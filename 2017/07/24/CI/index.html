@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="持续集成," />
 
 
 
@@ -95,13 +95,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gordon">
-<meta property="og:url" content="http://bungder.github.io/index.html">
+<meta name="description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration，简称CI）。持续集成也被认为是敏捷开发的最重要实践之一。 文主要介绍持续集成的概念以及一些工具与实践。 2    概念2.1    持续集成在软件工程里，持续集成（Continuous Integration, CI）是指这样的一种实践：在一天里多次将所有开发人员">
+<meta name="keywords" content="持续集成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="持续集成简述">
+<meta property="og:url" content="http://bungder.github.io/2017/07/24/CI/index.html">
 <meta property="og:site_name" content="Gordon">
+<meta property="og:description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration，简称CI）。持续集成也被认为是敏捷开发的最重要实践之一。 文主要介绍持续集成的概念以及一些工具与实践。 2    概念2.1    持续集成在软件工程里，持续集成（Continuous Integration, CI）是指这样的一种实践：在一天里多次将所有开发人员">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-24T14:22:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gordon">
+<meta name="twitter:title" content="持续集成简述">
+<meta name="twitter:description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration，简称CI）。持续集成也被认为是敏捷开发的最重要实践之一。 文主要介绍持续集成的概念以及一些工具与实践。 2    概念2.1    持续集成在软件工程里，持续集成（Continuous Integration, CI）是指这样的一种实践：在一天里多次将所有开发人员">
 
 
 
@@ -129,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://bungder.github.io/"/>
+  <link rel="canonical" href="http://bungder.github.io/2017/07/24/CI/"/>
 
 
 
 
 
-  <title>Gordon</title>
+  <title>持续集成简述 | Gordon</title>
   
 
 
@@ -160,9 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -279,9 +282,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -307,9 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/24/CI/" itemprop="url">持续集成简述</a></h1>
+          <h1 class="post-title" itemprop="name headline">持续集成简述</h1>
         
 
         <div class="post-meta">
@@ -356,170 +357,216 @@
       
 
       
-        
-          <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration，简称CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
+        <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration，简称CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
 <p>文主要介绍持续集成的概念以及一些工具与实践。</p>
 <h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2    概念"></a>2    概念</h1><h2 id="2-1-持续集成"><a href="#2-1-持续集成" class="headerlink" title="2.1    持续集成"></a>2.1    持续集成</h2><p>在软件工程里，持续集成（Continuous Integration, CI）是指这样的一种实践：在一天里多次将所有开发人员的代码合并到一个共享的主干里，每次合并都会触发持续集成服务器进行自动构建，这个过程包括了编译、单元测试、集成测试、质量分析等步骤，结果只有两个：成功或者失败。如果得到失败的结果，说明有人提交了不合格的代码，这就能及时发现问题。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/24/CI/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<a id="more"></a>
+<h2 id="2-2-自动化测试"><a href="#2-2-自动化测试" class="headerlink" title="2.2    自动化测试"></a>2.2    自动化测试</h2><p>自动化测试是持续集成必不可少的一部分，基本上，没有自动化测试的持续集成，都很难称之为真正的持续集成。我们希望持续集成能够尽早的暴露问题，但这远非配置一个 Hudson/Jenkins服务器那么简单，只有真正用心编写了较为完整的测试用例，并一直维护它们，持续集成才能孜孜不倦地运行测试并第一时间报告问题。</p>
+<p>自动化测试还包括单元测试、集成测试、系统测试、验收测试、性能测试等，在不同的场景下，它们都能为软件开发带来极大的价值。</p>
+<h3 id="2-2-1-单元测试"><a href="#2-2-1-单元测试" class="headerlink" title="2.2.1    单元测试"></a>2.2.1    单元测试</h3><p>单元测试（Unit Testing）又称为模块测试, 是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。</p>
+<p>通常来说，程序员每修改一次程序就会进行最少一次单元测试，在编写程序的过程中前后很可能要进行多次单元测试，以证实程序达到软件规格书要求的工作目标，没有程序错误。</p>
+<h3 id="2-2-2-集成测试"><a href="#2-2-2-集成测试" class="headerlink" title="2.2.2    集成测试"></a>2.2.2    集成测试</h3><p>集成测试（Integration Testing，有时也叫Integration and Testing, I&amp;T）即对独立的软件模块组装起来看成是一个整体进行测试。集成测试一般在单元测试之后、系统测试之前进行。实践表明，有时模块虽然可以单独工作，但是并不能保证组装起来也可以同时工作。</p>
+<p>集成与单元测试最大的区别是它需要尽可能的测试整个功能及相关环境，对于测试Web应用而言，通常有这么几步：</p>
+<ol>
+<li>启动Web容器</li>
+<li>部署待测试Web应用</li>
+<li>以Web客户端的角色运行测试用例</li>
+<li>停止Web容器</li>
+</ol>
+<h2 id="2-3-持续交付"><a href="#2-3-持续交付" class="headerlink" title="2.3    持续交付"></a>2.3    持续交付</h2><p>(TODO)</p>
+<h2 id="2-4-持续部署"><a href="#2-4-持续部署" class="headerlink" title="2.4    持续部署"></a>2.4    持续部署</h2><p>(TODO)</p>
+<h1 id="3-代价与好处"><a href="#3-代价与好处" class="headerlink" title="3    代价与好处"></a>3    代价与好处</h1><h2 id="3-1-代价"><a href="#3-1-代价" class="headerlink" title="3.1    代价"></a>3.1    代价</h2><ol>
+<li>构造自动测试用例会耗费大量的工作，而且要去覆盖不断增加的新功能点，也要随着代码的改动去修改测试用例。<ul>
+<li>测试被视为软件开发的一种最佳实践。无论是否采用持续集成，在一些方法论里——例如测试驱动开发——自动化测试都是必不可少的一部分。</li>
+<li>采用持续集成的时候也可以不使用任何测试用例，但是在发布一个产品之前的质量保证（Quality Assurance）成本就会变得很高，因为一切都要频繁地采用人手操作。</li>
+</ul>
+</li>
+<li>要花费精力去部署一个构建系统，这有时候会比较复杂，难以灵活地修改<ul>
+<li>然而，有大量的开源的持续集成软件项目，选择很多</li>
+</ul>
+</li>
+<li>如果项目比较小，或者包含了未经测试的遗留代码，持续集成的价值就并不是那么大</li>
+<li>持续集成所增加的价值依赖于测试的质量以及代码实际上的可测试程度。</li>
+<li>团队规模大就意味着代码会非常频繁地提交到集成队列里，跟踪提交就会比较困难，并且排队进行构建会减慢每个人的工作，如果构建失败，整个开发团队必须停下手里的工作，立刻修复他们的错误。<ul>
+<li>但是持续集成是可以灵活变通的，不一定要在一天里多次构建，可以配置每天下班前半小时自动构建，有错误的话开发人员可以在下班前进行处理；或者每天凌晨自动构建，第二天早上开发人员一上班就能看到构建的结果报告，然后进行处理。</li>
+</ul>
+</li>
+<li>一天里有多个提交和合并，一个新功能的部分代码能轻易地推送上去，在新功能完成之前，集成测试都是不通过的。</li>
+</ol>
+<h2 id="3-2-好处"><a href="#3-2-好处" class="headerlink" title="3.2    好处"></a>3.2    好处</h2><ol>
+<li>能快速发现错误和定位错误</li>
+<li>避免在发布日期大家都在检查自己有冲突的版本，造成混乱</li>
+<li>当单元测试不通过或者出现bug的时候，如果开发人员需要回滚代码，只会造成少量的改动丢失，因为集成是频繁的。</li>
+<li>防止分支大幅偏离主干。如果不是经常集成，主干又在不断更新，会导致以后集成的难度变大，甚至难以集成。</li>
+<li>无论对于测试、demo还是发布的目的或需求，总是有一份当前的构建可用。</li>
+<li>频繁的代码检查驱使开发人员编写模块化的、低复杂度的代码。</li>
+</ol>
+<h1 id="4-具体实践"><a href="#4-具体实践" class="headerlink" title="4    具体实践"></a>4    具体实践</h1><h2 id="4-1-工具"><a href="#4-1-工具" class="headerlink" title="4.1    工具"></a>4.1    工具</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>授权</th>
+<th>价格</th>
+<th>Git支持</th>
+<th>Docker支持</th>
+<th>自动测试</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jenkins</td>
+<td>MIT</td>
+<td>免费</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>需插件支持</td>
+<td></td>
+</tr>
+<tr>
+<td>GitLab CI</td>
+<td>MIT</td>
+<td>免费</td>
+<td>支持</td>
+<td>支持</td>
+<td>需自配测试服务</td>
+<td></td>
+</tr>
+<tr>
+<td>Phabricator</td>
+<td>Apache 2.0</td>
+<td>免费</td>
+<td>支持</td>
+<td></td>
+<td></td>
+<td>Facebook出品</td>
+</tr>
+<tr>
+<td>Travis CI</td>
+<td></td>
+<td>免费</td>
+<td>支持</td>
+<td>支持</td>
+<td></td>
+<td>不支持私有部署</td>
+</tr>
+<tr>
+<td>Bamboo</td>
+<td></td>
+<td>收费</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td></td>
+</tr>
+<tr>
+<td>Codeship</td>
+<td></td>
+<td>免费/收费</td>
+<td>关联Github, GitLab</td>
+<td>支持</td>
+<td></td>
+<td>不支持私有部署</td>
+</tr>
+<tr>
+<td>CircleCI</td>
+<td></td>
+<td>免费/收费</td>
+<td>关联Github</td>
+<td>支持</td>
+<td>支持大部分测试框架</td>
+<td>不支持私有部署</td>
+</tr>
+<tr>
+<td>Hudson</td>
+<td>Eclipse Public License 1.0</td>
+<td>免费</td>
+<td>需插件</td>
+<td>需插件</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>其实这里的支持，意思应该是直接的支持，例如Jenkins，其实和git结合也很简单，通过脚本就可以实现。</p>
+<h1 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5    参考资料"></a>5    参考资料</h1><ol>
+<li>Maven实战（五）——自动化Web应用集成测试<br><a href="http://www.infoq.com/cn/news/2011/03/xxb-maven-5-integration-test" target="_blank" rel="external">http://www.infoq.com/cn/news/2011/03/xxb-maven-5-integration-test</a></li>
+<li>单元测试-维基百科<br><a href="https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95</a></li>
+<li>Integration testing – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Integration\_testing" target="_blank" rel="external">https://en.wikipedia.org/wiki/Integration\_testing</a></li>
+<li>Continuous integration – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Continuous\_integration" target="_blank" rel="external">https://en.wikipedia.org/wiki/Continuous\_integration</a></li>
+<li>另一种声音：持续集成已死<br><a href="http://www.infoq.com/cn/news/2014/10/continuous-integration" target="_blank" rel="external">http://www.infoq.com/cn/news/2014/10/continuous-integration</a></li>
+<li>持续集成是什么？<br><a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html</a></li>
+<li>25 best continuous integration tools as of 2017 - Slant<br><a href="https://www.slant.co/topics/799/~best-continuous-integration-tools" target="_blank" rel="external">https://www.slant.co/topics/799/~best-continuous-integration-tools</a></li>
+<li>Bamboo vs Jenkins Comparison | Atlassian<br><a href="https://www.atlassian.com/software/bamboo/comparison/bamboo-vs-jenkins" target="_blank" rel="external">https://www.atlassian.com/software/bamboo/comparison/bamboo-vs-jenkins</a></li>
+<li>通过Docker容器运行持续集成/持续部署<br><a href="http://dockone.io/article/468" target="_blank" rel="external">http://dockone.io/article/468</a></li>
+<li>Continuous Integration, Deployment &amp; Delivery with Codeship<br><a href="https://codeship.com" target="_blank" rel="external">https://codeship.com</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/07/24/REST/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/24/REST/" itemprop="url">一种RESTful接口的约定</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T21:05:13+08:00">
-                2017-07-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/持续集成/" rel="tag"># 持续集成</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
-<h2 id="1-2-为什么采用REST"><a href="#1-2-为什么采用REST" class="headerlink" title="1.2    为什么采用REST"></a>1.2    为什么采用REST</h2><p>目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。</p>
-<p>另外，由于严格遵照HTTP协议进行数据返回，对于安全的接口，可以在返回的Header里设置缓存策略（接口安全性的概念在下文会解释）。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/24/REST/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/24/REST/" rel="next" title="一种RESTful接口的约定">
+                <i class="fa fa-chevron-left"></i> 一种RESTful接口的约定
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -527,6 +574,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -547,8 +598,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -608,6 +668,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1    概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-概念"><span class="nav-number">2.</span> <span class="nav-text">2    概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-持续集成"><span class="nav-number">2.1.</span> <span class="nav-text">2.1    持续集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-自动化测试"><span class="nav-number">2.2.</span> <span class="nav-text">2.2    自动化测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-单元测试"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1    单元测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-集成测试"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2    集成测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-持续交付"><span class="nav-number">2.3.</span> <span class="nav-text">2.3    持续交付</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-持续部署"><span class="nav-number">2.4.</span> <span class="nav-text">2.4    持续部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-代价与好处"><span class="nav-number">3.</span> <span class="nav-text">3    代价与好处</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-代价"><span class="nav-number">3.1.</span> <span class="nav-text">3.1    代价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-好处"><span class="nav-number">3.2.</span> <span class="nav-text">3.2    好处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-具体实践"><span class="nav-number">4.</span> <span class="nav-text">4    具体实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-工具"><span class="nav-number">4.1.</span> <span class="nav-text">4.1    工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-参考资料"><span class="nav-number">5.</span> <span class="nav-text">5    参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -728,10 +804,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 

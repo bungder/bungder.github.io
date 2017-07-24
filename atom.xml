@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2017-07-19T05:59:28.000Z</updated>
+  <updated>2017-07-24T14:22:19.000Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -16,153 +16,307 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>test2</title>
-    <link href="http://bungder.github.io/2017/07/18/test2/"/>
-    <id>http://bungder.github.io/2017/07/18/test2/</id>
-    <published>2017-07-18T13:46:57.000Z</published>
-    <updated>2017-07-19T05:59:28.000Z</updated>
+    <title>持续集成简述</title>
+    <link href="http://bungder.github.io/2017/07/24/CI/"/>
+    <id>http://bungder.github.io/2017/07/24/CI/</id>
+    <published>2017-07-24T13:51:48.000Z</published>
+    <updated>2017-07-24T14:22:19.000Z</updated>
     
-    <content type="html"><![CDATA[<p>scar Wilde，1854~1900），19世纪出生在英国（准确来讲是爱尔兰，但是当时由英国统治。）最伟大的作家与艺术家之一，以其剧作、诗歌、童话和小说闻名。唯美主义代表人物，19世纪80年代美学运动的主力和90年代颓废派运动的先驱。代表作《快乐王子》《道林·格雷的画像》。</p>
-<p><img src="http://www.shz100.com/data/attachment/portal/201505/29/111626qzotecrtcpp1zpr8.jpg" alt="wangerde"></p>
-<p>1.逢场作戏和终身不渝之间的区别只在于逢场作戏稍微长一些。</p>
+    <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration，简称CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
+<p>文主要介绍持续集成的概念以及一些工具与实践。</p>
+<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2    概念"></a>2    概念</h1><h2 id="2-1-持续集成"><a href="#2-1-持续集成" class="headerlink" title="2.1    持续集成"></a>2.1    持续集成</h2><p>在软件工程里，持续集成（Continuous Integration, CI）是指这样的一种实践：在一天里多次将所有开发人员的代码合并到一个共享的主干里，每次合并都会触发持续集成服务器进行自动构建，这个过程包括了编译、单元测试、集成测试、质量分析等步骤，结果只有两个：成功或者失败。如果得到失败的结果，说明有人提交了不合格的代码，这就能及时发现问题。</p>
 <a id="more"></a>
-<p>2.爱，始于自我欺骗，终于欺骗他人。这就是所谓的浪漫。</p>
-<p>3.浪漫的精髓就在于它充满种种可能。</p>
-<p>4.人是理性动物，但当他被要求按照理性的要求行动时，可又要发脾气了。</p>
-<p>5.没有人富有到可以赎回自己的过去。</p>
-<p>6.真相很少纯粹，也决不简单。</p>
-<p>7.一生的浪漫，从自恋开始。</p>
-<p>8.我们都生活在阴沟里，但仍有人仰望星空。</p>
-<p>9.大多数人发现他们从未后悔的事情只是他们的错误，但发现时已经太晚了。</p>
-<p>10.什么是离婚的主要原因？结婚。</p>
-<p>11.当爱情走到尽头，软弱者哭个不停，有效率的马上去寻找下一个目标，而聪明的早就预备了下一个。</p>
-<p>12.伟大的艺术家所看到的，从来都不是世界的本来面目。一旦他看透了，他就不再是艺术家。</p>
-<p>13.我给你们讲述的是所有你们没勇气去犯的罪孽。</p>
-<p>14.一个人总是可以善待他毫不在意的人。</p>
-<p>15.心是用来碎的。</p>
-<p>16.宗教一旦被证明是正确时就会消亡。科学便是已消亡宗教的记录。</p>
-<p>17.只有浅薄的人才了解自己。</p>
-<p>18.摆脱诱惑的唯一方式是臣服于诱惑……我能抗拒一切，除了诱惑。</p>
-<p>19.不满是个人或民族迈向进步的第一步。</p>
-<p>20.我喜欢自言自语，因为这样节约时间，而且不会有人跟我争论。</p>
-<p>21.格言是智慧耐用的替代品。</p>
-<p>22.梦想家只能在月光下找到前进的方向，他为此遭受的惩罚是比所有人提前看到曙光。</p>
-<p>23.每个圣人都有过去，每个罪人都有未来。</p>
-<p>24.生活是世上最罕见的事情，大多数人只是存在，仅此而已。</p>
-<p>25.我喜欢有未来的男人和有过去的女人。</p>
-<p>26.悲观主义者是这种人：当他可以从两种罪恶中选择时，他把两种都选了。</p>
-<p>27.社会仅仅以一种精神概念而存在，真实世界中只有个体存在。</p>
-<p>28.一个愤世嫉俗的人知道所有东西的价格，却不知道任何东西的价值。</p>
-<p>29.我喜欢人甚于原则，此外我还喜欢没原则的人甚于世界上的一切。</p>
-<p>30.我不想谋生；我想生活。</p>
-<p>31.适度是极其致命的事情。过度带来的成功是无可比拟的。</p>
-<p>32.我想所有迷人的人都是被宠爱着的，这是他们吸引力来源的秘密。</p>
-<p>33.没有比冷静更让人恼火的。</p>
-<p>34.奚落是庸才对天才的颂歌。</p>
-<p>35.什么也不做是世上最难的事情，最困难并且最智慧。</p>
-<p>36.平常的财宝会被偷走，而真正的财富则不会。你灵魂里无限珍贵的东西是无法被夺走的。</p>
-<p>37.恨是盲目的，爱亦然。</p>
-<p>38.注意穿着打扮是必要的。而拥有生活目标却并非如此。</p>
-<p>39.永远宽恕你的敌人，没有什么能比这个更让他们恼怒的了。</p>
-<p>40.孩子最初爱他们父母，等大一些他们评判父母；然后有些时候，他们原谅父母。</p>
-<p>41.生活中只有两种悲剧:一个是没有得到我们想要的，另外一个是得到我们想要的。</p>
-<p>42.谈论天气是无趣人类最后的避难所。</p>
-<p>43.真实生活就通常就是我们无法掌控的生活。</p>
-<p>44.邪恶是善良的人们编造的谎言，用来解释其他人的特殊魅力。</p>
-<p>45.愚人创造了这个世界，智者不得不活在其中。</p>
-<p>46.情感的好处就是让我们引入歧途，而科学的好处是不感情用事。</p>
-<p>47.我敬佩简单的快乐，那是复杂的最后避难所。</p>
-<p>48.除了感官，什么也不能治灵魂的创痛，同样，感官的饥渴也只有灵魂解除得了。</p>
-<p>49.把人分成好的与坏的是荒谬的，人要么迷人，要么乏味。</p>
-<p>50.女人是用来被爱的，不是用来被理解的。</p>
-<p>51.艺术并非模仿生活，而是生活在模仿艺术。</p>
-<p>52.我年青时以为金钱至上，而今年事已迈，发现果真如此。</p>
-<p>53.不要惧怕过去。如果人们告诉你说过去的事情无可挽回，别相信他们。</p>
-<p>54.争论是俗不可耐的，因为道德社会里每个人都持完全相同的观点。</p>
-<p>55.每次人们赞同我的时候，我都觉得自己一定错了。</p>
-<p>56.我一点都不浪漫。我还不算太老。还是把浪漫留给比我老的人吧。</p>
-<p>57.坏女人给我麻烦。好女人令我厌烦。这就是她们唯一的不同。<br>　　<br>58.每个人犯了错误，都自称是经验。<br>　　<br>59.男人的面孔是他的自传，女人的面容是她的幻想作品。<br>　　<br>60.女人的生活中只有一个真正的悲剧：她总在缅怀过去，却必须活在未来。</p>
-<p>61.如果一个女人不能让她犯的错误变得迷人，她就只是一个雌性动物。</p>
-<p>62.不够真诚是危险的，太真诚则绝对是致命的。</p>
-<p>63.一个人在选择他的敌人时，再小心也不为过。</p>
-<p>64.所有女人都会变得像她们的母亲一样，这是女人的悲剧。但没有男人变得像他们的父亲，这是男人的悲剧。</p>
-<p>65.美国是唯一一个直接从野蛮进入颓废、中间没有经过文明阶段的社会。</p>
-<p>66.要避免争论，争论总是俗不可耐，而且常常令人信服。</p>
-<p>67.只要一个女人看上去比她自己的女儿小十岁，她就一定会心满意足。</p>
-<p>68.糟糕的画家总是欣赏彼此的作品。</p>
-<p>69.男女之间不可能存在友谊，有的只是爱恨情仇。</p>
-<p>70.民主就是指人民用人民的大头棒打击人民。</p>
+<h2 id="2-2-自动化测试"><a href="#2-2-自动化测试" class="headerlink" title="2.2    自动化测试"></a>2.2    自动化测试</h2><p>自动化测试是持续集成必不可少的一部分，基本上，没有自动化测试的持续集成，都很难称之为真正的持续集成。我们希望持续集成能够尽早的暴露问题，但这远非配置一个 Hudson/Jenkins服务器那么简单，只有真正用心编写了较为完整的测试用例，并一直维护它们，持续集成才能孜孜不倦地运行测试并第一时间报告问题。</p>
+<p>自动化测试还包括单元测试、集成测试、系统测试、验收测试、性能测试等，在不同的场景下，它们都能为软件开发带来极大的价值。</p>
+<h3 id="2-2-1-单元测试"><a href="#2-2-1-单元测试" class="headerlink" title="2.2.1    单元测试"></a>2.2.1    单元测试</h3><p>单元测试（Unit Testing）又称为模块测试, 是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。</p>
+<p>通常来说，程序员每修改一次程序就会进行最少一次单元测试，在编写程序的过程中前后很可能要进行多次单元测试，以证实程序达到软件规格书要求的工作目标，没有程序错误。</p>
+<h3 id="2-2-2-集成测试"><a href="#2-2-2-集成测试" class="headerlink" title="2.2.2    集成测试"></a>2.2.2    集成测试</h3><p>集成测试（Integration Testing，有时也叫Integration and Testing, I&amp;T）即对独立的软件模块组装起来看成是一个整体进行测试。集成测试一般在单元测试之后、系统测试之前进行。实践表明，有时模块虽然可以单独工作，但是并不能保证组装起来也可以同时工作。</p>
+<p>集成与单元测试最大的区别是它需要尽可能的测试整个功能及相关环境，对于测试Web应用而言，通常有这么几步：</p>
 <ol>
-<li>教育是一件可敬的事，但要时刻牢记，没有什么值得知道的事是教得会的。</li>
+<li>启动Web容器</li>
+<li>部署待测试Web应用</li>
+<li>以Web客户端的角色运行测试用例</li>
+<li>停止Web容器</li>
 </ol>
-<p>72.所有人类的重大问题都有一个共同点：没有点幽默和疯狂是没办法解决的。</p>
-<p>73.争论者损失的只是智力。</p>
-<p>74.人生就是一件蠢事追着另一件蠢事而来，而爱情则是两个蠢东西追来追去。</p>
-<p>75.结婚是想象战胜了理智，再婚是希望战胜了经验。</p>
-<p>76.音乐让人感觉非常浪漫，至少让人感觉不安，如今两者是一回事。</p>
-<p>77.报纸和文学的区别是，报纸没法读，而文学则没人读。</p>
-<p>78.所有糟糕的诗歌都源于真情实感。自然化的作品其内涵是显而易见的，而显而易见的内涵并不艺术。</p>
-<p>79.虚荣心是年轻人佩戴的一朵优雅的花。</p>
-<p>80.拒绝或放弃自己的经历就是要阻止自己的发展，否认自己的经历就是自己对自己撒弥天大谎，这无异于否定灵魂。</p>
-<p>81.只有聪明的女人才会犯骇人听闻的错误。</p>
-<p>82.人生的首要责任是尽量虚伪。至于第二责任是什么，至今尚无人发现。</p>
-<p>83.倘若穷人有鲜明的个性，解决贫困问题就不会困难重重。</p>
-<p>84.现实中发生的任何事情都不是无关紧要的。</p>
-<p>85.人总要有点怪僻。</p>
-<p>86.一个人要么成为一件艺术品，要么拥有一件艺术品。</p>
-<p>87.唯有表面的特征能够长存。人内心的东西很快就会被发现。</p>
-<p>88.工业是一切丑陋的根源。</p>
-<p>89.我们这个时代的人，读书太多所以不再聪慧，思考太多所以不再美丽。</p>
-<p>90.犯罪分子离我们如此地近，就连警察都能够发现他们，他们离我们又如此遥远，只有诗人能够理解他们。</p>
-<p>91.生活中不正常的事物与艺术的关系是正常的，而且是生活中与艺术保持正常关系的唯一事物。</p>
-<p>92.第一：我永远是对的；第二：如果我错了，请参见第一条。</p>
-<p>93.男人经常希望自己是女人初恋的对象，女人则希望成为男人最后的罗曼史。</p>
-<p>94.美丽的东西有了过失，要不分青红皂白地原谅它；丑陋的东西有了过失要不顾天地良心地鄙视它。</p>
-<p>95.现在我很快乐，所以我很肯定，我的人格已荡然无存。</p>
-<p>96.从艺术的观点来看，坏人是非常吸引的研究对象。他们代表了色彩、变化与特异。好人会激怒人的理性，坏人则引发人的想象力。</p>
-<p>97.活着是珍贵的，大多数人只是存在，仅此而已。</p>
-<p>98.一个自己的灵魂还有他朋友们的感情，这是生活中最有魅力的东西。</p>
-<p>99.如今是这样的时代，看得太多而没有时间欣赏，写得太多而没有时间思想。</p>
-<p>100.节制是不幸的，适量就像顿普通的饭菜那么糟糕，过度才像一席盛宴那么尽兴。</p>
+<h2 id="2-3-持续交付"><a href="#2-3-持续交付" class="headerlink" title="2.3    持续交付"></a>2.3    持续交付</h2><p>(TODO)</p>
+<h2 id="2-4-持续部署"><a href="#2-4-持续部署" class="headerlink" title="2.4    持续部署"></a>2.4    持续部署</h2><p>(TODO)</p>
+<h1 id="3-代价与好处"><a href="#3-代价与好处" class="headerlink" title="3    代价与好处"></a>3    代价与好处</h1><h2 id="3-1-代价"><a href="#3-1-代价" class="headerlink" title="3.1    代价"></a>3.1    代价</h2><ol>
+<li>构造自动测试用例会耗费大量的工作，而且要去覆盖不断增加的新功能点，也要随着代码的改动去修改测试用例。<ul>
+<li>测试被视为软件开发的一种最佳实践。无论是否采用持续集成，在一些方法论里——例如测试驱动开发——自动化测试都是必不可少的一部分。</li>
+<li>采用持续集成的时候也可以不使用任何测试用例，但是在发布一个产品之前的质量保证（Quality Assurance）成本就会变得很高，因为一切都要频繁地采用人手操作。</li>
+</ul>
+</li>
+<li>要花费精力去部署一个构建系统，这有时候会比较复杂，难以灵活地修改<ul>
+<li>然而，有大量的开源的持续集成软件项目，选择很多</li>
+</ul>
+</li>
+<li>如果项目比较小，或者包含了未经测试的遗留代码，持续集成的价值就并不是那么大</li>
+<li>持续集成所增加的价值依赖于测试的质量以及代码实际上的可测试程度。</li>
+<li>团队规模大就意味着代码会非常频繁地提交到集成队列里，跟踪提交就会比较困难，并且排队进行构建会减慢每个人的工作，如果构建失败，整个开发团队必须停下手里的工作，立刻修复他们的错误。<ul>
+<li>但是持续集成是可以灵活变通的，不一定要在一天里多次构建，可以配置每天下班前半小时自动构建，有错误的话开发人员可以在下班前进行处理；或者每天凌晨自动构建，第二天早上开发人员一上班就能看到构建的结果报告，然后进行处理。</li>
+</ul>
+</li>
+<li>一天里有多个提交和合并，一个新功能的部分代码能轻易地推送上去，在新功能完成之前，集成测试都是不通过的。</li>
+</ol>
+<h2 id="3-2-好处"><a href="#3-2-好处" class="headerlink" title="3.2    好处"></a>3.2    好处</h2><ol>
+<li>能快速发现错误和定位错误</li>
+<li>避免在发布日期大家都在检查自己有冲突的版本，造成混乱</li>
+<li>当单元测试不通过或者出现bug的时候，如果开发人员需要回滚代码，只会造成少量的改动丢失，因为集成是频繁的。</li>
+<li>防止分支大幅偏离主干。如果不是经常集成，主干又在不断更新，会导致以后集成的难度变大，甚至难以集成。</li>
+<li>无论对于测试、demo还是发布的目的或需求，总是有一份当前的构建可用。</li>
+<li>频繁的代码检查驱使开发人员编写模块化的、低复杂度的代码。</li>
+</ol>
+<h1 id="4-具体实践"><a href="#4-具体实践" class="headerlink" title="4    具体实践"></a>4    具体实践</h1><h2 id="4-1-工具"><a href="#4-1-工具" class="headerlink" title="4.1    工具"></a>4.1    工具</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>授权</th>
+<th>价格</th>
+<th>Git支持</th>
+<th>Docker支持</th>
+<th>自动测试</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jenkins</td>
+<td>MIT</td>
+<td>免费</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>需插件支持</td>
+<td></td>
+</tr>
+<tr>
+<td>GitLab CI</td>
+<td>MIT</td>
+<td>免费</td>
+<td>支持</td>
+<td>支持</td>
+<td>需自配测试服务</td>
+<td></td>
+</tr>
+<tr>
+<td>Phabricator</td>
+<td>Apache 2.0</td>
+<td>免费</td>
+<td>支持</td>
+<td></td>
+<td></td>
+<td>Facebook出品</td>
+</tr>
+<tr>
+<td>Travis CI</td>
+<td></td>
+<td>免费</td>
+<td>支持</td>
+<td>支持</td>
+<td></td>
+<td>不支持私有部署</td>
+</tr>
+<tr>
+<td>Bamboo</td>
+<td></td>
+<td>收费</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td></td>
+</tr>
+<tr>
+<td>Codeship</td>
+<td></td>
+<td>免费/收费</td>
+<td>关联Github, GitLab</td>
+<td>支持</td>
+<td></td>
+<td>不支持私有部署</td>
+</tr>
+<tr>
+<td>CircleCI</td>
+<td></td>
+<td>免费/收费</td>
+<td>关联Github</td>
+<td>支持</td>
+<td>支持大部分测试框架</td>
+<td>不支持私有部署</td>
+</tr>
+<tr>
+<td>Hudson</td>
+<td>Eclipse Public License 1.0</td>
+<td>免费</td>
+<td>需插件</td>
+<td>需插件</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>其实这里的支持，意思应该是直接的支持，例如Jenkins，其实和git结合也很简单，通过脚本就可以实现。</p>
+<h1 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5    参考资料"></a>5    参考资料</h1><ol>
+<li>Maven实战（五）——自动化Web应用集成测试<br><a href="http://www.infoq.com/cn/news/2011/03/xxb-maven-5-integration-test" target="_blank" rel="external">http://www.infoq.com/cn/news/2011/03/xxb-maven-5-integration-test</a></li>
+<li>单元测试-维基百科<br><a href="https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95</a></li>
+<li>Integration testing – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Integration\_testing" target="_blank" rel="external">https://en.wikipedia.org/wiki/Integration\_testing</a></li>
+<li>Continuous integration – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Continuous\_integration" target="_blank" rel="external">https://en.wikipedia.org/wiki/Continuous\_integration</a></li>
+<li>另一种声音：持续集成已死<br><a href="http://www.infoq.com/cn/news/2014/10/continuous-integration" target="_blank" rel="external">http://www.infoq.com/cn/news/2014/10/continuous-integration</a></li>
+<li>持续集成是什么？<br><a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html</a></li>
+<li>25 best continuous integration tools as of 2017 - Slant<br><a href="https://www.slant.co/topics/799/~best-continuous-integration-tools" target="_blank" rel="external">https://www.slant.co/topics/799/~best-continuous-integration-tools</a></li>
+<li>Bamboo vs Jenkins Comparison | Atlassian<br><a href="https://www.atlassian.com/software/bamboo/comparison/bamboo-vs-jenkins" target="_blank" rel="external">https://www.atlassian.com/software/bamboo/comparison/bamboo-vs-jenkins</a></li>
+<li>通过Docker容器运行持续集成/持续部署<br><a href="http://dockone.io/article/468" target="_blank" rel="external">http://dockone.io/article/468</a></li>
+<li>Continuous Integration, Deployment &amp; Delivery with Codeship<br><a href="https://codeship.com" target="_blank" rel="external">https://codeship.com</a></li>
+</ol>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;scar Wilde，1854~1900），19世纪出生在英国（准确来讲是爱尔兰，但是当时由英国统治。）最伟大的作家与艺术家之一，以其剧作、诗歌、童话和小说闻名。唯美主义代表人物，19世纪80年代美学运动的主力和90年代颓废派运动的先驱。代表作《快乐王子》《道林·格雷的画像》。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://www.shz100.com/data/attachment/portal/201505/29/111626qzotecrtcpp1zpr8.jpg&quot; alt=&quot;wangerde&quot;&gt;&lt;/p&gt;
-&lt;p&gt;1.逢场作戏和终身不渝之间的区别只在于逢场作戏稍微长一些。&lt;/p&gt;
+      &lt;h1 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1    概述&quot;&gt;&lt;/a&gt;1    概述&lt;/h1&gt;&lt;p&gt;联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration，简称CI）。持续集成也被认为是敏捷开发的最重要实践之一。&lt;/p&gt;
+&lt;p&gt;文主要介绍持续集成的概念以及一些工具与实践。&lt;/p&gt;
+&lt;h1 id=&quot;2-概念&quot;&gt;&lt;a href=&quot;#2-概念&quot; class=&quot;headerlink&quot; title=&quot;2    概念&quot;&gt;&lt;/a&gt;2    概念&lt;/h1&gt;&lt;h2 id=&quot;2-1-持续集成&quot;&gt;&lt;a href=&quot;#2-1-持续集成&quot; class=&quot;headerlink&quot; title=&quot;2.1    持续集成&quot;&gt;&lt;/a&gt;2.1    持续集成&lt;/h2&gt;&lt;p&gt;在软件工程里，持续集成（Continuous Integration, CI）是指这样的一种实践：在一天里多次将所有开发人员的代码合并到一个共享的主干里，每次合并都会触发持续集成服务器进行自动构建，这个过程包括了编译、单元测试、集成测试、质量分析等步骤，结果只有两个：成功或者失败。如果得到失败的结果，说明有人提交了不合格的代码，这就能及时发现问题。&lt;/p&gt;
     
     </summary>
     
     
-      <category term="test" scheme="http://bungder.github.io/tags/test/"/>
+      <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://bungder.github.io/2017/07/17/hello-world/"/>
-    <id>http://bungder.github.io/2017/07/17/hello-world/</id>
-    <published>2017-07-17T02:04:30.000Z</published>
-    <updated>2017-07-17T02:04:30.000Z</updated>
+    <title>一种RESTful接口的约定</title>
+    <link href="http://bungder.github.io/2017/07/24/REST/"/>
+    <id>http://bungder.github.io/2017/07/24/REST/</id>
+    <published>2017-07-24T13:05:13.000Z</published>
+    <updated>2017-07-24T14:07:07.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+    <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
+<h2 id="1-2-为什么采用REST"><a href="#1-2-为什么采用REST" class="headerlink" title="1.2    为什么采用REST"></a>1.2    为什么采用REST</h2><p>目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。</p>
+<p>另外，由于严格遵照HTTP协议进行数据返回，对于安全的接口，可以在返回的Header里设置缓存策略（接口安全性的概念在下文会解释）。</p>
+<a id="more"></a>
+<h2 id="1-3-文档结构"><a href="#1-3-文档结构" class="headerlink" title="1.3 文档结构"></a>1.3 文档结构</h2><p>第二部分将阐述关于RESTful的若干个关键的概念，明确第二部分阐述的几个概念有利于设计、实现优雅规范的接口。</p>
+<p>第三部分就URL命名的问题进行约定。</p>
+<p>第四部分对消息实体进行约定。</p>
+<p>第五部分对『向RESTful接口发起请求』进行阐述，约定要实现的方法，约定请求的头部和body的格式。</p>
+<p>第六部分对接口的响应格式进行约定，包括响应消息的头部、状态码、JSON实体。</p>
+<p>第七部分对版本控制的问题进行约定。</p>
+<p>第八部分对RESTful接口的实现提出了实现工具的建议。</p>
+<h1 id="2-关键概念"><a href="#2-关键概念" class="headerlink" title="2    关键概念"></a>2    关键概念</h1><p>明确一些关键的概念是很重要的，虽然RESTful风格的API设计方案并没有统一的标准，但是还是需要符合一定的原则进行设计，否则就不能称为RESTful风格的API。因为许多人并没有对REST进行充分的了解就宣称自己的API是RESTful风格的API，以至于RESTful的提出者Fielding博士本人无法忍受，在2008年为此专门写了一篇博客『<strong>REST APIs must be hypertext-driven</strong>』，hypertext-driven与HATEOAS是同一个概念的不同表述，在下文会进行阐述。</p>
+<h2 id="2-1-RESTful"><a href="#2-1-RESTful" class="headerlink" title="2.1     RESTful"></a>2.1     RESTful</h2><p><strong>REST</strong>不是一种协议，也不是一种文件格式，更不是一种开发框架。它是一系列的设计约束的集合：无状态性、将超媒体作为应用状态的引擎等。REST是<strong>Representation State Transfer</strong>的缩写，中文是『表述性状态转移』，这里就涉及到资源的表述与状态两个概念。</p>
+<p>简单地说，资源可以看作是服务器上存储的所有数据，资源的表述则是服务器对外提供的指向这些资源的方式，使用JSON、XML等均可，一个资源可以有多种表述；资源的状态则是服务器的数据存储状态，例如在t时刻，服务器中存储了m条数据，这时候客户端向服务端提交了一个创建数据的请求，服务器处理了此请求并创建了一条数据，那么在t+1时刻，服务器中就存储了m+1条数据，这两个时刻的资源状态就是不一样的，t时刻发生的请求导致了资源状态的改变。</p>
+<h2 id="2-2-HATEOAS"><a href="#2-2-HATEOAS" class="headerlink" title="2.2    HATEOAS"></a>2.2    HATEOAS</h2><p><strong>Hypermedia As The Engine Of Application State</strong>，超媒体作为应用程序状态的引擎。这是REST区别于其他SOA风格的主要特点。客户端与服务端进行互动的时候，完全是通过服务端动态提供的超媒体进行的。除了对超媒体的一般理解，客户端不需要知道其他额外的知识。相反，在一些SOA接口的设计中，客户端与服务端的通信是要事先进行约定的，例如通过文档或者接口描述语言（Interface Description Language, IDL）。而基于HTTP协议的REST设计里，一般采用的就是请求与响应的Header来体现HATEOAS原则（具体请参考：<a href="https://en.wikipedia.org/wiki/HATEOAS）。这里也隐含这样一层含义：REST应尽可能地利用HTTP标准中现有的东西，例如Header、标准方法与状态码。" target="_blank" rel="external">https://en.wikipedia.org/wiki/HATEOAS）。这里也隐含这样一层含义：REST应尽可能地利用HTTP标准中现有的东西，例如Header、标准方法与状态码。</a></p>
+<p>从标准的角度看，HTTP标准是一项RFC标准，世界认可；而其他自定义的SOA标准则可能是一项个人标准或者公司标准，最多是一项互联网草案（这对大部分公司来说都不可能），而一项标准越是被广为认可接受，其实现的通用性就越强。个人标准和公司标准都五花八门，这样对每一个标准都要参照其相关文档实现相应的行为逻辑是很麻烦的。</p>
+<h2 id="2-3-安全性"><a href="#2-3-安全性" class="headerlink" title="2.3    安全性"></a>2.3    安全性</h2><p>一个方法被调用1次与被调用0次是一样的，此方法就是安全的，否则就是不安全的。<br>例如，一个方法A仅仅是读取数据，并不创建或者修改数据，不论A方法被调用多少次，都不对数据记录产生任何影响，A方法是安全的。而假如有另一个方法B对数据进行删除，B方法被调用1次后，数据会被删除（或者标识位被修改），系统里的数据发生了变化，那么B方法是不安全的。</p>
+<h2 id="2-4-幂等性"><a href="#2-4-幂等性" class="headerlink" title="2.4    幂等性"></a>2.4    幂等性</h2><p>一个方法被同样地调用1次与被调用多次是一样的，即同样的输入会得到同样的输出，此方法就是幂等的，否则就不是幂等的。<br>2.3节中A方法与B方法都是幂等的，一个安全的方法一定是幂等的，一个幂等的方法不一定是安全的。<br>假设一个方法C对某个全局计数器执行自增操作并写入数据库，每次调用C方法都会对系统数据产生影响，那么C方法就不是幂等的。</p>
+<h1 id="3-URL命名"><a href="#3-URL命名" class="headerlink" title="3 URL命名"></a>3 URL命名</h1><p>URL用于标识资源，因此URL应该以名词进行命名，例如/users, /users/children等。<br>一般URL会内嵌参数，例如要获取id为313的user的信息，那么URL应该为/users/313，前面的user采用复数，如果要列出其所有后代，则URL应为/users/313/children，children为复数形式，如果要获取其id为499的后代，则URL应为/users/313/children/499</p>
+<h1 id="4-消息实体"><a href="#4-消息实体" class="headerlink" title="4    消息实体"></a>4    消息实体</h1><p>消息实体，就是请求和响应消息中的entity-body（也称为body），消息实体采用JSON字符串格式。</p>
+<h1 id="5-请求"><a href="#5-请求" class="headerlink" title="5 请求"></a>5 请求</h1><h2 id="5-1-方法"><a href="#5-1-方法" class="headerlink" title="5.1    方法"></a>5.1    方法</h2><p>使用HTTP标准定义的请求方法。</p>
+<h3 id="5-1-1-get"><a href="#5-1-1-get" class="headerlink" title="5.1.1    get"></a>5.1.1    get</h3><p>获取资源，单个参数一般写在URL上，多个参数则作为query parameter附在URL后面，例如：</p>
+<ul>
+<li>单个参数：/user/123, 表示id为123的user</li>
+<li>多个参数：/user?name=tom&amp;phone=13787890987&amp;gender=male</li>
+</ul>
+<p>get方法应为幂等的，并且不对数据记录产生影响。对于汉字与特殊字符，应该进行urlencode。</p>
+<h3 id="5-1-2-post"><a href="#5-1-2-post" class="headerlink" title="5.1.2    post"></a>5.1.2    post</h3><p>创建资源，请求的headers里设置Content-type为application/json，参数为json类型。</p>
+<p>根据约定，在创建成功之后，返回的状态码应该是201（Created），并且在response的Header里设置Location为新创建的资源的URL，例如，创建了一个新的user，该user创建后id为888，那么Header里应该设置Location为/users/888，当然，这应该是一个完整的URL，这里只是给出了一个相对路径的URI以作为说明。返回了这些数据后，客户端可以自定义后续行为，或者查看创建后的user，或者刷新当前的user列表，这些行为服务端并不关心。</p>
+<p>如果重复提交了相同的数据，第一次应该返回201，以后则应返回409（Conflict），并且在response的Header里设置Location指向已经存在的资源，说明冲突的来源。</p>
+<h3 id="5-1-3-put"><a href="#5-1-3-put" class="headerlink" title="5.1.3    put"></a>5.1.3    put</h3><p>更新资源，对现有资源进行修改，请求的headers与post一样，参数也是。此方法应该是幂等的。</p>
+<h3 id="5-1-4-delete"><a href="#5-1-4-delete" class="headerlink" title="5.1.4    delete"></a>5.1.4    delete</h3><p>删除资源。此方法应是幂等的。</p>
+<h2 id="5-2-Header"><a href="#5-2-Header" class="headerlink" title="5.2    Header"></a>5.2    Header</h2><p>Content-type应设为application/json。</p>
+<p>另外应设置一个version，指明所使用的接口版本。这不属于HTTP协议中的一部分，是自定义的，出于版本控制的考量，具体见第七章。</p>
+<h2 id="5-3-body"><a href="#5-3-body" class="headerlink" title="5.3    body"></a>5.3    body</h2><p>采用JSON字符串，具体的结构有待商定，这不属于HTTP协议的一部分，是自定义的。</p>
+<p>这里主要放置业务相关的数据。</p>
+<h1 id="6-响应"><a href="#6-响应" class="headerlink" title="6    响应"></a>6    响应</h1><h2 id="6-1-Header"><a href="#6-1-Header" class="headerlink" title="6.1    Header"></a>6.1    Header</h2><p>根据响应的状态码不同，相应地设置头部，具体见下一节。</p>
+<p>但是在我所了解的公司里，做法都是统一返回200，然后在返回的JSON字符串里设置消息码。我是不能理解的。据一位前端同学说，前端代码接收到了请求以后，不方便获取Http状态码。其实我也写过前端，不深入，但是一些基本的知识还是有的，我觉得这并不难做到，估计是他的代码封装的时候没有考虑到这一点，现在要改比较麻烦，所以不想大动干戈、伤筋动骨。</p>
+<h2 id="6-2-状态码"><a href="#6-2-状态码" class="headerlink" title="6.2    状态码"></a>6.2    状态码</h2><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>语义</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+<td>正常返回消息，什么问题也没有</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Created</td>
+<td>创建资源成功，Header里应设置Location指向新创建的资源</td>
+</tr>
+<tr>
+<td>202</td>
+<td>Accepted</td>
+<td>请求已被接收，但是处理过程较长，不能马上返回结果</td>
+</tr>
+<tr>
+<td>304</td>
+<td>Not Modified</td>
+<td>没有任何修改发生</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>缺乏权限，指已经登录但是缺乏请求这个资源的权限</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>拒绝访问，可用于未登录时拦截返回的状态码，此时Header里应设置Location为登录页面的URL</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>不存在所请求的资源</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable</td>
+<td>请求没有被接收，参数约束校验不通过，或者其他业务类型的错误都可以返回这个状态码，response的body里应有表示错误信息的JSON实体。</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Conflict</td>
+<td>请求的资源有冲突，例如多次提交一样的创建请求，response的Header里应设置Location为产生冲突的资源的URL</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>服务器的非业务类错误，response的body里应有表示错误信息的JSON实体</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-3-body"><a href="#6-3-body" class="headerlink" title="6.3    body"></a>6.3    body</h2><p>采用JSON字符串。</p>
+<p>JSON的结构分为两种：成功、失败。</p>
+<p>一般而言，只有返回200的时候才需要读取成功的JSON，只有返回406和500的时候才需要读取失败的JSON，对于其他的状态码，客户端不需要服务器提供额外的消息。</p>
+<p>对于成功的JSON，里面应该只包含一个result对象，而失败的JSON应该使用这样的结构：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;	error:&#123;		code: xxx,		message: “xxx”,		data: &#123;…&#125;    &#125;&#125;</div></pre></td></tr></table></figure>
+<p>失败的JSON只有一个error对象，包含错误码、消息及相关数据，message应该是直接可读的消息，客户端毋需理解发生了什么错误，客户端只需将消息展示出来即可。在收到406的时候，客户端只需知道发生的错误是由客户端造成的即可，具体是什么类型并不需要知道，将消息直接展示出来，让使用的人知道是什么即可，所以message应该是人类可以理解的文本。同理，收到500的时候，只需知道这个错误是服务端的问题即可，客户端也毋需知道具体的错误类型，最多就将错误码和消息展示出来，让使用者有反馈的依据即可。</p>
+<h1 id="7-版本控制"><a href="#7-版本控制" class="headerlink" title="7 版本控制"></a>7 版本控制</h1><p>考虑到接口有可能升级，升级的类型有几种：</p>
+<ol>
+<li>新增功能接口</li>
+<li>原有接口返回数据增加字段</li>
+<li>现有接口返回数据变更现有字段格式或删除现有字段</li>
+<li>现有接口变更业务逻辑</li>
+<li>删除接口</li>
+</ol>
+<p>其中，前两种升级并不会影响客户端，因此毋需处理。而后面三种会导致使用旧接口的客户端不能正常工作。</p>
+<p>一般服务端升级与客户端升级都不是同步的，客户端升级往往会滞后，因此在服务端升级后应该保留旧版本的接口继续运行一段时间，让未升级的客户端可以继续工作一段时间，同时可以上线新版本的客户端。过一段时间后再将旧版本的接口下线。</p>
+<p>而版本控制应该是向下兼容的，即假设当前版本是1.2，如果客户端请求1.3版本的服务，应当用当前版本提供服务。如果没有注明请求的版本号，应当提供当前版本的服务。</p>
+<p>一般情况下，客户端请求需要带版本号，但是服务端并不需要对此进行处理，除非是同时运行新旧版本的同一个接口，才需要做差异处理。</p>
+<h1 id="8-实现"><a href="#8-实现" class="headerlink" title="8 实现"></a>8 实现</h1><h2 id="8-1-Spring-HATEOAS"><a href="#8-1-Spring-HATEOAS" class="headerlink" title="8.1    Spring HATEOAS"></a>8.1    Spring HATEOAS</h2><p>Spring HATEOAS可以很方便地与Spring MVC结合来开发RESTful接口。具体参照其文档：<br><a href="http://docs.spring.io/spring-hateoas/docs/0.20.0.RELEASE/reference/html/#fundamentals.jaxb-json" target="_blank" rel="external">http://docs.spring.io/spring-hateoas/docs/0.20.0.RELEASE/reference/html/#fundamentals.jaxb-json</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      &lt;h1 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h1&gt;&lt;h2 id=&quot;1-1-撰写目的&quot;&gt;&lt;a href=&quot;#1-1-撰写目的&quot; class=&quot;headerlink&quot; title=&quot;1.1 撰写目的&quot;&gt;&lt;/a&gt;1.1 撰写目的&lt;/h2&gt;&lt;p&gt;本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。&lt;/p&gt;
+&lt;h2 id=&quot;1-2-为什么采用REST&quot;&gt;&lt;a href=&quot;#1-2-为什么采用REST&quot; class=&quot;headerlink&quot; title=&quot;1.2    为什么采用REST&quot;&gt;&lt;/a&gt;1.2    为什么采用REST&lt;/h2&gt;&lt;p&gt;目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。&lt;/p&gt;
+&lt;p&gt;另外，由于严格遵照HTTP协议进行数据返回，对于安全的接口，可以在返回的Header里设置缓存策略（接口安全性的概念在下文会解释）。&lt;/p&gt;
     
     </summary>
     
+    
+      <category term="REST" scheme="http://bungder.github.io/tags/REST/"/>
     
   </entry>
   

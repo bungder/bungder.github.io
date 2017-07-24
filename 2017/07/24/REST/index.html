@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="REST," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Gordon" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1 概述1.1 撰写目的本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。 1.">
+<meta name="keywords" content="REST">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一种RESTful接口的约定">
+<meta property="og:url" content="http://bungder.github.io/2017/07/24/REST/index.html">
+<meta property="og:site_name" content="Gordon">
+<meta property="og:description" content="1 概述1.1 撰写目的本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。 1.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-24T14:07:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一种RESTful接口的约定">
+<meta name="twitter:description" content="1 概述1.1 撰写目的本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。 1.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bungder.github.io/2017/07/24/REST/"/>
+
+
+
+
+
+  <title>一种RESTful接口的约定 | Gordon</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gordon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/07/24/REST/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gordon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gordon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一种RESTful接口的约定</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T21:05:13+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
+<h2 id="1-2-为什么采用REST"><a href="#1-2-为什么采用REST" class="headerlink" title="1.2    为什么采用REST"></a>1.2    为什么采用REST</h2><p>目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。</p>
+<p>另外，由于严格遵照HTTP协议进行数据返回，对于安全的接口，可以在返回的Header里设置缓存策略（接口安全性的概念在下文会解释）。</p>
+<a id="more"></a>
+<h2 id="1-3-文档结构"><a href="#1-3-文档结构" class="headerlink" title="1.3 文档结构"></a>1.3 文档结构</h2><p>第二部分将阐述关于RESTful的若干个关键的概念，明确第二部分阐述的几个概念有利于设计、实现优雅规范的接口。</p>
+<p>第三部分就URL命名的问题进行约定。</p>
+<p>第四部分对消息实体进行约定。</p>
+<p>第五部分对『向RESTful接口发起请求』进行阐述，约定要实现的方法，约定请求的头部和body的格式。</p>
+<p>第六部分对接口的响应格式进行约定，包括响应消息的头部、状态码、JSON实体。</p>
+<p>第七部分对版本控制的问题进行约定。</p>
+<p>第八部分对RESTful接口的实现提出了实现工具的建议。</p>
+<h1 id="2-关键概念"><a href="#2-关键概念" class="headerlink" title="2    关键概念"></a>2    关键概念</h1><p>明确一些关键的概念是很重要的，虽然RESTful风格的API设计方案并没有统一的标准，但是还是需要符合一定的原则进行设计，否则就不能称为RESTful风格的API。因为许多人并没有对REST进行充分的了解就宣称自己的API是RESTful风格的API，以至于RESTful的提出者Fielding博士本人无法忍受，在2008年为此专门写了一篇博客『<strong>REST APIs must be hypertext-driven</strong>』，hypertext-driven与HATEOAS是同一个概念的不同表述，在下文会进行阐述。</p>
+<h2 id="2-1-RESTful"><a href="#2-1-RESTful" class="headerlink" title="2.1     RESTful"></a>2.1     RESTful</h2><p><strong>REST</strong>不是一种协议，也不是一种文件格式，更不是一种开发框架。它是一系列的设计约束的集合：无状态性、将超媒体作为应用状态的引擎等。REST是<strong>Representation State Transfer</strong>的缩写，中文是『表述性状态转移』，这里就涉及到资源的表述与状态两个概念。</p>
+<p>简单地说，资源可以看作是服务器上存储的所有数据，资源的表述则是服务器对外提供的指向这些资源的方式，使用JSON、XML等均可，一个资源可以有多种表述；资源的状态则是服务器的数据存储状态，例如在t时刻，服务器中存储了m条数据，这时候客户端向服务端提交了一个创建数据的请求，服务器处理了此请求并创建了一条数据，那么在t+1时刻，服务器中就存储了m+1条数据，这两个时刻的资源状态就是不一样的，t时刻发生的请求导致了资源状态的改变。</p>
+<h2 id="2-2-HATEOAS"><a href="#2-2-HATEOAS" class="headerlink" title="2.2    HATEOAS"></a>2.2    HATEOAS</h2><p><strong>Hypermedia As The Engine Of Application State</strong>，超媒体作为应用程序状态的引擎。这是REST区别于其他SOA风格的主要特点。客户端与服务端进行互动的时候，完全是通过服务端动态提供的超媒体进行的。除了对超媒体的一般理解，客户端不需要知道其他额外的知识。相反，在一些SOA接口的设计中，客户端与服务端的通信是要事先进行约定的，例如通过文档或者接口描述语言（Interface Description Language, IDL）。而基于HTTP协议的REST设计里，一般采用的就是请求与响应的Header来体现HATEOAS原则（具体请参考：<a href="https://en.wikipedia.org/wiki/HATEOAS）。这里也隐含这样一层含义：REST应尽可能地利用HTTP标准中现有的东西，例如Header、标准方法与状态码。" target="_blank" rel="external">https://en.wikipedia.org/wiki/HATEOAS）。这里也隐含这样一层含义：REST应尽可能地利用HTTP标准中现有的东西，例如Header、标准方法与状态码。</a></p>
+<p>从标准的角度看，HTTP标准是一项RFC标准，世界认可；而其他自定义的SOA标准则可能是一项个人标准或者公司标准，最多是一项互联网草案（这对大部分公司来说都不可能），而一项标准越是被广为认可接受，其实现的通用性就越强。个人标准和公司标准都五花八门，这样对每一个标准都要参照其相关文档实现相应的行为逻辑是很麻烦的。</p>
+<h2 id="2-3-安全性"><a href="#2-3-安全性" class="headerlink" title="2.3    安全性"></a>2.3    安全性</h2><p>一个方法被调用1次与被调用0次是一样的，此方法就是安全的，否则就是不安全的。<br>例如，一个方法A仅仅是读取数据，并不创建或者修改数据，不论A方法被调用多少次，都不对数据记录产生任何影响，A方法是安全的。而假如有另一个方法B对数据进行删除，B方法被调用1次后，数据会被删除（或者标识位被修改），系统里的数据发生了变化，那么B方法是不安全的。</p>
+<h2 id="2-4-幂等性"><a href="#2-4-幂等性" class="headerlink" title="2.4    幂等性"></a>2.4    幂等性</h2><p>一个方法被同样地调用1次与被调用多次是一样的，即同样的输入会得到同样的输出，此方法就是幂等的，否则就不是幂等的。<br>2.3节中A方法与B方法都是幂等的，一个安全的方法一定是幂等的，一个幂等的方法不一定是安全的。<br>假设一个方法C对某个全局计数器执行自增操作并写入数据库，每次调用C方法都会对系统数据产生影响，那么C方法就不是幂等的。</p>
+<h1 id="3-URL命名"><a href="#3-URL命名" class="headerlink" title="3 URL命名"></a>3 URL命名</h1><p>URL用于标识资源，因此URL应该以名词进行命名，例如/users, /users/children等。<br>一般URL会内嵌参数，例如要获取id为313的user的信息，那么URL应该为/users/313，前面的user采用复数，如果要列出其所有后代，则URL应为/users/313/children，children为复数形式，如果要获取其id为499的后代，则URL应为/users/313/children/499</p>
+<h1 id="4-消息实体"><a href="#4-消息实体" class="headerlink" title="4    消息实体"></a>4    消息实体</h1><p>消息实体，就是请求和响应消息中的entity-body（也称为body），消息实体采用JSON字符串格式。</p>
+<h1 id="5-请求"><a href="#5-请求" class="headerlink" title="5 请求"></a>5 请求</h1><h2 id="5-1-方法"><a href="#5-1-方法" class="headerlink" title="5.1    方法"></a>5.1    方法</h2><p>使用HTTP标准定义的请求方法。</p>
+<h3 id="5-1-1-get"><a href="#5-1-1-get" class="headerlink" title="5.1.1    get"></a>5.1.1    get</h3><p>获取资源，单个参数一般写在URL上，多个参数则作为query parameter附在URL后面，例如：</p>
+<ul>
+<li>单个参数：/user/123, 表示id为123的user</li>
+<li>多个参数：/user?name=tom&amp;phone=13787890987&amp;gender=male</li>
+</ul>
+<p>get方法应为幂等的，并且不对数据记录产生影响。对于汉字与特殊字符，应该进行urlencode。</p>
+<h3 id="5-1-2-post"><a href="#5-1-2-post" class="headerlink" title="5.1.2    post"></a>5.1.2    post</h3><p>创建资源，请求的headers里设置Content-type为application/json，参数为json类型。</p>
+<p>根据约定，在创建成功之后，返回的状态码应该是201（Created），并且在response的Header里设置Location为新创建的资源的URL，例如，创建了一个新的user，该user创建后id为888，那么Header里应该设置Location为/users/888，当然，这应该是一个完整的URL，这里只是给出了一个相对路径的URI以作为说明。返回了这些数据后，客户端可以自定义后续行为，或者查看创建后的user，或者刷新当前的user列表，这些行为服务端并不关心。</p>
+<p>如果重复提交了相同的数据，第一次应该返回201，以后则应返回409（Conflict），并且在response的Header里设置Location指向已经存在的资源，说明冲突的来源。</p>
+<h3 id="5-1-3-put"><a href="#5-1-3-put" class="headerlink" title="5.1.3    put"></a>5.1.3    put</h3><p>更新资源，对现有资源进行修改，请求的headers与post一样，参数也是。此方法应该是幂等的。</p>
+<h3 id="5-1-4-delete"><a href="#5-1-4-delete" class="headerlink" title="5.1.4    delete"></a>5.1.4    delete</h3><p>删除资源。此方法应是幂等的。</p>
+<h2 id="5-2-Header"><a href="#5-2-Header" class="headerlink" title="5.2    Header"></a>5.2    Header</h2><p>Content-type应设为application/json。</p>
+<p>另外应设置一个version，指明所使用的接口版本。这不属于HTTP协议中的一部分，是自定义的，出于版本控制的考量，具体见第七章。</p>
+<h2 id="5-3-body"><a href="#5-3-body" class="headerlink" title="5.3    body"></a>5.3    body</h2><p>采用JSON字符串，具体的结构有待商定，这不属于HTTP协议的一部分，是自定义的。</p>
+<p>这里主要放置业务相关的数据。</p>
+<h1 id="6-响应"><a href="#6-响应" class="headerlink" title="6    响应"></a>6    响应</h1><h2 id="6-1-Header"><a href="#6-1-Header" class="headerlink" title="6.1    Header"></a>6.1    Header</h2><p>根据响应的状态码不同，相应地设置头部，具体见下一节。</p>
+<p>但是在我所了解的公司里，做法都是统一返回200，然后在返回的JSON字符串里设置消息码。我是不能理解的。据一位前端同学说，前端代码接收到了请求以后，不方便获取Http状态码。其实我也写过前端，不深入，但是一些基本的知识还是有的，我觉得这并不难做到，估计是他的代码封装的时候没有考虑到这一点，现在要改比较麻烦，所以不想大动干戈、伤筋动骨。</p>
+<h2 id="6-2-状态码"><a href="#6-2-状态码" class="headerlink" title="6.2    状态码"></a>6.2    状态码</h2><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>语义</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+<td>正常返回消息，什么问题也没有</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Created</td>
+<td>创建资源成功，Header里应设置Location指向新创建的资源</td>
+</tr>
+<tr>
+<td>202</td>
+<td>Accepted</td>
+<td>请求已被接收，但是处理过程较长，不能马上返回结果</td>
+</tr>
+<tr>
+<td>304</td>
+<td>Not Modified</td>
+<td>没有任何修改发生</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>缺乏权限，指已经登录但是缺乏请求这个资源的权限</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>拒绝访问，可用于未登录时拦截返回的状态码，此时Header里应设置Location为登录页面的URL</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>不存在所请求的资源</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable</td>
+<td>请求没有被接收，参数约束校验不通过，或者其他业务类型的错误都可以返回这个状态码，response的body里应有表示错误信息的JSON实体。</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Conflict</td>
+<td>请求的资源有冲突，例如多次提交一样的创建请求，response的Header里应设置Location为产生冲突的资源的URL</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>服务器的非业务类错误，response的body里应有表示错误信息的JSON实体</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-3-body"><a href="#6-3-body" class="headerlink" title="6.3    body"></a>6.3    body</h2><p>采用JSON字符串。</p>
+<p>JSON的结构分为两种：成功、失败。</p>
+<p>一般而言，只有返回200的时候才需要读取成功的JSON，只有返回406和500的时候才需要读取失败的JSON，对于其他的状态码，客户端不需要服务器提供额外的消息。</p>
+<p>对于成功的JSON，里面应该只包含一个result对象，而失败的JSON应该使用这样的结构：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;	error:&#123;		code: xxx,		message: “xxx”,		data: &#123;…&#125;    &#125;&#125;</div></pre></td></tr></table></figure>
+<p>失败的JSON只有一个error对象，包含错误码、消息及相关数据，message应该是直接可读的消息，客户端毋需理解发生了什么错误，客户端只需将消息展示出来即可。在收到406的时候，客户端只需知道发生的错误是由客户端造成的即可，具体是什么类型并不需要知道，将消息直接展示出来，让使用的人知道是什么即可，所以message应该是人类可以理解的文本。同理，收到500的时候，只需知道这个错误是服务端的问题即可，客户端也毋需知道具体的错误类型，最多就将错误码和消息展示出来，让使用者有反馈的依据即可。</p>
+<h1 id="7-版本控制"><a href="#7-版本控制" class="headerlink" title="7 版本控制"></a>7 版本控制</h1><p>考虑到接口有可能升级，升级的类型有几种：</p>
+<ol>
+<li>新增功能接口</li>
+<li>原有接口返回数据增加字段</li>
+<li>现有接口返回数据变更现有字段格式或删除现有字段</li>
+<li>现有接口变更业务逻辑</li>
+<li>删除接口</li>
+</ol>
+<p>其中，前两种升级并不会影响客户端，因此毋需处理。而后面三种会导致使用旧接口的客户端不能正常工作。</p>
+<p>一般服务端升级与客户端升级都不是同步的，客户端升级往往会滞后，因此在服务端升级后应该保留旧版本的接口继续运行一段时间，让未升级的客户端可以继续工作一段时间，同时可以上线新版本的客户端。过一段时间后再将旧版本的接口下线。</p>
+<p>而版本控制应该是向下兼容的，即假设当前版本是1.2，如果客户端请求1.3版本的服务，应当用当前版本提供服务。如果没有注明请求的版本号，应当提供当前版本的服务。</p>
+<p>一般情况下，客户端请求需要带版本号，但是服务端并不需要对此进行处理，除非是同时运行新旧版本的同一个接口，才需要做差异处理。</p>
+<h1 id="8-实现"><a href="#8-实现" class="headerlink" title="8 实现"></a>8 实现</h1><h2 id="8-1-Spring-HATEOAS"><a href="#8-1-Spring-HATEOAS" class="headerlink" title="8.1    Spring HATEOAS"></a>8.1    Spring HATEOAS</h2><p>Spring HATEOAS可以很方便地与Spring MVC结合来开发RESTful接口。具体参照其文档：<br><a href="http://docs.spring.io/spring-hateoas/docs/0.20.0.RELEASE/reference/html/#fundamentals.jaxb-json" target="_blank" rel="external">http://docs.spring.io/spring-hateoas/docs/0.20.0.RELEASE/reference/html/#fundamentals.jaxb-json</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/REST/" rel="tag"># REST</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/24/CI/" rel="prev" title="持续集成简述">
+                持续集成简述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Gordon" />
+          <p class="site-author-name" itemprop="name">Gordon</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-撰写目的"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 撰写目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-为什么采用REST"><span class="nav-number">1.2.</span> <span class="nav-text">1.2    为什么采用REST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-文档结构"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 文档结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-关键概念"><span class="nav-number">2.</span> <span class="nav-text">2    关键概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-RESTful"><span class="nav-number">2.1.</span> <span class="nav-text">2.1     RESTful</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-HATEOAS"><span class="nav-number">2.2.</span> <span class="nav-text">2.2    HATEOAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-安全性"><span class="nav-number">2.3.</span> <span class="nav-text">2.3    安全性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-幂等性"><span class="nav-number">2.4.</span> <span class="nav-text">2.4    幂等性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-URL命名"><span class="nav-number">3.</span> <span class="nav-text">3 URL命名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-消息实体"><span class="nav-number">4.</span> <span class="nav-text">4    消息实体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-请求"><span class="nav-number">5.</span> <span class="nav-text">5 请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-方法"><span class="nav-number">5.1.</span> <span class="nav-text">5.1    方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-get"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1    get</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-post"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2    post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-put"><span class="nav-number">5.1.3.</span> <span class="nav-text">5.1.3    put</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-4-delete"><span class="nav-number">5.1.4.</span> <span class="nav-text">5.1.4    delete</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-Header"><span class="nav-number">5.2.</span> <span class="nav-text">5.2    Header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-body"><span class="nav-number">5.3.</span> <span class="nav-text">5.3    body</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-响应"><span class="nav-number">6.</span> <span class="nav-text">6    响应</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-Header"><span class="nav-number">6.1.</span> <span class="nav-text">6.1    Header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-状态码"><span class="nav-number">6.2.</span> <span class="nav-text">6.2    状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-body"><span class="nav-number">6.3.</span> <span class="nav-text">6.3    body</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-版本控制"><span class="nav-number">7.</span> <span class="nav-text">7 版本控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-实现"><span class="nav-number">8.</span> <span class="nav-text">8 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-Spring-HATEOAS"><span class="nav-number">8.1.</span> <span class="nav-text">8.1    Spring HATEOAS</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gordon</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
