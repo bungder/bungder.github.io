@@ -185,7 +185,7 @@
     <link href="http://bungder.github.io/2017/07/24/REST/"/>
     <id>http://bungder.github.io/2017/07/24/REST/</id>
     <published>2017-07-24T13:05:13.000Z</published>
-    <updated>2017-07-24T14:07:07.000Z</updated>
+    <updated>2017-07-24T15:31:58.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
 <h2 id="1-2-为什么采用REST"><a href="#1-2-为什么采用REST" class="headerlink" title="1.2    为什么采用REST"></a>1.2    为什么采用REST</h2><p>目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。</p>
@@ -201,12 +201,15 @@
 <h1 id="2-关键概念"><a href="#2-关键概念" class="headerlink" title="2    关键概念"></a>2    关键概念</h1><p>明确一些关键的概念是很重要的，虽然RESTful风格的API设计方案并没有统一的标准，但是还是需要符合一定的原则进行设计，否则就不能称为RESTful风格的API。因为许多人并没有对REST进行充分的了解就宣称自己的API是RESTful风格的API，以至于RESTful的提出者Fielding博士本人无法忍受，在2008年为此专门写了一篇博客『<strong>REST APIs must be hypertext-driven</strong>』，hypertext-driven与HATEOAS是同一个概念的不同表述，在下文会进行阐述。</p>
 <h2 id="2-1-RESTful"><a href="#2-1-RESTful" class="headerlink" title="2.1     RESTful"></a>2.1     RESTful</h2><p><strong>REST</strong>不是一种协议，也不是一种文件格式，更不是一种开发框架。它是一系列的设计约束的集合：无状态性、将超媒体作为应用状态的引擎等。REST是<strong>Representation State Transfer</strong>的缩写，中文是『表述性状态转移』，这里就涉及到资源的表述与状态两个概念。</p>
 <p>简单地说，资源可以看作是服务器上存储的所有数据，资源的表述则是服务器对外提供的指向这些资源的方式，使用JSON、XML等均可，一个资源可以有多种表述；资源的状态则是服务器的数据存储状态，例如在t时刻，服务器中存储了m条数据，这时候客户端向服务端提交了一个创建数据的请求，服务器处理了此请求并创建了一条数据，那么在t+1时刻，服务器中就存储了m+1条数据，这两个时刻的资源状态就是不一样的，t时刻发生的请求导致了资源状态的改变。</p>
-<h2 id="2-2-HATEOAS"><a href="#2-2-HATEOAS" class="headerlink" title="2.2    HATEOAS"></a>2.2    HATEOAS</h2><p><strong>Hypermedia As The Engine Of Application State</strong>，超媒体作为应用程序状态的引擎。这是REST区别于其他SOA风格的主要特点。客户端与服务端进行互动的时候，完全是通过服务端动态提供的超媒体进行的。除了对超媒体的一般理解，客户端不需要知道其他额外的知识。相反，在一些SOA接口的设计中，客户端与服务端的通信是要事先进行约定的，例如通过文档或者接口描述语言（Interface Description Language, IDL）。而基于HTTP协议的REST设计里，一般采用的就是请求与响应的Header来体现HATEOAS原则（具体请参考：<a href="https://en.wikipedia.org/wiki/HATEOAS）。这里也隐含这样一层含义：REST应尽可能地利用HTTP标准中现有的东西，例如Header、标准方法与状态码。" target="_blank" rel="external">https://en.wikipedia.org/wiki/HATEOAS）。这里也隐含这样一层含义：REST应尽可能地利用HTTP标准中现有的东西，例如Header、标准方法与状态码。</a></p>
+<h2 id="2-2-HATEOAS"><a href="#2-2-HATEOAS" class="headerlink" title="2.2    HATEOAS"></a>2.2    HATEOAS</h2><p><strong>Hypermedia As The Engine Of Application State</strong>，超媒体作为应用程序状态的引擎。这是REST区别于其他SOA风格的主要特点。客户端与服务端进行互动的时候，完全是通过服务端动态提供的超媒体进行的。除了对超媒体的一般理解，客户端不需要知道其他额外的知识。相反，在一些SOA接口的设计中，客户端与服务端的通信是要事先进行约定的，例如通过文档或者接口描述语言（Interface Description Language, IDL）。而基于HTTP协议的REST设计里，一般采用的就是请求与响应的Header来体现HATEOAS原则（具体请参考：<a href="https://en.wikipedia.org/wiki/HATEOAS" target="_blank" rel="external">https://en.wikipedia.org/wiki/HATEOAS</a>）。这里也隐含这样一层含义：REST应尽可能地利用HTTP标准中现有的东西，例如Header、标准方法与状态码。</p>
 <p>从标准的角度看，HTTP标准是一项RFC标准，世界认可；而其他自定义的SOA标准则可能是一项个人标准或者公司标准，最多是一项互联网草案（这对大部分公司来说都不可能），而一项标准越是被广为认可接受，其实现的通用性就越强。个人标准和公司标准都五花八门，这样对每一个标准都要参照其相关文档实现相应的行为逻辑是很麻烦的。</p>
-<h2 id="2-3-安全性"><a href="#2-3-安全性" class="headerlink" title="2.3    安全性"></a>2.3    安全性</h2><p>一个方法被调用1次与被调用0次是一样的，此方法就是安全的，否则就是不安全的。<br>例如，一个方法A仅仅是读取数据，并不创建或者修改数据，不论A方法被调用多少次，都不对数据记录产生任何影响，A方法是安全的。而假如有另一个方法B对数据进行删除，B方法被调用1次后，数据会被删除（或者标识位被修改），系统里的数据发生了变化，那么B方法是不安全的。</p>
-<h2 id="2-4-幂等性"><a href="#2-4-幂等性" class="headerlink" title="2.4    幂等性"></a>2.4    幂等性</h2><p>一个方法被同样地调用1次与被调用多次是一样的，即同样的输入会得到同样的输出，此方法就是幂等的，否则就不是幂等的。<br>2.3节中A方法与B方法都是幂等的，一个安全的方法一定是幂等的，一个幂等的方法不一定是安全的。<br>假设一个方法C对某个全局计数器执行自增操作并写入数据库，每次调用C方法都会对系统数据产生影响，那么C方法就不是幂等的。</p>
-<h1 id="3-URL命名"><a href="#3-URL命名" class="headerlink" title="3 URL命名"></a>3 URL命名</h1><p>URL用于标识资源，因此URL应该以名词进行命名，例如/users, /users/children等。<br>一般URL会内嵌参数，例如要获取id为313的user的信息，那么URL应该为/users/313，前面的user采用复数，如果要列出其所有后代，则URL应为/users/313/children，children为复数形式，如果要获取其id为499的后代，则URL应为/users/313/children/499</p>
-<h1 id="4-消息实体"><a href="#4-消息实体" class="headerlink" title="4    消息实体"></a>4    消息实体</h1><p>消息实体，就是请求和响应消息中的entity-body（也称为body），消息实体采用JSON字符串格式。</p>
+<h2 id="2-3-安全性"><a href="#2-3-安全性" class="headerlink" title="2.3    安全性"></a>2.3    安全性</h2><p>一个方法被调用1次与被调用0次是一样的，此方法就是安全的，否则就是不安全的。例如，一个方法A仅仅是读取数据，并不创建或者修改数据，不论A方法被调用多少次，都不对数据记录产生任何影响，A方法是安全的。而假如有另一个方法B对数据进行删除，B方法被调用1次后，数据会被删除（或者标识位被修改），系统里的数据发生了变化，那么B方法是不安全的。</p>
+<h2 id="2-4-幂等性"><a href="#2-4-幂等性" class="headerlink" title="2.4    幂等性"></a>2.4    幂等性</h2><p>一个方法被同样地调用1次与被调用多次是一样的，即同样的输入会得到同样的输出，此方法就是幂等的，否则就不是幂等的。</p>
+<p>2.3节中A方法与B方法都是幂等的，一个安全的方法一定是幂等的，一个幂等的方法不一定是安全的。</p>
+<p>假设一个方法C对某个全局计数器执行自增操作并写入数据库，每次调用C方法都会对系统数据产生影响，那么C方法就不是幂等的。</p>
+<h1 id="3-URL命名"><a href="#3-URL命名" class="headerlink" title="3 URL命名"></a>3 URL命名</h1><p>URL用于标识资源，因此URL应该以名词进行命名，例如<code>/users</code>, <code>/users/children</code>等。</p>
+<p>一般URL会内嵌参数，例如要获取id为313的user的信息，那么URL应该为<code>/users/313</code>，前面的user采用复数，如果要列出其所有后代，则URL应为<code>/users/313/children</code>，children为复数形式，如果要获取其id为499的后代，则URL应为<code>/users/313/children/499</code></p>
+<h1 id="4-消息实体"><a href="#4-消息实体" class="headerlink" title="4    消息实体"></a>4    消息实体</h1><p>消息实体，就是请求和响应消息中的<code>entity-body</code>（也称为body），消息实体采用JSON字符串格式。</p>
 <h1 id="5-请求"><a href="#5-请求" class="headerlink" title="5 请求"></a>5 请求</h1><h2 id="5-1-方法"><a href="#5-1-方法" class="headerlink" title="5.1    方法"></a>5.1    方法</h2><p>使用HTTP标准定义的请求方法。</p>
 <h3 id="5-1-1-get"><a href="#5-1-1-get" class="headerlink" title="5.1.1    get"></a>5.1.1    get</h3><p>获取资源，单个参数一般写在URL上，多个参数则作为query parameter附在URL后面，例如：</p>
 <ul>
@@ -214,8 +217,8 @@
 <li>多个参数：/user?name=tom&amp;phone=13787890987&amp;gender=male</li>
 </ul>
 <p>get方法应为幂等的，并且不对数据记录产生影响。对于汉字与特殊字符，应该进行urlencode。</p>
-<h3 id="5-1-2-post"><a href="#5-1-2-post" class="headerlink" title="5.1.2    post"></a>5.1.2    post</h3><p>创建资源，请求的headers里设置Content-type为application/json，参数为json类型。</p>
-<p>根据约定，在创建成功之后，返回的状态码应该是201（Created），并且在response的Header里设置Location为新创建的资源的URL，例如，创建了一个新的user，该user创建后id为888，那么Header里应该设置Location为/users/888，当然，这应该是一个完整的URL，这里只是给出了一个相对路径的URI以作为说明。返回了这些数据后，客户端可以自定义后续行为，或者查看创建后的user，或者刷新当前的user列表，这些行为服务端并不关心。</p>
+<h3 id="5-1-2-post"><a href="#5-1-2-post" class="headerlink" title="5.1.2    post"></a>5.1.2    post</h3><p>创建资源，请求的headers里设置<code>Content-type</code>为<code>application/json</code>，参数为json类型。</p>
+<p>根据约定，在创建成功之后，返回的状态码应该是201（Created），并且在response的Header里设置Location为新创建的资源的URL，例如，创建了一个新的user，该user创建后id为888，那么Header里应该设置<code>Location</code>为<code>/users/888</code>，当然，这应该是一个完整的URL，这里只是给出了一个相对路径的URI以作为说明。返回了这些数据后，客户端可以自定义后续行为，或者查看创建后的user，或者刷新当前的user列表，这些行为服务端并不关心。</p>
 <p>如果重复提交了相同的数据，第一次应该返回201，以后则应返回409（Conflict），并且在response的Header里设置Location指向已经存在的资源，说明冲突的来源。</p>
 <h3 id="5-1-3-put"><a href="#5-1-3-put" class="headerlink" title="5.1.3    put"></a>5.1.3    put</h3><p>更新资源，对现有资源进行修改，请求的headers与post一样，参数也是。此方法应该是幂等的。</p>
 <h3 id="5-1-4-delete"><a href="#5-1-4-delete" class="headerlink" title="5.1.4    delete"></a>5.1.4    delete</h3><p>删除资源。此方法应是幂等的。</p>
@@ -286,11 +289,10 @@
 </tr>
 </tbody>
 </table>
-<h2 id="6-3-body"><a href="#6-3-body" class="headerlink" title="6.3    body"></a>6.3    body</h2><p>采用JSON字符串。</p>
-<p>JSON的结构分为两种：成功、失败。</p>
+<h2 id="6-3-body采用JSON字符串。"><a href="#6-3-body采用JSON字符串。" class="headerlink" title="6.3    body采用JSON字符串。"></a>6.3    body采用JSON字符串。</h2><p>JSON的结构分为两种：成功、失败。</p>
 <p>一般而言，只有返回200的时候才需要读取成功的JSON，只有返回406和500的时候才需要读取失败的JSON，对于其他的状态码，客户端不需要服务器提供额外的消息。</p>
 <p>对于成功的JSON，里面应该只包含一个result对象，而失败的JSON应该使用这样的结构：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;	error:&#123;		code: xxx,		message: “xxx”,		data: &#123;…&#125;    &#125;&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    error: &#123;</div><div class="line">        code: xxx,</div><div class="line">        message: <span class="string">"xxx"</span></div><div class="line">        data: <span class="meta">&#123;...&#125;</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>失败的JSON只有一个error对象，包含错误码、消息及相关数据，message应该是直接可读的消息，客户端毋需理解发生了什么错误，客户端只需将消息展示出来即可。在收到406的时候，客户端只需知道发生的错误是由客户端造成的即可，具体是什么类型并不需要知道，将消息直接展示出来，让使用的人知道是什么即可，所以message应该是人类可以理解的文本。同理，收到500的时候，只需知道这个错误是服务端的问题即可，客户端也毋需知道具体的错误类型，最多就将错误码和消息展示出来，让使用者有反馈的依据即可。</p>
 <h1 id="7-版本控制"><a href="#7-版本控制" class="headerlink" title="7 版本控制"></a>7 版本控制</h1><p>考虑到接口有可能升级，升级的类型有几种：</p>
 <ol>
