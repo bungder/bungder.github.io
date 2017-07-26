@@ -185,7 +185,7 @@
     <link href="http://bungder.github.io/2017/07/24/REST/"/>
     <id>http://bungder.github.io/2017/07/24/REST/</id>
     <published>2017-07-24T13:05:13.000Z</published>
-    <updated>2017-07-24T15:31:58.000Z</updated>
+    <updated>2017-07-26T05:27:49.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
 <h2 id="1-2-为什么采用REST"><a href="#1-2-为什么采用REST" class="headerlink" title="1.2    为什么采用REST"></a>1.2    为什么采用REST</h2><p>目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。</p>
@@ -292,7 +292,7 @@
 <h2 id="6-3-body采用JSON字符串。"><a href="#6-3-body采用JSON字符串。" class="headerlink" title="6.3    body采用JSON字符串。"></a>6.3    body采用JSON字符串。</h2><p>JSON的结构分为两种：成功、失败。</p>
 <p>一般而言，只有返回200的时候才需要读取成功的JSON，只有返回406和500的时候才需要读取失败的JSON，对于其他的状态码，客户端不需要服务器提供额外的消息。</p>
 <p>对于成功的JSON，里面应该只包含一个result对象，而失败的JSON应该使用这样的结构：</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    error: &#123;</div><div class="line">        code: xxx,</div><div class="line">        message: <span class="string">"xxx"</span></div><div class="line">        data: <span class="meta">&#123;...&#125;</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    error: &#123;</div><div class="line">        code: xxx,</div><div class="line">        message: <span class="string">"xxx"</span>,</div><div class="line">        data: <span class="meta">&#123;...&#125;</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>失败的JSON只有一个error对象，包含错误码、消息及相关数据，message应该是直接可读的消息，客户端毋需理解发生了什么错误，客户端只需将消息展示出来即可。在收到406的时候，客户端只需知道发生的错误是由客户端造成的即可，具体是什么类型并不需要知道，将消息直接展示出来，让使用的人知道是什么即可，所以message应该是人类可以理解的文本。同理，收到500的时候，只需知道这个错误是服务端的问题即可，客户端也毋需知道具体的错误类型，最多就将错误码和消息展示出来，让使用者有反馈的依据即可。</p>
 <h1 id="7-版本控制"><a href="#7-版本控制" class="headerlink" title="7 版本控制"></a>7 版本控制</h1><p>考虑到接口有可能升级，升级的类型有几种：</p>
 <ol>
