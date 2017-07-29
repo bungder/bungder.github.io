@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2017-07-29T17:37:50.000Z</updated>
+  <updated>2017-07-29T17:41:11.000Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -20,12 +20,13 @@
     <link href="http://bungder.github.io/2017/07/30/software-engineering/"/>
     <id>http://bungder.github.io/2017/07/30/software-engineering/</id>
     <published>2017-07-29T16:41:48.000Z</published>
-    <updated>2017-07-29T17:37:50.000Z</updated>
+    <updated>2017-07-29T17:41:11.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>软件工程开发模型其实就是展开开发工作的方法论，其重要性不言而喻。以前本科的时候学过一门课就叫《软件工程》，但是当时学的很多东西都忘了，就只记得一个瀑布模型。然而瀑布模型过于原始，如今敏捷方法大行其道，有必要理清一下它们之间的关系（别人早已理清了，是我自己需要理清^_^）。</p>
 <p>维基百科上『软件工程』这一分类条目下的知识点总结如下：</p>
 <p><img src="http://otlnkjq1m.bkt.clouddn.com/software-engineering-model.jpg" alt=""></p>
 <p>本文主要就开发模型进行简单的总结。</p>
+<a id="more"></a>
 <h1 id="2-开发模型"><a href="#2-开发模型" class="headerlink" title="2 开发模型"></a>2 开发模型</h1><h2 id="2-1-瀑布模型"><a href="#2-1-瀑布模型" class="headerlink" title="2.1 瀑布模型"></a>2.1 瀑布模型</h2><h2 id="2-2-螺旋模型"><a href="#2-2-螺旋模型" class="headerlink" title="2.2 螺旋模型"></a>2.2 螺旋模型</h2><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实这也在情理之中。本科的时候最多也就写几个小项目玩玩，基本上就只有编码、单元测试两个环节，或许会有简单的需求分析和系统设计，但是存在感都比较弱，也就是说，在本科的时候，基本上缺乏软件工程的参与经验，既没有对此存在疑问，也意识不到其重要性。同时，这门课的老师也缺乏工程实施经验，走的路线基本就是本硕博读完进高校教书，对于软件项目开发这种与学术界关系不大的课题，也就只能照本宣科，台上台下都与『软件工程』没发生过什么实质性关系。因此，在现在看来，在本科开设软件工程这门课实在有点为时尚早，又或许是课程的形式不恰当。但是从另一个角度看，本科的学生本来就没有经历完整项目流程的机会（指规范的开发），而高校聘请业界工程师来讲课实施起来也有点问题，将来要成为软件工程师的学生又不可能不了解软件工程的知识，因此也就只好这样了。</p>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
 <li>瀑布模型 - 维基百科<br><a href="https://zh.wikipedia.org/wiki/瀑布模型" target="_blank" rel="external">https://zh.wikipedia.org/wiki/瀑布模型</a></li>
@@ -37,7 +38,10 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h1&gt;&lt;p&gt;软件工程开发模型其实就是展开开发工作的方法论，其重要性不言而喻。以前本科的时候学过一门课就叫《软件工程》，但是当时学的很多东
+      &lt;h1 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h1&gt;&lt;p&gt;软件工程开发模型其实就是展开开发工作的方法论，其重要性不言而喻。以前本科的时候学过一门课就叫《软件工程》，但是当时学的很多东西都忘了，就只记得一个瀑布模型。然而瀑布模型过于原始，如今敏捷方法大行其道，有必要理清一下它们之间的关系（别人早已理清了，是我自己需要理清^_^）。&lt;/p&gt;
+&lt;p&gt;维基百科上『软件工程』这一分类条目下的知识点总结如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://otlnkjq1m.bkt.clouddn.com/software-engineering-model.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;本文主要就开发模型进行简单的总结。&lt;/p&gt;
     
     </summary>
     
@@ -51,7 +55,7 @@
     <link href="http://bungder.github.io/2017/07/24/CI/"/>
     <id>http://bungder.github.io/2017/07/24/CI/</id>
     <published>2017-07-24T13:51:48.000Z</published>
-    <updated>2017-07-29T17:39:16.000Z</updated>
+    <updated>2017-07-29T17:42:23.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
 <p>本文主要介绍持续集成的概念以及一些工具与实践。</p>
@@ -256,7 +260,9 @@
     </summary>
     
     
-      <category term="持续集成,软件工程" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90-%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
+      <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+      <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
     
   </entry>
   
