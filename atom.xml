@@ -51,7 +51,7 @@
     <link href="http://bungder.github.io/2017/07/24/CI/"/>
     <id>http://bungder.github.io/2017/07/24/CI/</id>
     <published>2017-07-24T13:51:48.000Z</published>
-    <updated>2017-07-29T17:37:21.000Z</updated>
+    <updated>2017-07-29T17:39:16.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
 <p>本文主要介绍持续集成的概念以及一些工具与实践。</p>
@@ -256,7 +256,7 @@
     </summary>
     
     
-      <category term="持续集成 软件工程" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90-%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
+      <category term="持续集成,软件工程" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90-%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
     
   </entry>
   
