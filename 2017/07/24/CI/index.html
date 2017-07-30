@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="持续集成,软件工程," />
+  <meta name="keywords" content="软件工程,持续集成," />
 
 
 
@@ -95,23 +95,24 @@
 
 
 
-<meta name="description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念 这图很直观地描述了持续集成相关的概念之间的关系。 软件开发的过程无非就是以下几个阶段：  需求分析 系统设计 编码实现 验收 维护  这几个阶段">
-<meta name="keywords" content="持续集成,软件工程">
+<meta name="description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念图2.1 持续集成概念示意图之一 上图来源于谈谈持续集成，持续交付，持续部署之间的区别，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成">
+<meta name="keywords" content="软件工程,持续集成">
 <meta property="og:type" content="article">
 <meta property="og:title" content="持续集成简述">
 <meta property="og:url" content="http://bungder.github.io/2017/07/24/CI/index.html">
 <meta property="og:site_name" content="Gordon">
-<meta property="og:description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念 这图很直观地描述了持续集成相关的概念之间的关系。 软件开发的过程无非就是以下几个阶段：  需求分析 系统设计 编码实现 验收 维护  这几个阶段">
+<meta property="og:description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念图2.1 持续集成概念示意图之一 上图来源于谈谈持续集成，持续交付，持续部署之间的区别，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation.png">
+<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation-2.png">
 <meta property="og:image" content="http://7xsn88.com1.z0.glb.clouddn.com/image/f/82/6ce32afc227588c4b60b143501dcd.png">
 <meta property="og:image" content="http://7xsn88.com1.z0.glb.clouddn.com/image/e/bd/d757dd642e93e33fede310325b155.png">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/c/c3/Continuous_Delivery_process_diagram.svg">
 <meta property="og:image" content="http://7xsn88.com1.z0.glb.clouddn.com/image/0/3a/6b241b45b65eb7d77927619015d84.png">
-<meta property="og:updated_time" content="2017-07-29T17:42:23.000Z">
+<meta property="og:updated_time" content="2017-07-30T14:58:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="持续集成简述">
-<meta name="twitter:description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念 这图很直观地描述了持续集成相关的概念之间的关系。 软件开发的过程无非就是以下几个阶段：  需求分析 系统设计 编码实现 验收 维护  这几个阶段">
+<meta name="twitter:description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念图2.1 持续集成概念示意图之一 上图来源于谈谈持续集成，持续交付，持续部署之间的区别，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成">
 <meta name="twitter:image" content="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation.png">
 
 
@@ -374,27 +375,39 @@
       
         <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
 <p>本文主要介绍持续集成的概念以及一些工具与实践。</p>
-<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2    概念"></a>2    概念</h1><p><img src="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation.png" alt=""></p>
-<p>这图很直观地描述了持续集成相关的概念之间的关系。</p>
-<p>软件开发的过程无非就是以下几个阶段：</p>
+<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2    概念"></a>2    概念</h1><p><img src="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation.png" alt="图2.1 持续集成概念示意图之一"><br>图2.1 持续集成概念示意图之一</p>
+<p>上图来源于<a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="external">谈谈持续集成，持续交付，持续部署之间的区别</a>，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成密切相关的概念还有持续交付、持续部署，因此在下文将会就这三个概念进行阐述。</p>
+<a id="more"></a>
+<h2 id="2-1-持续集成"><a href="#2-1-持续集成" class="headerlink" title="2.1    持续集成"></a>2.1    持续集成</h2><p>在瀑布模型中，软件的开发过程被分为以下几个阶段：</p>
 <ul>
 <li>需求分析</li>
 <li>系统设计</li>
 <li>编码实现</li>
-<li>验收</li>
+<li>测试</li>
+<li>集成</li>
+<li>部署</li>
 <li>维护</li>
 </ul>
-<p>这几个阶段其实就来自瀑布模型的定义，但是无论是在迭代型方法中，（TODO）</p>
-<p>持续集成包括了以下几部分:</p>
+<p>而一般在实际的开发中，基本也就遵循这些步骤进行开发，大部分情况下，不会完全按照瀑布流的方式执行，但是这些步骤都是有的，无非就是在文档的落实、步骤的次序与侧重有所变化。其中，所谓的集成，在平时的开发过程中很少直接提到这个名词，其含义是（见：<a href="https://en.wikipedia.org/wiki/System_integration" target="_blank" rel="external">System integration - Wikipedia</a>）：</p>
+<blockquote>
+<p>将子系统的组件整合到一个系统中并且确保子系统的功能可以组合为一个系统的过程。</p>
+</blockquote>
+<p>所以，所谓的『集成』就是在存在多个系统协作的情况下，将子系统集成为一个大系统的过程，这个概念与『集成测试』中的『集成』是同一个概念。有些文章在解释『持续集成』这个概念的时候，并没有说清楚这个概念，有时候甚至误导读者，说『将代码集成到主干分支』，这样的说法是不对的。</p>
+<p>如果只有一个系统，那么久不存在『集成』这一个步骤，但是『持续集成』这个做法还是可以应用其中的，因为『持续集成』的精髓不在于『集成』，而在于『持续』，而我所理解的『持续』，就是将一些重复的操作自动化，然后频繁地触发这个自动化过程。</p>
+<p>所以，结合上面提到的瀑布模型的几个阶段，以及『持续集成』这个名字，图2.1应该改为这样：</p>
+<p><img src="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation-2.png" alt="图2.2 持续集成概念示意图之二"><br>图2.2 持续集成概念示意图之二</p>
+<p>从上图中看来，持续集成应该至少包括以下几部分:</p>
 <ul>
 <li>自动化构建</li>
-<li>单元测试</li>
-<li>部署</li>
-<li>验收测试</li>
+<li>自动化测试</li>
+<li>自动发布</li>
 </ul>
-<a id="more"></a>
-<h2 id="2-1-持续集成"><a href="#2-1-持续集成" class="headerlink" title="2.1    持续集成"></a>2.1    持续集成</h2><p><img src="http://7xsn88.com1.z0.glb.clouddn.com/image/f/82/6ce32afc227588c4b60b143501dcd.png" alt=""></p>
+<p><img src="http://7xsn88.com1.z0.glb.clouddn.com/image/f/82/6ce32afc227588c4b60b143501dcd.png" alt="图2.3 持续集成阶段示意图"><br>图2.3 持续集成阶段示意图</p>
+<p>维基百科的定义（<a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank" rel="external">Continuous integration - Wikipedia</a>）：</p>
+<blockquote>
 <p>在软件工程里，持续集成（Continuous Integration, CI）是指这样的一种实践：在一天里多次将所有开发人员的代码合并到一个共享的主干里，每次合并都会触发持续集成服务器进行自动构建，这个过程包括了编译、单元测试、集成测试、质量分析等步骤，结果只有两个：成功或者失败。如果得到失败的结果，说明有人提交了不合格的代码，这就能及时发现问题。</p>
+</blockquote>
+<p>(TODO 引出反馈途径)</p>
 <h3 id="2-1-1-自动化构建"><a href="#2-1-1-自动化构建" class="headerlink" title="2.1.1 自动化构建"></a>2.1.1 自动化构建</h3><p>（TODO）</p>
 <h3 id="2-1-2-自动化测试"><a href="#2-1-2-自动化测试" class="headerlink" title="2.1.2    自动化测试"></a>2.1.2    自动化测试</h3><p>自动化测试是持续集成必不可少的一部分，基本上，没有自动化测试的持续集成，都很难称之为真正的持续集成。我们希望持续集成能够尽早的暴露问题，但这远非配置一个 Hudson/Jenkins服务器那么简单，只有真正用心编写了较为完整的测试用例，并一直维护它们，持续集成才能孜孜不倦地运行测试并第一时间报告问题。</p>
 <p>自动化测试还包括单元测试、集成测试、系统测试、验收测试、性能测试等，在不同的场景下，它们都能为软件开发带来极大的价值。</p>
@@ -546,6 +559,8 @@
 <li>Continuous delivery – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Continuous_delivery" target="_blank" rel="external">https://en.wikipedia.org/wiki/Continuous_delivery</a></li>
 <li>Build automation – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Build_automation" target="_blank" rel="external">https://en.wikipedia.org/wiki/Build_automation</a></li>
 <li>List of build automation software – Wikipedia<br><a href="https://en.wikipedia.org/wiki/List_of_build_automation_software" target="_blank" rel="external">https://en.wikipedia.org/wiki/List_of_build_automation_software</a></li>
+<li>Software development process - Wikipedia<br><a href="https://en.wikipedia.org/wiki/Software_development_process" target="_blank" rel="external">https://en.wikipedia.org/wiki/Software_development_process</a></li>
+<li>System integration - Wikipedia<br><a href="https://en.wikipedia.org/wiki/System_integration" target="_blank" rel="external">https://en.wikipedia.org/wiki/System_integration</a></li>
 </ol>
 
       
@@ -576,9 +591,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/持续集成/" rel="tag"># 持续集成</a>
-          
             <a href="/tags/软件工程/" rel="tag"># 软件工程</a>
+          
+            <a href="/tags/持续集成/" rel="tag"># 持续集成</a>
           
         </div>
       
