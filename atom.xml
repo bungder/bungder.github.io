@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2017-07-30T15:00:23.000Z</updated>
+  <updated>2017-08-20T08:02:49.000Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -14,44 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>软件工程开发模型简述</title>
-    <link href="http://bungder.github.io/2017/07/30/software-engineering/"/>
-    <id>http://bungder.github.io/2017/07/30/software-engineering/</id>
-    <published>2017-07-29T16:41:48.000Z</published>
-    <updated>2017-07-30T15:00:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>软件工程开发模型其实就是展开开发工作的方法论，其重要性不言而喻。以前本科的时候学过一门课就叫《软件工程》，但是当时学的很多东西都忘了，就只记得一个瀑布模型。然而瀑布模型过于原始，如今敏捷方法大行其道，有必要理清一下它们之间的关系（别人早已理清了，是我自己需要理清^_^），了解敏捷方法的由来。</p>
-<p>维基百科上『软件工程』这一分类条目下的知识点总结如下：</p>
-<p><img src="http://otlnkjq1m.bkt.clouddn.com/software-engineering-model.jpg" alt=""></p>
-<p>本文主要就开发模型进行简单的总结。</p>
-<a id="more"></a>
-<h1 id="2-开发模型"><a href="#2-开发模型" class="headerlink" title="2 开发模型"></a>2 开发模型</h1><p>（TODO）</p>
-<h2 id="2-1-瀑布模型"><a href="#2-1-瀑布模型" class="headerlink" title="2.1 瀑布模型"></a>2.1 瀑布模型</h2><p>（TODO）</p>
-<h2 id="2-2-螺旋模型"><a href="#2-2-螺旋模型" class="headerlink" title="2.2 螺旋模型"></a>2.2 螺旋模型</h2><p>（TODO）</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实这也在情理之中。本科的时候最多也就写几个小项目玩玩，基本上就只有编码、单元测试两个环节，或许会有简单的需求分析和系统设计，但是存在感都比较弱，也就是说，在本科的时候，基本上缺乏软件工程的参与经验，既没有对此存在疑问，也意识不到其重要性。同时，这门课的老师也缺乏工程实施经验，走的路线基本就是本硕博读完进高校教书，对于软件项目开发这种与学术界关系不大的课题，也就只能照本宣科，台上台下都与『软件工程』没发生过什么实质性关系。因此，在现在看来，在本科开设软件工程这门课实在有点为时尚早，又或许是课程的形式不恰当。但是从另一个角度看，本科的学生本来就没有经历完整项目流程的机会（指规范的开发），而高校聘请业界工程师来讲课实施起来也有点问题，将来要成为软件工程师的学生又不可能不了解软件工程的知识，因此也就只好这样了。</p>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
-<li>瀑布模型 - 维基百科<br><a href="https://zh.wikipedia.org/wiki/瀑布模型" target="_blank" rel="external">https://zh.wikipedia.org/wiki/瀑布模型</a></li>
-<li>Waterfall model – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Waterfall_model" target="_blank" rel="external">https://en.wikipedia.org/wiki/Waterfall_model</a></li>
-<li>Software development process – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Software_development_process" target="_blank" rel="external">https://en.wikipedia.org/wiki/Software_development_process</a></li>
-<li>软件工程 - 维基百科<br><a href="https://zh.wikipedia.org/wiki/软件工程" target="_blank" rel="external">https://zh.wikipedia.org/wiki/软件工程</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h1&gt;&lt;p&gt;软件工程开发模型其实就是展开开发工作的方法论，其重要性不言而喻。以前本科的时候学过一门课就叫《软件工程》，但是当时学的很多东西都忘了，就只记得一个瀑布模型。然而瀑布模型过于原始，如今敏捷方法大行其道，有必要理清一下它们之间的关系（别人早已理清了，是我自己需要理清^_^），了解敏捷方法的由来。&lt;/p&gt;
-&lt;p&gt;维基百科上『软件工程』这一分类条目下的知识点总结如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://otlnkjq1m.bkt.clouddn.com/software-engineering-model.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;本文主要就开发模型进行简单的总结。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
-    
-  </entry>
   
   <entry>
     <title>持续集成简述</title>
@@ -302,9 +264,9 @@
     <link href="http://bungder.github.io/2017/07/24/REST/"/>
     <id>http://bungder.github.io/2017/07/24/REST/</id>
     <published>2017-07-24T13:05:13.000Z</published>
-    <updated>2017-08-10T13:50:25.000Z</updated>
+    <updated>2017-08-20T14:08:32.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远，而在书本以及网上大部分介绍RESTful的资料里，却都是这样的方案（URL命名风格、请求与响应的设计）。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
+    <content type="html"><![CDATA[<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派（死板），在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远，而在书本以及网上大部分介绍RESTful的资料里，却都是这样的方案（URL命名风格、请求与响应的设计）。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
 <h2 id="1-2-为什么采用REST"><a href="#1-2-为什么采用REST" class="headerlink" title="1.2    为什么采用REST"></a>1.2    为什么采用REST</h2><p>目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。</p>
 <p>另外，由于严格遵照HTTP协议进行数据返回，对于安全的接口，可以在返回的Header里设置缓存策略（接口安全性的概念在下文会解释）。</p>
 <a id="more"></a>
@@ -431,7 +393,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h1&gt;&lt;h2 id=&quot;1-1-撰写目的&quot;&gt;&lt;a href=&quot;#1-1-撰写目的&quot; class=&quot;headerlink&quot; title=&quot;1.1 撰写目的&quot;&gt;&lt;/a&gt;1.1 撰写目的&lt;/h2&gt;&lt;p&gt;本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派，在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远，而在书本以及网上大部分介绍RESTful的资料里，却都是这样的方案（URL命名风格、请求与响应的设计）。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。&lt;/p&gt;
+      &lt;h1 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1 概述&lt;/h1&gt;&lt;h2 id=&quot;1-1-撰写目的&quot;&gt;&lt;a href=&quot;#1-1-撰写目的&quot; class=&quot;headerlink&quot; title=&quot;1.1 撰写目的&quot;&gt;&lt;/a&gt;1.1 撰写目的&lt;/h2&gt;&lt;p&gt;本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派（死板），在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远，而在书本以及网上大部分介绍RESTful的资料里，却都是这样的方案（URL命名风格、请求与响应的设计）。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。&lt;/p&gt;
 &lt;h2 id=&quot;1-2-为什么采用REST&quot;&gt;&lt;a href=&quot;#1-2-为什么采用REST&quot; class=&quot;headerlink&quot; title=&quot;1.2    为什么采用REST&quot;&gt;&lt;/a&gt;1.2    为什么采用REST&lt;/h2&gt;&lt;p&gt;目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。&lt;/p&gt;
 &lt;p&gt;另外，由于严格遵照HTTP协议进行数据返回，对于安全的接口，可以在返回的Header里设置缓存策略（接口安全性的概念在下文会解释）。&lt;/p&gt;
     
