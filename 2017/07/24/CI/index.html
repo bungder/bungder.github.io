@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://7xsn88.com1.z0.glb.clouddn.com/image/e/bd/d757dd642e93e33fede310325b155.png">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/c/c3/Continuous_Delivery_process_diagram.svg">
 <meta property="og:image" content="http://7xsn88.com1.z0.glb.clouddn.com/image/0/3a/6b241b45b65eb7d77927619015d84.png">
-<meta property="og:updated_time" content="2017-08-20T08:02:49.000Z">
+<meta property="og:updated_time" content="2017-08-20T14:29:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="持续集成简述">
 <meta name="twitter:description" content="1    概述联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念图2.1 持续集成概念示意图之一 上图来源于谈谈持续集成，持续交付，持续部署之间的区别，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成">
@@ -454,15 +454,18 @@
 <li><p>自下而上（Bottom Up）<br>先测试低层次的单元，然后逐渐测试高层次的单元。</p>
 </li>
 </ol>
-<h2 id="2-2-持续交付"><a href="#2-2-持续交付" class="headerlink" title="2.2    持续交付"></a>2.2    持续交付</h2><p><img src="http://7xsn88.com1.z0.glb.clouddn.com/image/e/bd/d757dd642e93e33fede310325b155.png" alt=""></p>
+<h2 id="2-2-持续交付"><a href="#2-2-持续交付" class="headerlink" title="2.2    持续交付"></a>2.2    持续交付</h2><p><img src="http://7xsn88.com1.z0.glb.clouddn.com/image/e/bd/d757dd642e93e33fede310325b155.png" alt=""><br>图2.4 持续交付示意图</p>
 <p>持续交付（Continuous Delivery, CD）是一种软件工程的手段，让软件在短周期内产出，确保软件随时可以被可靠地发布。其目的在于更快、更频繁地构建、测试以及发布软件。通过加强对生产环境的应用进行渐进式更新，这种手段可以降低交付变更的成本与风险。一个简单直观的与可重复的部署过程对于持续交付来说是很重要的。</p>
 <h3 id="2-2-1-与DevOps的关系"><a href="#2-2-1-与DevOps的关系" class="headerlink" title="2.2.1 与DevOps的关系"></a>2.2.1 与DevOps的关系</h3><p>持续交付与DevOps的含义很相似，所以经常被混淆。但是它们是不同的两个概念。DevOps的范围更广，它以文化变迁为中心，特别是软件交付过程所涉及的多个团队之间的合作（开发、运维、QA、管理部门等），并且将软件交付的过程自动化。另一方面，持续交付是一种自动化交付的手段，关注点在于将不同的过程集中起来，并且更快、更频繁地执行这些过程。因此，DevOps可以是持续交付的一个产物，持续交付直接汇入DevOps。</p>
 <h3 id="2-2-2-与持续部署的关系"><a href="#2-2-2-与持续部署的关系" class="headerlink" title="2.2.2 与持续部署的关系"></a>2.2.2 与持续部署的关系</h3><p>有时候，持续交付也与持续部署混淆。持续部署意味着所有的变更都会被自动部署到生产环境中。持续交付意味着所有的变更都可以被部署到生产环境中，但是出于业务考虑，可以选择不部署。如果要实施持续部署，必须先实施持续交付。</p>
-<h3 id="2-2-3-原则"><a href="#2-2-3-原则" class="headerlink" title="2.2.3 原则"></a>2.2.3 原则</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Continuous_Delivery_process_diagram.svg" alt=""></p>
+<h3 id="2-2-3-原则"><a href="#2-2-3-原则" class="headerlink" title="2.2.3 原则"></a>2.2.3 原则</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Continuous_Delivery_process_diagram.svg" alt=""><br>图2.5 持续交付流水线示意图</p>
 <p>持续交付将部署流水线（<strong>deployment pipeline</strong>）这个老生常谈的概念看作一种简单的防错方法：一系列的确认。通过这些确认，一款软件必须遵循特定的路径来发布。每当有变更被提交到源码控制仓库中时，代码要首先进行编译（有必要的话），然后由构建服务器进行打包，接着由一些不同的技术来进行测试，最后才可以将代码标记为可发布的（releasable）。</p>
 <p>在一个持续交付环境中工作时，习惯了漫长开发周期的开发人员或许需要改变他们心态。任何代码提交在任何时间点都可能会向客户发布，明白这一点是很重要的。对于在早期提交尚未准备好让用户使用的代码，类似功能开关这样的模式是很有用的。使用NoSQL可以消除持续交付工作流中的数据迁移和模式变更的步骤、手工操作步骤以及异常情况。对于代码隔离的其他有用的技术——例如代码分支——在持续交付工作流中并未过时，但是必须加以修改以适应持续交付的原则。例如，运行多个长生命周期的代码分支是不实际的，因为一个可发布的artifact（不知道这词对应什么中文）如果要经历流水线的所有阶段，它必须从一个单独的分支中构建而来。</p>
-<h2 id="2-3-持续部署"><a href="#2-3-持续部署" class="headerlink" title="2.3    持续部署"></a>2.3    持续部署</h2><p>(TODO)</p>
-<p><img src="http://7xsn88.com1.z0.glb.clouddn.com/image/0/3a/6b241b45b65eb7d77927619015d84.png" alt=""></p>
+<h2 id="2-3-持续部署"><a href="#2-3-持续部署" class="headerlink" title="2.3    持续部署"></a>2.3    持续部署</h2><p><img src="http://7xsn88.com1.z0.glb.clouddn.com/image/0/3a/6b241b45b65eb7d77927619015d84.png" alt=""><br>图2.6 持续部署示意图</p>
+<p>如图所示，持续部署与持续交付之间的差异就是前者将部署自动化了。</p>
+<p>在持续交付的实践中，交付的目标是QA，但是实际上，软件最终是要交付到客户手上的。在SaaS领域里，持续部署采用得比较广泛，因为服务比较容易做到静默升级。</p>
+<p>采用持续部署的前提是自动化测试的覆盖率足够高。</p>
+<p>采用持续部署的好处是能减少运维的工作量，缩短新特性从开发到实际交付的周期。</p>
 <h1 id="3-代价与好处"><a href="#3-代价与好处" class="headerlink" title="3    代价与好处"></a>3    代价与好处</h1><h2 id="3-1-代价"><a href="#3-1-代价" class="headerlink" title="3.1    代价"></a>3.1    代价</h2><ol>
 <li>构造自动测试用例会耗费大量的工作，而且要去覆盖不断增加的新功能点，也要随着代码的改动去修改测试用例。<ul>
 <li>测试被视为软件开发的一种最佳实践。无论是否采用持续集成，在一些方法论里——例如测试驱动开发——自动化测试都是必不可少的一部分。</li>
@@ -596,6 +599,7 @@
 <li>System integration - Wikipedia<br><a href="https://en.wikipedia.org/wiki/System_integration" target="_blank" rel="external">https://en.wikipedia.org/wiki/System_integration</a></li>
 <li>Continuous Integration - Martin Fowler<br><a href="https://martinfowler.com/articles/continuousIntegration.html#PracticesOfContinuousIntegration" target="_blank" rel="external">https://martinfowler.com/articles/continuousIntegration.html#PracticesOfContinuousIntegration</a></li>
 <li>Integration Testing - Software Testing Fundamentals<br><a href="http://softwaretestingfundamentals.com/integration-testing/" target="_blank" rel="external">http://softwaretestingfundamentals.com/integration-testing/</a></li>
+<li>Practical continuous deployment: a guide to automated software delivery<br><a href="https://www.atlassian.com/blog/continuous-delivery/practical-continuous-deployment" target="_blank" rel="external">https://www.atlassian.com/blog/continuous-delivery/practical-continuous-deployment</a></li>
 </ol>
 
       
