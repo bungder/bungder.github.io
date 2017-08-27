@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2017-08-27T10:00:36.000Z</updated>
+  <updated>2017-08-27T11:56:23.000Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://bungder.github.io/2017/08/27/druid-monitor/"/>
     <id>http://bungder.github.io/2017/08/27/druid-monitor/</id>
     <published>2017-08-27T09:43:32.000Z</published>
-    <updated>2017-08-27T10:00:36.000Z</updated>
+    <updated>2017-08-27T11:56:23.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="1-普通的web监控"><a href="#1-普通的web监控" class="headerlink" title="1. 普通的web监控"></a>1. 普通的web监控</h1><p>阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：<a href="https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatFilter" target="_blank" rel="external">配置StatFilter · alibaba/driud wiki</a></p>
 <p>其实主要就是配置一个Servlet，但是github wiki上的做法只能在druid所在的项目中启用web服务的做法，在如今盛行的微服务架构中，很多时候druid所在的服务里并不提供web服务，这就需要额外的配置。其实druid本身也提供了这种功能，只是wiki里没有说。</p>
@@ -29,6 +29,7 @@
 <li>在启动服务的时候加上JVM启动参数（下文说）</li>
 <li>在远端启用web服务，配置StatViewServlet，在initParam中指定JMX地址</li>
 </ol>
+<a id="more"></a>
 <h2 id="1-1-JVM启动参数："><a href="#1-1-JVM启动参数：" class="headerlink" title="1.1 JVM启动参数："></a>1.1 JVM启动参数：</h2><blockquote>
 <p>-Djava.net.preferIPv4Stack=true<br>-Dcom.sun.management.jmxremote<br>-Djava.rmi.server.hostname=192.168.199.123<br>-Dcom.sun.management.jmxremote.port=9876<br>-Dcom.sun.management.jmxremote.authenticate=false<br>-Dcom.sun.management.jmxremote.ssl=false</p>
 </blockquote>
@@ -75,7 +76,13 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;1-普通的web监控&quot;&gt;&lt;a href=&quot;#1-普通的web监控&quot; class=&quot;headerlink&quot; title=&quot;1. 普通的web监控&quot;&gt;&lt;/a&gt;1. 普通的web监控&lt;/h1&gt;&lt;p&gt;阿里开源的连接池Druid自带了web监控的功能，具体的操作在其gith
+      &lt;h1 id=&quot;1-普通的web监控&quot;&gt;&lt;a href=&quot;#1-普通的web监控&quot; class=&quot;headerlink&quot; title=&quot;1. 普通的web监控&quot;&gt;&lt;/a&gt;1. 普通的web监控&lt;/h1&gt;&lt;p&gt;阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：&lt;a href=&quot;https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatFilter&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;配置StatFilter · alibaba/driud wiki&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;其实主要就是配置一个Servlet，但是github wiki上的做法只能在druid所在的项目中启用web服务的做法，在如今盛行的微服务架构中，很多时候druid所在的服务里并不提供web服务，这就需要额外的配置。其实druid本身也提供了这种功能，只是wiki里没有说。&lt;/p&gt;
+&lt;p&gt;druid本身可以通过启用JMX端口来将监控数据传输到远端进行处理，具体做法是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在启动服务的时候加上JVM启动参数（下文说）&lt;/li&gt;
+&lt;li&gt;在远端启用web服务，配置StatViewServlet，在initParam中指定JMX地址&lt;/li&gt;
+&lt;/ol&gt;
     
     </summary>
     
