@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="druid,连接池,监控," />
 
 
 
@@ -95,13 +95,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gordon">
-<meta property="og:url" content="http://bungder.github.io/index.html">
+<meta name="description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《阿里Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor 对于在同一个工程里进行监控和展示的情况不进">
+<meta name="keywords" content="druid,连接池,监控">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一次阿里Druid连接池监控改造">
+<meta property="og:url" content="http://bungder.github.io/2017/08/31/druid-monitor-remould/index.html">
 <meta property="og:site_name" content="Gordon">
+<meta property="og:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《阿里Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor 对于在同一个工程里进行监控和展示的情况不进">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-30T17:32:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gordon">
+<meta name="twitter:title" content="一次阿里Druid连接池监控改造">
+<meta name="twitter:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《阿里Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor 对于在同一个工程里进行监控和展示的情况不进">
 
 
 
@@ -129,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://bungder.github.io/"/>
+  <link rel="canonical" href="http://bungder.github.io/2017/08/31/druid-monitor-remould/"/>
 
 
 
 
 
-  <title>Gordon</title>
+  <title>一次阿里Druid连接池监控改造 | Gordon</title>
   
 
 
@@ -169,9 +174,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -288,9 +291,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -316,9 +319,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/31/druid-monitor-remould/" itemprop="url">一次阿里Druid连接池监控改造</a></h1>
+          <h1 class="post-title" itemprop="name headline">一次阿里Druid连接池监控改造</h1>
         
 
         <div class="post-meta">
@@ -350,6 +351,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> PV
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
 
@@ -365,9 +371,7 @@
       
 
       
-        
-          
-            <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>druid本身提供了监控功能，具体在我另一篇博文《<a href="/2017/08/27/druid-monitor/">阿里Druid连接池监控</a>》里有介绍。当时提到有以下缺陷：</p>
+        <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>druid本身提供了监控功能，具体在我另一篇博文《<a href="/2017/08/27/druid-monitor/">阿里Druid连接池监控</a>》里有介绍。当时提到有以下缺陷：</p>
 <ol>
 <li>无法灵活监控多个目标</li>
 <li>切换环境不方便</li>
@@ -445,401 +449,76 @@
 <p>第五点，根据配置信息做个汇总，然后给个页面列出来就可以。</p>
 <h1 id="4-实现"><a href="#4-实现" class="headerlink" title="4 实现"></a>4 实现</h1><p>请移步我github的仓库：<a href="https://github.com/bungder/druid-aggregated-monitor" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor</a></p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/08/27/druid-monitor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/27/druid-monitor/" itemprop="url">阿里Druid连接池监控</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T17:43:32+08:00">
-                2017-08-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/druid/" rel="tag"># druid</a>
           
-            
+            <a href="/tags/连接池/" rel="tag"># 连接池</a>
           
-
+            <a href="/tags/监控/" rel="tag"># 监控</a>
           
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <h1 id="1-普通的web监控"><a href="#1-普通的web监控" class="headerlink" title="1. 普通的web监控"></a>1. 普通的web监控</h1><p>阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：<a href="https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatFilter" target="_blank" rel="external">配置StatFilter · alibaba/driud wiki</a></p>
-<p>其实主要就是配置一个Servlet，但是github wiki上的做法只能在druid所在的项目中启用web服务的做法，在如今盛行的微服务架构中，很多时候druid所在的服务里并不提供web服务，这就需要额外的配置。其实druid本身也提供了这种功能，只是wiki里没有说。</p>
-<p>druid本身可以通过启用JMX端口来将监控数据传输到远端进行处理，具体做法是：</p>
-<ol>
-<li>在启动服务的时候加上JVM启动参数（下文说）</li>
-<li>在远端启用web服务，配置StatViewServlet，在initParam中指定JMX地址</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/27/druid-monitor/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/27/druid-monitor/" rel="next" title="阿里Druid连接池监控">
+                <i class="fa fa-chevron-left"></i> 阿里Druid连接池监控
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/07/24/CI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/24/CI/" itemprop="url">持续集成简述</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T21:51:48+08:00">
-                2017-07-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>互联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
-<p>本文主要介绍持续集成的概念以及一些工具与实践。</p>
-<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2    概念"></a>2    概念</h1><p><img src="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation.png" alt="图2.1 持续集成概念示意图之一"><br>图2.1 持续集成概念示意图之一</p>
-<p>上图来源于<a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="external">谈谈持续集成，持续交付，持续部署之间的区别</a>，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成密切相关的概念还有持续交付、持续部署，因此在下文将会就这三个概念进行阐述。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/24/CI/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/07/24/REST/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/24/REST/" itemprop="url">一种RESTful接口的约定</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T21:05:13+08:00">
-                2017-07-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派（死板），在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远，而在书本以及网上大部分介绍RESTful的资料里，却都是这样的方案（URL命名风格、请求与响应的设计）。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
-<h2 id="1-2-为什么采用REST"><a href="#1-2-为什么采用REST" class="headerlink" title="1.2    为什么采用REST"></a>1.2    为什么采用REST</h2><p>目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。</p>
-<p>另外，由于严格遵照HTTP协议进行数据返回，对于安全的接口，可以在返回的Header里设置缓存策略（接口安全性的概念在下文会解释）。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/24/REST/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -847,6 +526,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -867,8 +550,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg"
@@ -928,6 +620,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-原理分析"><span class="nav-number">2.</span> <span class="nav-text">2. 原理分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-改进思路"><span class="nav-number">3.</span> <span class="nav-text">3. 改进思路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-思路一：动态创建并注册StatViewServlet"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 思路一：动态创建并注册StatViewServlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-思路二：修改StatViewServlet的机制"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 思路二：修改StatViewServlet的机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-实现"><span class="nav-number">4.</span> <span class="nav-text">4 实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1060,10 +768,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 

@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://7xsn88.com1.z0.glb.clouddn.com/image/e/bd/d757dd642e93e33fede310325b155.png">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/c/c3/Continuous_Delivery_process_diagram.svg">
 <meta property="og:image" content="http://7xsn88.com1.z0.glb.clouddn.com/image/0/3a/6b241b45b65eb7d77927619015d84.png">
-<meta property="og:updated_time" content="2017-08-27T06:45:44.000Z">
+<meta property="og:updated_time" content="2017-08-28T12:47:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="持续集成简述">
 <meta name="twitter:description" content="1    概述互联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念图2.1 持续集成概念示意图之一 上图来源于谈谈持续集成，持续交付，持续部署之间的区别，这图很直观地描述了持续集成相关的概念之间的关系，与持续集">
@@ -460,7 +460,7 @@
 <h3 id="2-2-2-与持续部署的关系"><a href="#2-2-2-与持续部署的关系" class="headerlink" title="2.2.2 与持续部署的关系"></a>2.2.2 与持续部署的关系</h3><p>有时候，持续交付也与持续部署混淆。持续部署意味着所有的变更都会被自动部署到生产环境中。持续交付意味着所有的变更都可以被部署到生产环境中，但是出于业务考虑，可以选择不部署。如果要实施持续部署，必须先实施持续交付。</p>
 <h3 id="2-2-3-原则"><a href="#2-2-3-原则" class="headerlink" title="2.2.3 原则"></a>2.2.3 原则</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Continuous_Delivery_process_diagram.svg" alt=""><br>图2.5 持续交付流水线示意图</p>
 <p>持续交付将部署流水线（<strong>deployment pipeline</strong>）这个老生常谈的概念看作一种简单的防错方法：一系列的确认。通过这些确认，一款软件必须遵循特定的路径来发布。每当有变更被提交到源码控制仓库中时，代码要首先进行编译（有必要的话），然后由构建服务器进行打包，接着由一些不同的技术来进行测试，最后才可以将代码标记为可发布的（releasable）。</p>
-<p>在一个持续交付环境中工作时，习惯了漫长开发周期的开发人员或许需要改变他们心态。任何代码提交在任何时间点都可能会向客户发布，明白这一点是很重要的。对于在早期提交尚未准备好让用户使用的代码，类似功能开关这样的模式是很有用的。使用NoSQL可以消除持续交付工作流中的数据迁移和模式变更的步骤、手工操作步骤以及异常情况。对于代码隔离的其他有用的技术——例如代码分支——在持续交付工作流中并未过时，但是必须加以修改以适应持续交付的原则。例如，运行多个长生命周期的代码分支是不实际的，因为一个可发布的artifact（不知道这词对应什么中文）如果要经历流水线的所有阶段，它必须从一个单独的分支中构建而来。</p>
+<p>在一个持续交付环境中工作时，习惯了漫长开发周期的开发人员或许需要改变他们心态。任何代码提交在任何时间点都可能会向客户发布，明白这一点是很重要的。对于在早期提交尚未准备好让用户使用的代码，类似功能开关这样的模式是很有用的。使用NoSQL可以消除持续交付工作流中的数据迁移和模式变更的步骤、手工操作步骤以及异常情况。对于代码隔离的其他有用的技术——例如代码分支——在持续交付工作流中并未过时，但是必须加以修改以适应持续交付的原则。例如，运行多个长生命周期的代码分支是不实际的，因为一个可发布的产物如果要经历流水线的所有阶段，它必须从一个单独的分支中构建而来。</p>
 <h2 id="2-3-持续部署"><a href="#2-3-持续部署" class="headerlink" title="2.3    持续部署"></a>2.3    持续部署</h2><p><img src="http://7xsn88.com1.z0.glb.clouddn.com/image/0/3a/6b241b45b65eb7d77927619015d84.png" alt=""><br>图2.6 持续部署示意图</p>
 <p>如图所示，持续部署与持续交付之间的差异就是前者将部署自动化了。</p>
 <p>在持续交付的实践中，交付的目标是QA，但是实际上，软件最终是要交付到客户手上的。在SaaS领域里，持续部署采用得比较广泛，因为服务比较容易做到静默升级。</p>
@@ -730,7 +730,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
