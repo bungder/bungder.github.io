@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
+<meta name="description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor 对应本文的版本，已经打了tag：https:/">
 <meta name="keywords" content="druid,连接池,监控">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Druid连接池监控的一次改造">
 <meta property="og:url" content="http://bungder.github.io/2017/08/31/druid-monitor-remould/index.html">
 <meta property="og:site_name" content="Gordon">
-<meta property="og:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
+<meta property="og:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor 对应本文的版本，已经打了tag：https:/">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-31T02:39:55.000Z">
+<meta property="og:updated_time" content="2017-08-31T02:47:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Druid连接池监控的一次改造">
-<meta name="twitter:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
+<meta name="twitter:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor 对应本文的版本，已经打了tag：https:/">
 
 
 
@@ -378,6 +378,7 @@
 <li>JMX重连不会成功</li>
 </ol>
 <p>因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：<br><a href="https://github.com/bungder/druid-aggregated-monitor" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor</a></p>
+<p>对应本文的版本，已经打了tag：<br><a href="https://github.com/bungder/druid-aggregated-monitor/releases/tag/0.0.1" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor/releases/tag/0.0.1</a></p>
 <a id="more"></a>
 <p>对于在同一个工程里进行监控和展示的情况不进行考虑，具体原因见刚刚提到的博文。</p>
 <h1 id="2-原理分析"><a href="#2-原理分析" class="headerlink" title="2. 原理分析"></a>2. 原理分析</h1><p>首先，监控数据的展示是通过<code>com.alibaba.druid.support.http.StatViewServlet</code>实现的，将其源码贴上来分析：</p>
@@ -432,7 +433,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> javax.servlet.ServletContext;</div><div class="line"><span class="keyword">import</span> javax.servlet.ServletContextEvent;</div><div class="line"><span class="keyword">import</span> javax.servlet.ServletContextListener;</div><div class="line"><span class="keyword">import</span> javax.servlet.ServletRegistration;</div><div class="line"><span class="keyword">import</span> javax.servlet.annotation.WebListener;</div><div class="line"></div><div class="line"><span class="meta">@WebListener</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServletContextListenerImpl</span> <span class="keyword">implements</span> <span class="title">ServletContextListener</span> </span>&#123;</div><div class="line"> </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextInitialized</span><span class="params">(<span class="keyword">final</span> ServletContextEvent sce)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> ServletContext servletContext = sce.getServletContext();</div><div class="line">        <span class="keyword">final</span> ServletRegistration.Dynamic dynamic = servletContext.addServlet(<span class="string">"Example Servlet"</span>, ExampleServlet.class);</div><div class="line">        dynamic.addMapping(<span class="string">"/"</span>);</div><div class="line"> </div><div class="line">        <span class="keyword">final</span> Map&lt;String, ? extends ServletRegistration&gt; map = servletContext.getServletRegistrations();</div><div class="line">        <span class="keyword">for</span> (String key : map.keySet()) &#123;</div><div class="line">            servletContext.log(<span class="string">"Registered Servlet: "</span> + map.get(key).getName());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDestroyed</span><span class="params">(<span class="keyword">final</span> ServletContextEvent sce)</span> </span>&#123;</div><div class="line">        <span class="comment">//NO-OP</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
 <p>主要就是实现<code>javax.servlet.ServletContextListener</code>，通过<code>javax.servlet.ServletContextEvent</code>实例获取<code>javax.servlet.ServletContext</code>实例，然后调用它的方法去注册新的servlet。</p>
 <p>看上去好像可行的样子，但是在实际运行起来之后，在这一行报错了：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">final</span> ServletRegistration.Dynamic dynamic = servletContext.addServlet(<span class="string">"Example Servlet"</span>, ExampleServlet.class);</div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> ServletRegistration.Dynamic dynamic = servletContext.addServlet(<span class="string">"Example Servlet"</span>, ExampleServlet.class);</div></pre></td></tr></table></figure>
 <p>错误信息没有记录下来，但是意思就是说这个操作是不支持的，反正就是没戏。具体为什么，还需要进一步了解。</p>
 <h2 id="3-2-思路二：修改StatViewServlet的机制"><a href="#3-2-思路二：修改StatViewServlet的机制" class="headerlink" title="3.2 思路二：修改StatViewServlet的机制"></a>3.2 思路二：修改StatViewServlet的机制</h2><p>在第一个思路走不通之后，只能从其工作机制上入手。其原理分析已经在上文给出。</p>
 <p>因为只要有JMX的连接就可以获取数据了，所以关键在于以下几点：</p>
@@ -446,7 +447,7 @@
 <p>对于第一点，创建jmx连接只要有jmxUrl就够了，所以很容易做到，至于与请求关联起来，其实就是从请求的url里提取特征，用于表示不同的监控对象，然后将此特征映射到对应的jmx连接即可。</p>
 <p>对于第二点，这其实就是普通的读取、解析配置，然后用配置信息去初始化jmx连接（当然还有登录名、密码和黑白名单等）。</p>
 <p>第三点，转下弯，原有的逻辑是将url直接映射为资源文件，只要在这中间加一层解析即可。</p>
-<p>第四点，简单的方案是配置多个配置文件，根据不同的环境打不同的包。但是这种做法不灵活，最好还是做成注册中心的形式，被监控对象启动的时候网注册中心写入信息，这边从注册中心读，还有下线机制。但是这种做法工作量大，而且要改被监控的乙方，容易引入bug。要不就与配置中心集成，这样就只需改动web监控一端即可。这里的配置方案有多重，很适合采用SPI。</p>
+<p>第四点，简单的方案是配置多个配置文件，根据不同的环境打不同的包。但是这种做法不灵活，最好还是做成注册中心的形式，被监控对象启动的时候网注册中心写入信息，这边从注册中心读，还有下线机制。但是这种做法工作量大，而且要改被监控的一方，容易引入bug。要不就与配置中心集成，这样就只需改动web监控一端即可。这里的配置方案有多重，很适合采用SPI。</p>
 <p>第五点，根据配置信息做个汇总，然后给个页面列出来就可以。</p>
 <h1 id="4-实现"><a href="#4-实现" class="headerlink" title="4 实现"></a>4 实现</h1><p>请移步我github的仓库：<a href="https://github.com/bungder/druid-aggregated-monitor" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor</a></p>
 
