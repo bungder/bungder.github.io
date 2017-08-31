@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Gordon">
 <meta property="og:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor 对应本文的版本，已经打了tag：https:/">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-31T02:47:48.000Z">
+<meta property="og:updated_time" content="2017-08-31T09:02:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Druid连接池监控的一次改造">
 <meta name="twitter:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor 对应本文的版本，已经打了tag：https:/">
@@ -449,7 +449,9 @@
 <p>第三点，转下弯，原有的逻辑是将url直接映射为资源文件，只要在这中间加一层解析即可。</p>
 <p>第四点，简单的方案是配置多个配置文件，根据不同的环境打不同的包。但是这种做法不灵活，最好还是做成注册中心的形式，被监控对象启动的时候网注册中心写入信息，这边从注册中心读，还有下线机制。但是这种做法工作量大，而且要改被监控的一方，容易引入bug。要不就与配置中心集成，这样就只需改动web监控一端即可。这里的配置方案有多重，很适合采用SPI。</p>
 <p>第五点，根据配置信息做个汇总，然后给个页面列出来就可以。</p>
-<h1 id="4-实现"><a href="#4-实现" class="headerlink" title="4 实现"></a>4 实现</h1><p>请移步我github的仓库：<a href="https://github.com/bungder/druid-aggregated-monitor" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor</a></p>
+<h1 id="4-实现"><a href="#4-实现" class="headerlink" title="4 实现"></a>4 实现</h1><p>上文提及的问题在这里基本上都解决了，思路都讲清楚了，实现就不再重复讲。请移步我github的仓库：<a href="https://github.com/bungder/druid-aggregated-monitor" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor</a></p>
+<p>在这里提提失败重连的问题</p>
+<h2 id="4-1重连失败的问题"><a href="#4-1重连失败的问题" class="headerlink" title="4.1重连失败的问题"></a>4.1重连失败的问题</h2><p>其重连失败的问题，在debug的时候发现其实并没有重连，它重连的逻辑是conn为null，但是实际上conn初始化之后就不会为null了，但是当连接失效之后，里面的<code>terminated</code>属性为<code>true</code>，而<code>JmxMBeanServerConnection</code>是一个<code>interface</code>，本身没定义操作这个属性的方法运行时的实际类型并不确定是否总是某个实现类型，所以也<br>不好去强转类型进行操作。但是可以利用它本身的逻辑，既然它触发重连的条件是conn为null，我就将它设成null就好了。当conn不为null但是获取数据又出错的时候，就可以判断连接有问题，不妨触发重试，即使这种情况下不一定是连接失效了，但是正常情况下不会出现这种现象，就将其当成是连接失效也无妨。</p>
 
       
     </div>
@@ -650,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-原理分析"><span class="nav-number">2.</span> <span class="nav-text">2. 原理分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-改进思路"><span class="nav-number">3.</span> <span class="nav-text">3. 改进思路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-思路一：动态创建并注册StatViewServlet"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 思路一：动态创建并注册StatViewServlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-思路二：修改StatViewServlet的机制"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 思路二：修改StatViewServlet的机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-实现"><span class="nav-number">4.</span> <span class="nav-text">4 实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-原理分析"><span class="nav-number">2.</span> <span class="nav-text">2. 原理分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-改进思路"><span class="nav-number">3.</span> <span class="nav-text">3. 改进思路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-思路一：动态创建并注册StatViewServlet"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 思路一：动态创建并注册StatViewServlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-思路二：修改StatViewServlet的机制"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 思路二：修改StatViewServlet的机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-实现"><span class="nav-number">4.</span> <span class="nav-text">4 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1重连失败的问题"><span class="nav-number">4.1.</span> <span class="nav-text">4.1重连失败的问题</span></a></li></ol></li></ol></div>
             
 
           </div>
