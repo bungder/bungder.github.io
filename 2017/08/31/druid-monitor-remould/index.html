@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《阿里Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
+<meta name="description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
 <meta name="keywords" content="druid,连接池,监控">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一次阿里Druid连接池监控改造">
+<meta property="og:title" content="Druid连接池监控的一次改造">
 <meta property="og:url" content="http://bungder.github.io/2017/08/31/druid-monitor-remould/index.html">
 <meta property="og:site_name" content="Gordon">
-<meta property="og:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《阿里Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
+<meta property="og:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-30T17:33:53.000Z">
+<meta property="og:updated_time" content="2017-08-31T02:39:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一次阿里Druid连接池监控改造">
-<meta name="twitter:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《阿里Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
+<meta name="twitter:title" content="Druid连接池监控的一次改造">
+<meta name="twitter:description" content="1. 背景druid本身提供了监控功能，具体在我另一篇博文《Druid连接池监控》里有介绍。当时提到有以下缺陷：  无法灵活监控多个目标 切换环境不方便 JMX重连不会成功  因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：https://github.com/bungder/druid-aggregated-monitor">
 
 
 
@@ -140,7 +140,7 @@
 
 
 
-  <title>一次阿里Druid连接池监控改造 | Gordon</title>
+  <title>Druid连接池监控的一次改造 | Gordon</title>
   
 
 
@@ -319,7 +319,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一次阿里Druid连接池监控改造</h1>
+          <h1 class="post-title" itemprop="name headline">Druid连接池监控的一次改造</h1>
         
 
         <div class="post-meta">
@@ -371,7 +371,7 @@
       
 
       
-        <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>druid本身提供了监控功能，具体在我另一篇博文《<a href="/2017/08/27/druid-monitor/">阿里Druid连接池监控</a>》里有介绍。当时提到有以下缺陷：</p>
+        <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>druid本身提供了监控功能，具体在我另一篇博文《<a href="/2017/08/27/druid-monitor/">Druid连接池监控</a>》里有介绍。当时提到有以下缺陷：</p>
 <ol>
 <li>无法灵活监控多个目标</li>
 <li>切换环境不方便</li>
@@ -495,8 +495,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/27/druid-monitor/" rel="next" title="阿里Druid连接池监控">
-                <i class="fa fa-chevron-left"></i> 阿里Druid连接池监控
+              <a href="/2017/08/27/druid-monitor/" rel="next" title="Druid连接池监控">
+                <i class="fa fa-chevron-left"></i> Druid连接池监控
               </a>
             
           </div>

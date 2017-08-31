@@ -318,7 +318,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/31/druid-monitor-remould/" itemprop="url">一次阿里Druid连接池监控改造</a></h1>
+                <a class="post-title-link" href="/2017/08/31/druid-monitor-remould/" itemprop="url">Druid连接池监控的一次改造</a></h1>
         
 
         <div class="post-meta">
@@ -366,7 +366,7 @@
 
       
         
-          <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>druid本身提供了监控功能，具体在我另一篇博文《<a href="/2017/08/27/druid-monitor/">阿里Druid连接池监控</a>》里有介绍。当时提到有以下缺陷：</p>
+          <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>druid本身提供了监控功能，具体在我另一篇博文《<a href="/2017/08/27/druid-monitor/">Druid连接池监控</a>》里有介绍。当时提到有以下缺陷：</p>
 <ol>
 <li>无法灵活监控多个目标</li>
 <li>切换环境不方便</li>
@@ -440,7 +440,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/27/druid-monitor/" itemprop="url">阿里Druid连接池监控</a></h1>
+                <a class="post-title-link" href="/2017/08/27/druid-monitor/" itemprop="url">Druid连接池监控</a></h1>
         
 
         <div class="post-meta">
@@ -488,7 +488,7 @@
 
       
         
-          <h1 id="1-普通的web监控"><a href="#1-普通的web监控" class="headerlink" title="1. 普通的web监控"></a>1. 普通的web监控</h1><p>阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：<a href="https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatFilter" target="_blank" rel="external">配置StatFilter · alibaba/driud wiki</a></p>
+          <h1 id="1-普通的web监控"><a href="#1-普通的web监控" class="headerlink" title="1. 普通的web监控"></a>1. 普通的web监控</h1><p>阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：<a href="https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE" target="_blank" rel="external">配置_StatViewServlet配置 · alibaba/driud wiki</a></p>
 <p>其实主要就是配置一个Servlet，但是github wiki上的做法只能在druid所在的项目中启用web服务的做法，在如今盛行的微服务架构中，很多时候druid所在的服务里并不提供web服务，这就需要额外的配置。其实druid本身也提供了这种功能，只是wiki里没有说。</p>
 <p>druid本身可以通过启用JMX端口来将监控数据传输到远端进行处理，具体做法是：</p>
 <ol>
