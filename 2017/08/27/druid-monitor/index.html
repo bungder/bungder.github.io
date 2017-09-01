@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/druid-monitor.png">
 <meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/JProfiler8-RecordedObjects.jpg">
-<meta property="og:updated_time" content="2017-08-31T02:39:50.000Z">
+<meta property="og:updated_time" content="2017-09-01T13:49:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Druid连接池监控">
 <meta name="twitter:description" content="1. 普通的web监控阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：配置_StatViewServlet配置 · alibaba/driud wiki 其实主要就是配置一个Servlet，但是github wiki上的做法只能在druid所在的项目中启用web服务的做法，在如今盛行的微服务架构中，很多时候druid所在的服务里并不提供web服务，">
@@ -219,6 +219,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
           </a>
         </li>
       
@@ -399,10 +409,10 @@
 <h2 id="1-3-查看监控数据"><a href="#1-3-查看监控数据" class="headerlink" title="1.3 查看监控数据"></a>1.3 查看监控数据</h2><p>上面的都配置好之后，启动服务，等服务启动成功之后，启动远端的web服务，然后访问web服务的<code>/druid</code>目录（与上面配置的匹配即可），例如在我本地起的：<code>http://127.0.0.1:8080/druid</code></p>
 <p><img src="http://otlnkjq1m.bkt.clouddn.com/druid-monitor.png" alt=""></p>
 <h2 id="1-4-缺陷"><a href="#1-4-缺陷" class="headerlink" title="1.4 缺陷"></a>1.4 缺陷</h2><ol>
-<li>这种做法是一对一的，也就是一个druid连接池实例必须对应一个StatViewServlet，一个StatViewServlet也只能队一行一个druid实例。</li>
+<li>这种做法是一对一的，也就是一个druid连接池实例必须对应一个StatViewServlet，一个StatViewServlet也只能对应一个druid实例。</li>
 <li>切换环境不方便</li>
 <li>JMX重连不会成功<ul>
-<li>虽然远端会有重连机制，但是在服务重启之后，重连总是报Connection refused，只能将远端的web服务重启才能成功连上</li>
+<li>虽然远端会有重连机制，但是在服务重启之后，重连总是报Connection refused，只能将远端的web服务重启才能成功连上（后来发现这其实没有重连，报错只是使用一个已经terminated的连接获取数据报错，具体见下一篇博文）</li>
 </ul>
 </li>
 </ol>
