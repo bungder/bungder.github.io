@@ -7,7 +7,7 @@
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -151,7 +151,7 @@
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
-  </script>
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -169,7 +169,7 @@
     
   
 
-  <div class="container sidebar-position-left 
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
    page-home 
  ">
     <div class="headband"></div>
@@ -299,6 +299,251 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gordon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gordon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/10/jvm-loading-linking-initializing/" itemprop="url">JVM加载、启动和初始化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T01:08:12+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。</p>
+<p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
+<hr>
+<ul>
+<li><p><strong>加载</strong>是这样一个过程：寻找一个特定名称的class或者interface的二进制表达形式（binary representation），然后从这个二进制表达形式中创建出一个class或者interface。</p>
+</li>
+<li><p><strong>链接</strong>是这样一个过程：取得class或者interface，然后将其结合到JVM的运行时状态，使得它可以被执行。</p>
+</li>
+<li><p><strong>初始化</strong>一个class或者interface的过程就是执行这个class或者interface的初始化方法<code>&lt;clinit&gt;</code>的过程。</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/10/jvm-loading-linking-initializing/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2018/03/10/java-class-file-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gordon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gordon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/10/java-class-file-format/" itemprop="url">Java class文件格式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T01:02:29+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。</p>
+<hr>
+<p>每一个class文件都包含了一个单独的class或者interface的定义。尽管一个class或者interface并不是有一个以文件形式存在的外部表达，但是下面还是通俗地将class或interface的任何有效表达称为类文件格式（<em>the class file format</em>）。</p>
+<p>一个类文件由一个<code>8位字节流</code>组成。 所有的16位，32位和64位量分别通过读取2、4、8个连续的8位字节来构造。 多字节数据项总是以<code>big-endian顺序</code>存储，其中高字节排在第一位。 在Java SE平台中，此格式由接口<code>java.io.DataInput</code>和<code>java.io.DataOutput</code>以及类如<code>java.io.DataInputStream</code>和<code>java.io.DataOutputStream</code>支持。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/10/java-class-file-format/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -828,7 +1073,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -841,7 +1086,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -890,7 +1135,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -900,6 +1145,8 @@
 <center>
     <a href="mailto:bungderblog@163.com?subject=From GithubPages">联系我</a>
 </center>
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
 
 
         
@@ -1361,7 +1608,7 @@
         onPopupClose();
       }
     });
-  </script>
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2017-09-20T08:31:27.000Z</updated>
+  <updated>2018-03-09T17:26:59.348Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -14,6 +14,536 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM加载、启动和初始化</title>
+    <link href="http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/"/>
+    <id>http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/</id>
+    <published>2018-03-09T17:08:12.000Z</published>
+    <updated>2018-03-09T17:26:59.348Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。</p>
+<p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
+<hr>
+<ul>
+<li><p><strong>加载</strong>是这样一个过程：寻找一个特定名称的class或者interface的二进制表达形式（binary representation），然后从这个二进制表达形式中创建出一个class或者interface。</p>
+</li>
+<li><p><strong>链接</strong>是这样一个过程：取得class或者interface，然后将其结合到JVM的运行时状态，使得它可以被执行。</p>
+</li>
+<li><p><strong>初始化</strong>一个class或者interface的过程就是执行这个class或者interface的初始化方法<code>&lt;clinit&gt;</code>的过程。</p>
+</li>
+</ul>
+<a id="more"></a>
+<h1 id="1-运行时常量池（Run-Time-Constant-Pool）"><a href="#1-运行时常量池（Run-Time-Constant-Pool）" class="headerlink" title="1 运行时常量池（Run-Time Constant Pool）"></a>1 运行时常量池（Run-Time Constant Pool）</h1><p>在class或interface被创建的时候，用二进制形式的class文件中的<code>constant_pool</code>表来构造运行时常量池。运行时常量池中的所有引用最初都是符号引用。运行时常量池中的符号引用来自二进制表达形式中的以下结构：</p>
+<table>
+<thead>
+<tr>
+<th>Symbolic Reference to</th>
+<th>Structure in class file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td>CONSTANT_Class_info</td>
+</tr>
+<tr>
+<td>field</td>
+<td>CONSTANT_Fieldref_info</td>
+</tr>
+<tr>
+<td>class method</td>
+<td>CONSTANT_Methodref_info</td>
+</tr>
+<tr>
+<td>interface method</td>
+<td>CONSTANT_InterfaceMethodref_info</td>
+</tr>
+<tr>
+<td>method handle</td>
+<td>CONSTANT_MethodHandle_info</td>
+</tr>
+<tr>
+<td>method type</td>
+<td>CONSTANT_MethodType_info</td>
+</tr>
+<tr>
+<td>call site specifier</td>
+<td>CONSTANT_InvokeDynamic_info</td>
+</tr>
+</tbody>
+</table>
+<p>另外，某些不是符号引用的运行时值则来自<code>constant_pool</code>表中的以下结构：</p>
+<ul>
+<li>字符串字面量  <code>CONSTANT_String_info</code></li>
+<li>运行时常量值 <code>CONSTANT_Integer_info</code> <code>CONSTANT_Float_info</code> <code>CONSTANT_Long_info</code> <code>CONSTANT_Double_info</code></li>
+</ul>
+<p><code>constant_pool</code>里剩下的结构则只会被间接使用：</p>
+<ul>
+<li><code>CONSTANT_NameAndType_info</code></li>
+<li><code>CONSTANT_Utf8_info</code></li>
+</ul>
+<h1 id="2-JVM启动"><a href="#2-JVM启动" class="headerlink" title="2 JVM启动"></a>2 JVM启动</h1><p>JVM通过使用引导类加载器（<strong>bootstrap class loader</strong>）创建初始类来启动，初始类的指定方式与实现相关。</p>
+<p>然后，JVM链接初始类，初始化它，并调用<code>public static void main(String[])</code>方法。此方法的调用将驱动所有进一步的执行。执行构成 main 方法的JVM指令可能会导致附加类和接口的链接（链接之后进而创建），以及调用其他方法。</p>
+<p>在JVM的实现中，初始类可以作为命令行参数提供。或者， JVM的实现可以提供一个初始类来设置类加载程序，然后加载一个应用程序。可以选择其他初始类，只要它们与前一段中给出的规范一致即可。</p>
+<h1 id="3-创建和加载（Creation-and-Loading）"><a href="#3-创建和加载（Creation-and-Loading）" class="headerlink" title="3 创建和加载（Creation and Loading）"></a>3 创建和加载（Creation and Loading）</h1><p><span id="creationAndLoading"></span></p>
+<h2 id="符号约定"><a href="#符号约定" class="headerlink" title="符号约定"></a>符号约定</h2><p>class或者interface $C$ 用其类名 $N$ 来表示，其创建过程由另一个class or interface $D$ 触发，$D$通过运行时常量池引用$C$。class or interface的创建也可以通过$D$调用Java SE平台的特定class libraries中的方法来触发，例如反射。</p>
+<p>如果$C$不是数组类，则通过使用class loader加载$C$的二进制表达来创建。</p>
+<p>数组类没有外部的二进制表达，由JVM来创建，而不是class loader。</p>
+<p>类加载器 $L$可以通过以下两种方式来创建$C$：</p>
+<ul>
+<li>直接定义$C$</li>
+<li>委托给另一个class loader</li>
+</ul>
+<p>如果$L$委托了另一个class loader来加载$C$，则说$L$启动了$C$的加载（$L$ <em>initiates loading of</em> $C$），或者等价地说，$L$是$C$的<code>initiating loader</code>。$N^L$ 表示由$L$ initiates loading的$C$。</p>
+<p>如果$L$直接创建$C$，则我们说$L$定义了$C$（$L$ <em>defines</em> $C$），或者等价地说，$L$是$C$的 <code>defining loader</code>。&lt;$N, L$&gt; 表示由$L$ defines的$C$。同时，$L$也是$C$的<code>initiating loader</code>。</p>
+<h2 id="3-1-用Bootstrap-Class-Loader加载"><a href="#3-1-用Bootstrap-Class-Loader加载" class="headerlink" title="3.1 用Bootstrap Class Loader加载"></a>3.1 用Bootstrap Class Loader加载</h2><p>下面的步骤用于加载、从而创建由$N$表示的、非数组类型的类或者接口$C$。</p>
+<ol>
+<li><p>首先，JVM判断bootstrap class loader是否已经被标记为由$N$表示的类或接口的initiating loader。如果是，这个类或者接口就是$C$，后续没有创建过程。</p>
+<p> 否则，JVM将$N$作为参数来调用bootstrap class loader的方法，用平台依赖的方式来搜索给出的$C$的表达形式。</p>
+<p> 通常，类或接口会使用分层文件系统中的文件来表达，并且其名称会编码在文件的路径名（pathname）中。</p>
+<p> 这个阶段需要检查以下错误：</p>
+<ul>
+<li>如果找不到给出的$C$的表达形式，抛出<code>ClassNotFoundException</code></li>
+</ul>
+</li>
+<li><p>然后，JVM尝试使用<a href="TBD">加载算法</a>，从给出的表达形式中取得$N$表示的类，将结果作为$C$。</p>
+</li>
+</ol>
+<h2 id="3-2-用User-defined-Class-Loader加载"><a href="#3-2-用User-defined-Class-Loader加载" class="headerlink" title="3.2 用User-defined Class Loader加载"></a>3.2 用User-defined Class Loader加载</h2><p>下面的步骤用于使用<strong>用户定义的类加载器（user-defined class loader）</strong> $L$加载、从而创建由$N$表示的、非数组类型的类或者接口$C$。</p>
+<ol>
+<li>首先，JVM判断$L$是否已经被标记为由$N$表示的类或接口的initiating loader。如果是，这个类或者接口就是$C$，后续没有创建过程。</li>
+<li>否则，JVM调用$L$的<code>loadClass(N)</code>方法，这个调用的返回值就是创建后的类或接口$C$。</li>
+<li>然后JVM将$L$记录为$C$的initiating loader。</li>
+</ol>
+<p>当使用$N$来调用$L$的<code>loadClass</code>方法时，$L$必须执行以下两个操作之一来加载$C$：</p>
+<ol>
+<li>$L$可以创建一个byte数组，这个数组表达了$C$的<code>ClassFile</code>结构；然后它必须调用<code>ClassLoader</code>类的<code>defineClass</code>方法，执行这个方法使得JVM用$L$使用<a href="TBD">加载算法</a>从byte数组中取得$C$。</li>
+<li>$L$可以将加载过程委托给另一个类加载器$L’$，将参数$N$直接或者间接地传给$L’$的方法调用（一般是<code>loadClass</code>方法）。方法调用的结果是$C$。</li>
+</ol>
+<p>在上述两个步骤中，无论处于任何原因无法加载$N$所表示的类或接口时，都必须抛出<code>ClassNotFoundException</code>。</p>
+<h2 id="3-3-创建数组类（Array-Classes）"><a href="#3-3-创建数组类（Array-Classes）" class="headerlink" title="3.3 创建数组类（Array Classes）"></a>3.3 创建数组类（Array Classes）</h2><p>下面的步骤用于使用类加载器$L$来加载、从而创建由$N$表示的、数组类型的类$C$。</p>
+<p>如果$L$已被记录为与$N$相同的组件类型（component type）的数组类的initiating loader，则该类为$C$，并且不需要再进行任何数组类创建。</p>
+<p>否则，执行下面的步骤来创建$C$：</p>
+<ol>
+<li>如果组件类型是引用类型（reference type），则使用$L$递归地应用<a href="#creationAndLoading">本节的算法</a>，以加载、从而创建$C$的组件类型；</li>
+<li>JVM使用指定的组件类型和维数创建一个新的数组类。<ul>
+<li>如果组件类型是一个引用类型，$C$会被标记为 『已被组件类型的defining class loader定义了』（<em>having been defined by the defining class loader of the component type</em>）。否则，$C$会被标记为『已被bootstrap class loader定义了』（<em>having been defined by the bootstrap class loader</em>）。</li>
+<li>无论如何，JVM都会将$L$记录为$C$的initiating loader。</li>
+<li>如果组件类型是一个引用类型，那么这个数组类的可见性（accessibility）和组件类型一致，否则可见性为<code>public</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="3-4-加载的限制"><a href="#3-4-加载的限制" class="headerlink" title="3.4 加载的限制"></a>3.4 加载的限制</h2><h2 id="3-5-从class文件表达形式中获得Class"><a href="#3-5-从class文件表达形式中获得Class" class="headerlink" title="3.5 从class文件表达形式中获得Class"></a>3.5 从class文件表达形式中获得<code>Class</code></h2><p>将一个非数组类型的class或者interface $C$ 记为 $N$，下面是用loader $L$从class文件格式中加载$C$为Class对象的步骤：</p>
+<ol>
+<li>JVM判断$L$是否已经被标记为$N$的initiating loader，如果是，创建过程将不可用，并且抛出<code>LinkageError</code></li>
+<li>否则，JVM尝试解析给出的表达。但是，给出的表达不一定是$C$的一个有效的表达。这个加载阶段必须检查以下错误：<ul>
+<li>如果给出的表达形式不是<code>ClassFile</code>结构，抛出<code>ClassFormatError</code></li>
+<li>否则，如果给出的表达不在支持的版本范围内（major version和minor version），抛出<code>UnsupportedClassVersionError</code></li>
+<li>否则，如果给出的表达不是类名$N$的实际表达，抛出<code>NoClassDefFoundError</code>或者其子类</li>
+</ul>
+</li>
+<li>如果$C$有直接父类，就用<a href="#ClassAndInterfaceResolution">Class and Interface Resolution</a>算法来解析出$C$到其直接父类的符号链接。<br> 这个阶段要检查以下错误：<ul>
+<li>如果其直接父类实际上是一个interface，抛出<code>IncompatibleClassChangeError</code></li>
+<li>否则，如果$C$任意父类是$C$本身，抛出<code>ClassCircularityError</code></li>
+</ul>
+</li>
+<li>如果$C$有任何直接父接口，则使用 <a href="#ClassAndInterfaceResolution">Class and Interface Resolution</a> 算法来解析出$C$到其直接父接口的符号链接。<br> 这个阶段要检查以下错误：<ul>
+<li>如果其直接父接口实际上不是一个interface，抛出<code>IncompatibleClassChangeError</code></li>
+<li>如果$C$的任何一个父接口是$C$本身，抛出<code>ClassCircularityError</code></li>
+</ul>
+</li>
+<li>JVM将$C$标记为拥有$L$作为其defining class loader，并且标记$L$是$C$的initiating loader</li>
+</ol>
+<h1 id="4-链接（Linking）"><a href="#4-链接（Linking）" class="headerlink" title="4 链接（Linking）"></a>4 链接（Linking）</h1><h2 id="4-1-验证（Verification）"><a href="#4-1-验证（Verification）" class="headerlink" title="4.1 验证（Verification）"></a>4.1 验证（Verification）</h2><h2 id="4-2-准备（Preparation）"><a href="#4-2-准备（Preparation）" class="headerlink" title="4.2 准备（Preparation）"></a>4.2 准备（Preparation）</h2><p>准备阶段包括创建class or interface的static fields，并初始化默认值。这个过程不需要执行任何JVM代码。静态字段的显式初始值设定是作为初始化的一部分执行，而不是准备阶段。</p>
+<p>在class or interface $C$ 的准备阶段，JVM有以下约束：</p>
+<p>令$L_1$为$C$的defining loader，$m$为$C$中覆盖自父类或者父接口&lt;$D, L_2$&gt;的方法，对于每个$m$，令其返回值为$T_r$，形参为$T_{f_1},…,T_{f_n}$，那么：</p>
+<ul>
+<li>如果$T_r$不是数组类型，令$T_0$为$T_r$；否则令$T_0$为$T_r$的元素类型；</li>
+<li>对于$i=1, …, n$，如果$T_{f_i}$不是数组类型，令$T_i$为$T_{f_i}$；否则令$T_i$为$T_{f_i}$的元素类型</li>
+</ul>
+<p>则有：<br>$$ {T_i}^{L_1} = {T_i}^{L_2}, i=0, …, n $$</p>
+<p>更进一步，如果$C$实现了父接口&lt;$I, L_3$&gt;中的方法$m$，但是$C$没有声明方法$m$，但是$C$的父类&lt;$D, L_2$&gt;声明了方法$m$的实现，则有以下约束：</p>
+<p>$m$的返回类型记为$T_r$，$m$的形参类型记为$T_{f1}, …, T_{fn}$，则：<br>如果$T_r$不是数组类型，令$T_0$为$T_r$，否则令$T_0$为$T_r$的元素类型（element type）。<br>对于所有$i=0, …, n$：如果$T_{fi}$不是数组类型，则$T_i$为$T_{fi}$，否则$T_i$为$T_{fi}$的元素类型。<br>那么有<br>$$ {T_i}^{L_2}={T_i}^{L_3}, i=0, …, n $$</p>
+<h2 id="4-3-解析（Resolution）"><a href="#4-3-解析（Resolution）" class="headerlink" title="4.3 解析（Resolution）"></a>4.3 解析（Resolution）</h2><h2 id="4-4-访问控制（Access-Control）"><a href="#4-4-访问控制（Access-Control）" class="headerlink" title="4.4 访问控制（Access Control）"></a>4.4 访问控制（Access Control）</h2><h2 id="4-5-覆盖（Overriding）"><a href="#4-5-覆盖（Overriding）" class="headerlink" title="4.5 覆盖（Overriding）"></a>4.5 覆盖（Overriding）</h2><h1 id="5-初始化（Initialization）"><a href="#5-初始化（Initialization）" class="headerlink" title="5 初始化（Initialization）"></a>5 初始化（Initialization）</h1><h1 id="6-绑定本地方法实现"><a href="#6-绑定本地方法实现" class="headerlink" title="6 绑定本地方法实现"></a>6 绑定本地方法实现</h1><h1 id="7-JVM-Exit"><a href="#7-JVM-Exit" class="headerlink" title="7 JVM Exit"></a>7 JVM Exit</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0-概述&quot;&gt;&lt;a href=&quot;#0-概述&quot; class=&quot;headerlink&quot; title=&quot;0 概述&quot;&gt;&lt;/a&gt;0 概述&lt;/h1&gt;&lt;p&gt;这实际上是&lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《The Java&lt;sup&gt;&amp;reg;&lt;/sup&gt; Virtual Machine Specification - Java SE 8 Edition》&lt;/a&gt;中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。&lt;/p&gt;
+&lt;p&gt;阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 &lt;a href=&quot;/2018/03/10/java-class-file-format/&quot;&gt;Java class文件格式&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;加载&lt;/strong&gt;是这样一个过程：寻找一个特定名称的class或者interface的二进制表达形式（binary representation），然后从这个二进制表达形式中创建出一个class或者interface。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;链接&lt;/strong&gt;是这样一个过程：取得class或者interface，然后将其结合到JVM的运行时状态，使得它可以被执行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;初始化&lt;/strong&gt;一个class或者interface的过程就是执行这个class或者interface的初始化方法&lt;code&gt;&amp;lt;clinit&amp;gt;&lt;/code&gt;的过程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="JVM, Java" scheme="http://bungder.github.io/tags/JVM-Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java class文件格式</title>
+    <link href="http://bungder.github.io/2018/03/10/java-class-file-format/"/>
+    <id>http://bungder.github.io/2018/03/10/java-class-file-format/</id>
+    <published>2018-03-09T17:02:29.000Z</published>
+    <updated>2018-03-09T17:27:12.036Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。</p>
+<hr>
+<p>每一个class文件都包含了一个单独的class或者interface的定义。尽管一个class或者interface并不是有一个以文件形式存在的外部表达，但是下面还是通俗地将class或interface的任何有效表达称为类文件格式（<em>the class file format</em>）。</p>
+<p>一个类文件由一个<code>8位字节流</code>组成。 所有的16位，32位和64位量分别通过读取2、4、8个连续的8位字节来构造。 多字节数据项总是以<code>big-endian顺序</code>存储，其中高字节排在第一位。 在Java SE平台中，此格式由接口<code>java.io.DataInput</code>和<code>java.io.DataOutput</code>以及类如<code>java.io.DataInputStream</code>和<code>java.io.DataOutputStream</code>支持。</p>
+<a id="more"></a>
+<p>本章定义了自己的一组表示类文件数据的数据类型：</p>
+<ul>
+<li>类型<code>u1</code>，<code>u2</code>和<code>u4</code>分别表示一个无符号的一个，两个或四个字节数量（即1 byte、2 byte和4 byte）。</li>
+</ul>
+<p>在Java SE平台中，这些类型可以通过接口<code>java.io.DataInput</code>的<code>readUnsignedByte</code>，<code>readUnsignedShort</code>和<code>readInt</code>等方法读取。</p>
+<h1 id="1-ClassFile结构"><a href="#1-ClassFile结构" class="headerlink" title="1 ClassFile结构"></a>1 <code>ClassFile</code>结构</h1><p>一个class文件包含一个单独的<code>ClassFile</code>结构：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="section">ClassFile</span> &#123;</div><div class="line">   <span class="attribute">u4</span>             magic;</div><div class="line">   <span class="attribute">u2</span>             minor_version;</div><div class="line">   <span class="attribute">u2</span>             major_version;</div><div class="line">   <span class="attribute">u2</span>             constant_pool_count;</div><div class="line">   <span class="attribute">cp_info</span>        constant_pool[constant_pool_count-<span class="number">1</span>];</div><div class="line">   <span class="attribute">u2</span>             access_flags;</div><div class="line">   <span class="attribute">u2</span>             this_class;</div><div class="line">   <span class="attribute">u2</span>             super_class;</div><div class="line">   <span class="attribute">u2</span>             interfaces_count;</div><div class="line">   <span class="attribute">u2</span>             interfaces[interfaces_count];</div><div class="line">   <span class="attribute">u2</span>             fields_count;</div><div class="line">   <span class="attribute">field_info</span>     fields[fields_count];</div><div class="line">   <span class="attribute">u2</span>             methods_count;</div><div class="line">   <span class="attribute">method_info</span>    methods[methods_count];</div><div class="line">   <span class="attribute">u2</span>             attributes_count;</div><div class="line">   <span class="attribute">attribute_info</span> attributes[attributes_count];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>ClassFile</code>结构中的各个<code>item</code>含义如下：</p>
+<h2 id="1-1-magic"><a href="#1-1-magic" class="headerlink" title="1.1 magic"></a>1.1 magic</h2><p>魔法数字，用于标识class文件格式，固定为<code>0xCAFEBABE</code></p>
+<h2 id="1-2-minor-version-major-version"><a href="#1-2-minor-version-major-version" class="headerlink" title="1.2 minor_version, major_version"></a>1.2 minor_version, major_version</h2><p>minor_version和major_version组合到一起，决定了class文件格式的版本。</p>
+<p>假设class文件的major_version为$M$，minor_version为$m$，那么我们将class文件格式的版本记为$M.m$，因此，这个版本号可以按字典序排序，例如$1.5&lt;2.0&lt;2.1$。</p>
+<p>一个JVM的实现可以支持的class文件格式版本记为$v$，当且仅当v落在连续区间 $Mi.0 \leq v \leq Mj.m$ 时成立。</p>
+<p>JVM实现所遵循的Java SE平台的<strong>release level</strong>决定了其支持范围。</p>
+<p>例如</p>
+<ul>
+<li>Oracle对JDK release 1.0.2的JVM实现支持的class文件格式版本为$[45.0, 45.3]$</li>
+<li>JDK release 1.1.* 支持$[45.0, 45.65535]$</li>
+<li>对于$k \geq 2$，JDK release $1.k$ 支持范围为$[45.0, 44+k.0]$</li>
+</ul>
+<h2 id="1-3-constant-pool-count"><a href="#1-3-constant-pool-count" class="headerlink" title="1.3 constant_pool_count"></a>1.3 constant_pool_count</h2><p><code>constant_pool[]</code>中的条目数量+1</p>
+<h2 id="1-4-constant-pool"><a href="#1-4-constant-pool" class="headerlink" title="1.4 constant_pool[]"></a>1.4 constant_pool[]</h2><p>constant_pool是一个结构表，表示<code>ClassFile</code>结构及其子结构中引用的各种</p>
+<ul>
+<li>字符串常量</li>
+<li>类和接口名</li>
+<li>字段名</li>
+<li>其他常量。</li>
+</ul>
+<p>每个constant_pool表项的格式由第一个“标记(tag)”字节表示。<br>constant_pool表下标的取值范围是$[1, constant_pool_count)$</p>
+<h2 id="1-5-access-flags"><a href="#1-5-access-flags" class="headerlink" title="1.5 access_flags"></a>1.5 access_flags</h2><p>access_flags 项的值是用于<strong>表示对此类或接口的访问权限和属性</strong>的标志的掩码。</p>
+<p>16bit</p>
+<table>
+<thead>
+<tr>
+<th>Flag Name</th>
+<th>Value</th>
+<th>二进制</th>
+<th>十进制表示</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACC_PUBLIC</td>
+<td>0x0001</td>
+<td>00000000 00000001</td>
+<td>1</td>
+<td>声明<code>public</code></td>
+</tr>
+<tr>
+<td>ACC_FINAL</td>
+<td>0x0010</td>
+<td>00000000 00010000</td>
+<td>16</td>
+<td>声明<code>final</code></td>
+</tr>
+<tr>
+<td>ACC_SUPER</td>
+<td>0x0020</td>
+<td>00000000 00100000</td>
+<td>32</td>
+<td>当调用<code>invokespecial</code>指令时，特殊对待父类方法</td>
+</tr>
+<tr>
+<td>ACC_INTERFACE</td>
+<td>0x0200</td>
+<td>00000010 00000000</td>
+<td>512</td>
+<td>指明这是<code>interface</code>而非<code>class</code></td>
+</tr>
+<tr>
+<td>ACC_ABSTRACT</td>
+<td>0x0400</td>
+<td>00000100 00000000</td>
+<td>1024</td>
+<td>声明<code>abstract</code></td>
+</tr>
+<tr>
+<td>ACC_SYNTHETIC</td>
+<td>0x1000</td>
+<td>00010000 00000000</td>
+<td>4096</td>
+<td>声明synthetic，在源码中不存在</td>
+</tr>
+<tr>
+<td>ACC_ANNOTATION</td>
+<td>0x2000</td>
+<td>00100000 00000000</td>
+<td>8192</td>
+<td>指明这是注解</td>
+</tr>
+<tr>
+<td>ACC_ENUM</td>
+<td>0x4000</td>
+<td>01000000 00000000</td>
+<td>16384</td>
+<td>指明这是<code>enum</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-6-this-class"><a href="#1-6-this-class" class="headerlink" title="1.6 this_class"></a>1.6 this_class</h2><p><code>this_class</code>的值必须是<code>constant_pool[]</code>的有效下标。<code>constant_pool[this_class]</code>必须为<code>CONSTANT_Class_info</code>结构，表示了在此class文件中定义的类或者接口。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="section">CONSTANT_Class_info</span> &#123;</div><div class="line">   <span class="attribute">u1</span> tag;</div><div class="line">   <span class="attribute">u2</span> name_index;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1-7-super-class"><a href="#1-7-super-class" class="headerlink" title="1.7 super_class"></a>1.7 super_class</h2><p><code>super_class</code>的值也必须是<code>constant_pool[]</code>的有效下标。</p>
+<p>对于类来说，</p>
+<ul>
+<li>如果此值不是0， 则<code>constant_pool[super_class]</code>必须为<code>CONSTANT_Class_info</code>结构，表示了此class文件定义的类的直接父类。</li>
+<li>如果此值为0，则此class文件必须表示<code>Object</code>类，这是唯一没有直接父类的类或者接口。</li>
+</ul>
+<p>对于接口来说，没有规定。</p>
+<h2 id="1-8-interfaces-count"><a href="#1-8-interfaces-count" class="headerlink" title="1.8 interfaces_count"></a>1.8 interfaces_count</h2><p>指明了此类的直接父接口的数量。</p>
+<h2 id="1-9-interfaces"><a href="#1-9-interfaces" class="headerlink" title="1.9 interfaces[]"></a>1.9 interfaces[]</h2><p>里面的每个值都必须是<code>constant_pool[]</code>的有效下标。所指向的<code>constant_pool</code>中的条目必须为<code>CONSTANT_Class_info</code>结构，指明了其直接父接口。</p>
+<h2 id="1-10-fileds-count"><a href="#1-10-fileds-count" class="headerlink" title="1.10 fileds_count"></a>1.10 fileds_count</h2><p>给出<code>fields[]</code>中<code>field_info</code>结构的数量。<code>field_info</code>结构表示了此类或接口所声明的所有field，包括class variables和instance virables（也就是静态变量和实例变量）。</p>
+<h2 id="1-11-fields"><a href="#1-11-fields" class="headerlink" title="1.11 fields[]"></a>1.11 fields[]</h2><p>所有值都必须为<code>field_info</code>结构，给出对变量的完整描述。只包含由此类或者接口声明的变量，不包括继承而来的。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="section">field_info</span> &#123;</div><div class="line">   <span class="attribute">u2</span>             access_flags;</div><div class="line">   <span class="attribute">u2</span>             name_index;</div><div class="line">   <span class="attribute">u2</span>             descriptor_index;</div><div class="line">   <span class="attribute">u2</span>             attributes_count;</div><div class="line">   <span class="attribute">attribute_info</span> attributes[attributes_count];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1-12-methods-count"><a href="#1-12-methods-count" class="headerlink" title="1.12 methods_count"></a>1.12 methods_count</h2><p>给出<code>methods[]</code>中<code>method_info</code>结构的数量</p>
+<h2 id="1-13-methods"><a href="#1-13-methods" class="headerlink" title="1.13 methods[]"></a>1.13 methods[]</h2><p>所有值都必须为<code>method_info</code>结构。</p>
+<p>如果<code>ACC_NATIVE</code>和<code>ACC_ABSTRACT</code>标志都没有在<code>method_info</code>里的<code>access_flags</code>中设置，实现此方法的JVM指令也要提供。</p>
+<p><code>methods[]</code>表达了此class or intreface声明的所有方法，包括实例方法、类方法、实例初始化方法和class or interface 初始化方法，不包括继承而来的方法。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="section">method_info</span> &#123;</div><div class="line">   <span class="attribute">u2</span>             access_flags;</div><div class="line">   <span class="attribute">u2</span>             name_index;</div><div class="line">   <span class="attribute">u2</span>             descriptor_index;</div><div class="line">   <span class="attribute">u2</span>             attributes_count;</div><div class="line">   <span class="attribute">attribute_info</span> attributes[attributes_count];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1-14-attributes-count"><a href="#1-14-attributes-count" class="headerlink" title="1.14 attributes_count"></a>1.14 attributes_count</h2><p>size of <code>attributes[]</code></p>
+<h2 id="1-15-attributes"><a href="#1-15-attributes" class="headerlink" title="1.15 attributes[]"></a>1.15 attributes[]</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="section">attribute_info</span> &#123;</div><div class="line">   <span class="attribute">u2</span> attribute_name_index;</div><div class="line">   <span class="attribute">u4</span> attribute_length;</div><div class="line">   <span class="attribute">u1</span> <span class="literal">info</span>[attribute_length];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="2-The-Internal-Form-of-Names"><a href="#2-The-Internal-Form-of-Names" class="headerlink" title="2 The Internal Form of Names"></a>2 The Internal Form of Names</h1><p><span id="internalFormOfNames"></span></p>
+<h2 id="2-1-Binary-Class-and-Interface-Names"><a href="#2-1-Binary-Class-and-Interface-Names" class="headerlink" title="2.1 Binary Class and Interface Names"></a>2.1 Binary Class and Interface Names</h2><p>class文件结构中，class和interface的名字总是以一种全限定（fully qualified）的形式表达的，被称为<code>binary names</code>（JLS §13.1）。这些名字总是表达为<code>CONSTANT_Utf8_info</code>结构。</p>
+<p>类和接口名称是从那些<code>CONSTANT_NameAndType_info</code>结构中引用的, 它们的名称是其描述符的一部分, 并且来自所有<code>CONSTANT_Class_info</code>结构</p>
+<p>由于历史原因, 类文件结构中出现的binary names的语法不同于JLS §13.1中记录的二进制名称的语法。标识符（identifiers）构成了binary names，通常用ASCII码（<code>.</code>）分割各个标识符，在这种内部形式中，替换为了ASCII码（<code>/</code>）。标识符本身必须是未限定的名称（unqualified names）。</p>
+<h2 id="2-2-Unqualified-Names-未限定的名称"><a href="#2-2-Unqualified-Names-未限定的名称" class="headerlink" title="2.2 Unqualified Names 未限定的名称"></a>2.2 Unqualified Names 未限定的名称</h2><p>方法、field、本地变量和形式参数的名称都存储为<code>unqualified names</code>。</p>
+<p>一个<code>unqualified names</code>必须包含至少一个Unicode码（Unicode code point），并且不能包含以下ASCII字符：<code>.</code>, <code>;</code>, <code>[</code>, <code>/</code>（即，句号、分号、左方括号和斜线）。</p>
+<p>方法名的约束还要加上不能出现ASCII字符<code>&lt;</code>、<code>&gt;</code>（即左尖括号和右尖括号），例外方法为</p>
+<ul>
+<li><code>&lt;init&gt;</code></li>
+<li><code>&lt;clinit&gt;</code></li>
+</ul>
+<h1 id="3-Descriptors-描述符"><a href="#3-Descriptors-描述符" class="headerlink" title="3 Descriptors 描述符"></a>3 Descriptors 描述符</h1><p>描述符是用于表示field或者方法的字符串。</p>
+<h2 id="3-1-Grammer-Notaion-语法符号"><a href="#3-1-Grammer-Notaion-语法符号" class="headerlink" title="3.1 Grammer Notaion 语法符号"></a>3.1 Grammer Notaion 语法符号</h2><p>（先定义用于描述描述符构成的语法）：<br>描述符是使用语法指定的。语法是一组生产、 描述字符序列如何形成各种语法正确的描述符。</p>
+<ul>
+<li>语法的终端符号以固定宽度字体显示。</li>
+<li>非终结名称符号以斜体类型显示。</li>
+<li>非终结名称的定义由定义的非终结名称的名称引入，后跟冒号。</li>
+<li>非终结名称的一个或多个可选定义随后将跟随后续行。</li>
+<li>生产右侧的语法 {x} 表示 x 的零个或多个匹配项。</li>
+<li>生产右侧的短语 (one of) 表示以下行或行上的每个终端符号都是可选的定义。</li>
+</ul>
+<h2 id="3-2-Field-Descriptors"><a href="#3-2-Field-Descriptors" class="headerlink" title="3.2 Field Descriptors"></a>3.2 Field Descriptors</h2><p><img src="http://otlnkjq1m.bkt.clouddn.com/FieldDescriptors.jpeg" alt=""></p>
+<p>field descriptors的说明：</p>
+<table>
+<thead>
+<tr>
+<th>FieldType term</th>
+<th>Type</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>byte</td>
+<td>signed byte  </td>
+</tr>
+<tr>
+<td>C</td>
+<td>char</td>
+<td>Unicode character code point in the Basic Multilingual Plane, encoded with UTF-16 </td>
+</tr>
+<tr>
+<td>D</td>
+<td>double</td>
+<td>double-precision floating-point value </td>
+</tr>
+<tr>
+<td>F</td>
+<td>float</td>
+<td>single-precision floating-point value </td>
+</tr>
+<tr>
+<td>I</td>
+<td>int</td>
+<td>integer  </td>
+</tr>
+<tr>
+<td>J</td>
+<td>long</td>
+<td>long integer </td>
+</tr>
+<tr>
+<td>L ClassName ;</td>
+<td>reference</td>
+<td>an instance of class ClassName </td>
+</tr>
+<tr>
+<td>S</td>
+<td>short</td>
+<td>signed short </td>
+</tr>
+<tr>
+<td>Z</td>
+<td>boolean</td>
+<td>true or false </td>
+</tr>
+<tr>
+<td>[</td>
+<td>reference</td>
+<td>one array dimension </td>
+</tr>
+</tbody>
+</table>
+<p>例子：</p>
+<ul>
+<li>一个Object实例表示为：<code>Ljava/lang/Object;</code></li>
+<li>一个多维数组<code>double[][][]</code>表示为<code>[[[D</code></li>
+</ul>
+<h2 id="3-3-Method-Descriptors-方法描述符"><a href="#3-3-Method-Descriptors-方法描述符" class="headerlink" title="3.3 Method Descriptors 方法描述符"></a>3.3 Method Descriptors 方法描述符</h2><p><img src="http://otlnkjq1m.bkt.clouddn.com/MethodDescriptors.jpeg" alt=""></p>
+<p>例子：</p>
+<ul>
+<li><p>1</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">Object <span class="title">m</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">double</span> d, Thread t)</span> </span>&#123;...&#125;</div></pre></td></tr></table></figure>
+<p>  描述符为：<code>(IDLjava/lang/Thread;)Ljava/lang/Object;</code></p>
+</li>
+</ul>
+<h1 id="4-The-Constant-Pool"><a href="#4-The-Constant-Pool" class="headerlink" title="4 The Constant Pool"></a>4 The Constant Pool</h1><p>Java 虚拟机指令不依赖于类、接口、类实例或数组的运行时布局。相反, 指令指的是 constant_pool 表中的符号信息。</p>
+<p><code>constant_pool</code>中的所有条目都具有以下的一般结构：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="section">cp_info</span> &#123;</div><div class="line">    <span class="attribute">u1</span> tag;</div><div class="line">    <span class="attribute">u1</span> <span class="literal">info</span>[]; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中，<code>tag</code>用于指示<code>cp_info</code>条目的类型，<code>info</code>数组的内容随<code>tag</code>的值而变化。每个标记字节必须后跟两个或多个字节, 以提供有关特定常量的信息。<code>tag</code>的取值范围如下：</p>
+<table>
+<thead>
+<tr>
+<th>Constant Type</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONSTANT_Class</td>
+<td>7</td>
+</tr>
+<tr>
+<td>CONSTANT_Fieldref</td>
+<td>9</td>
+</tr>
+<tr>
+<td>CONSTANT_Methodref</td>
+<td>10</td>
+</tr>
+<tr>
+<td>CONSTANT_InterfaceMethodref</td>
+<td>11</td>
+</tr>
+<tr>
+<td>CONSTANT_String</td>
+<td>8</td>
+</tr>
+<tr>
+<td>CONSTANT_Integer</td>
+<td>3</td>
+</tr>
+<tr>
+<td>CONSTANT_Float</td>
+<td>4</td>
+</tr>
+<tr>
+<td>CONSTANT_Long</td>
+<td>5</td>
+</tr>
+<tr>
+<td>CONSTANT_Double</td>
+<td>6</td>
+</tr>
+<tr>
+<td>CONSTANT_NameAndType</td>
+<td>12</td>
+</tr>
+<tr>
+<td>CONSTANT_Utf8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>CONSTANT_MethodHandle</td>
+<td>15</td>
+</tr>
+<tr>
+<td>CONSTANT_MethodType</td>
+<td>16</td>
+</tr>
+<tr>
+<td>CONSTANT_InvokeDynamic</td>
+<td>18</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-1-CONSTANT-Class-info"><a href="#4-1-CONSTANT-Class-info" class="headerlink" title="4.1 CONSTANT_Class_info"></a>4.1 CONSTANT_Class_info</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="section">CONSTANT_Class_info</span> &#123;</div><div class="line">    <span class="attribute">u1</span> tag;</div><div class="line">    <span class="attribute">u2</span> name_index;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>tag</code>的值为<code>7</code>，表示这是一个<code>CONSTANT_Class</code>，<code>name_index</code>必须是<code>constant_pool</code>的有效下标，指向的必须是一个<code>CONSTANT_Utf8_info</code>结构。也就是说指向了常量池中表示类名的字符串常量。类名表达为<a href="#internalFormOfNames"><code>internal form</code></a>，例如：</p>
+<ul>
+<li><code>int[][]</code>表达为<code>[[I</code></li>
+<li><code>Thread[]</code>表达为<code>[Ljava/lang/Thread;</code></li>
+</ul>
+<h2 id="4-2-CONSTANT-Fieldref-info-CONSTANT-Methodref-info和CONSTANT-InterfaceMethodref-info"><a href="#4-2-CONSTANT-Fieldref-info-CONSTANT-Methodref-info和CONSTANT-InterfaceMethodref-info" class="headerlink" title="4.2 CONSTANT_Fieldref_info, CONSTANT_Methodref_info和CONSTANT_InterfaceMethodref_info"></a>4.2 CONSTANT_Fieldref_info, CONSTANT_Methodref_info和CONSTANT_InterfaceMethodref_info</h2><h2 id="4-3-CONSTANT-String-info"><a href="#4-3-CONSTANT-String-info" class="headerlink" title="4.3 CONSTANT_String_info"></a>4.3 CONSTANT_String_info</h2><h2 id="4-4-CONSTANT-Integer-info"><a href="#4-4-CONSTANT-Integer-info" class="headerlink" title="4.4 CONSTANT_Integer_info"></a>4.4 CONSTANT_Integer_info</h2><h2 id="4-5-CONSTANT-Long-info"><a href="#4-5-CONSTANT-Long-info" class="headerlink" title="4.5 CONSTANT_Long_info"></a>4.5 CONSTANT_Long_info</h2><h2 id="4-6-CONSTANT-NameAndType-info"><a href="#4-6-CONSTANT-NameAndType-info" class="headerlink" title="4.6 CONSTANT_NameAndType_info"></a>4.6 CONSTANT_NameAndType_info</h2><h2 id="4-7-CONSTANT-Utf8-info"><a href="#4-7-CONSTANT-Utf8-info" class="headerlink" title="4.7 CONSTANT_Utf8_info"></a>4.7 CONSTANT_Utf8_info</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="section">CONSTANT_Utf8_info</span> &#123;</div><div class="line">    <span class="attribute">u1</span> tag;</div><div class="line">    <span class="attribute">u2</span> length;</div><div class="line">    <span class="attribute">u1</span> bytes[length];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-8-CONSTANT-MethodHandle-info"><a href="#4-8-CONSTANT-MethodHandle-info" class="headerlink" title="4.8 CONSTANT_MethodHandle_info"></a>4.8 CONSTANT_MethodHandle_info</h2><h2 id="4-9-CONSTANT-MethodType-info"><a href="#4-9-CONSTANT-MethodType-info" class="headerlink" title="4.9 CONSTANT_MethodType_info"></a>4.9 CONSTANT_MethodType_info</h2><h2 id="4-10-CONSTANT-InvokeDynamic-info"><a href="#4-10-CONSTANT-InvokeDynamic-info" class="headerlink" title="4.10 CONSTANT_InvokeDynamic_info"></a>4.10 CONSTANT_InvokeDynamic_info</h2><h1 id="5-Fields"><a href="#5-Fields" class="headerlink" title="5 Fields"></a>5 Fields</h1><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="section">field_info</span> &#123;</div><div class="line">   <span class="attribute">u2</span>             access_flags;</div><div class="line">   <span class="attribute">u2</span>             name_index;</div><div class="line">   <span class="attribute">u2</span>             descriptor_index;</div><div class="line">   <span class="attribute">u2</span>             attributes_count;</div><div class="line">   <span class="attribute">attribute_info</span> attributes[attributes_count];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>attributes[]<br>里面的每个item都必须是<a href="#attributeInfo"><code>attribute_info</code></a>结构</li>
+</ul>
+<h1 id="6-Methods"><a href="#6-Methods" class="headerlink" title="6 Methods"></a>6 Methods</h1><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="section">method_info</span> &#123;</div><div class="line">       <span class="attribute">u2</span>             access_flags;</div><div class="line">       <span class="attribute">u2</span>             name_index;</div><div class="line">       <span class="attribute">u2</span>             descriptor_index;</div><div class="line">       <span class="attribute">u2</span>             attributes_count;</div><div class="line">       <span class="attribute">attribute_info</span> attributes[attributes_count];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>attributes[]<br>里面的每个item都必须是<a href="#attributeInfo"><code>attribute_info</code></a>结构</li>
+</ul>
+<h1 id="7-Attributes"><a href="#7-Attributes" class="headerlink" title="7 Attributes"></a>7 Attributes</h1><p><span id="attributeInfo"><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="section">attribute_info</span> &#123;</div><div class="line">   <span class="attribute">u2</span> attribute_name_index;</div><div class="line">   <span class="attribute">u4</span> attribute_length;</div><div class="line">   <span class="attribute">u1</span> <span class="literal">info</span>[attribute_length];</div><div class="line">&#125;</div></pre></td></tr></table></figure></span></p>
+<h2 id="The-Code-Attribute"><a href="#The-Code-Attribute" class="headerlink" title="The Code Attribute"></a>The Code Attribute</h2><figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Code_attribute &#123;</div><div class="line">    u2 attribute_name_index<span class="comment">;</span></div><div class="line">    u4 attribute_length<span class="comment">;</span></div><div class="line">    u2 max_stack<span class="comment">;</span></div><div class="line">    u2 max_locals<span class="comment">;</span></div><div class="line">    u4 code_length<span class="comment">;</span></div><div class="line">    u1 code[code_length]<span class="comment">;</span></div><div class="line">    u2 exception_table_length<span class="comment">;</span></div><div class="line">    &#123;   u2 start_pc<span class="comment">;</span></div><div class="line">        u2 end_pc<span class="comment">;</span></div><div class="line">        u2 handler_pc<span class="comment">;</span></div><div class="line">        u2 catch_type<span class="comment">;</span></div><div class="line">    &#125; exception_table[exception_table_length]<span class="comment">;</span></div><div class="line">    u2 attributes_count<span class="comment">;</span></div><div class="line">    attribute_info attributes[attributes_count]<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>max_stack<br>给出在方法执行的任意地方操作数栈的最大深度</li>
+<li>max_locals<br>给出方法调用时本地方法表的最大容量</li>
+<li><strong>code[]</strong><br><strong>给出了实现方法的JVM代码的实际字节（byte）。</strong></li>
+</ul>
+<h1 id="8-Format-Checking"><a href="#8-Format-Checking" class="headerlink" title="8 Format Checking"></a>8 Format Checking</h1><h1 id="9-Constraints-on-Java-Virtual-Machine-Code"><a href="#9-Constraints-on-Java-Virtual-Machine-Code" class="headerlink" title="9 Constraints on Java Virtual Machine Code"></a>9 Constraints on Java Virtual Machine Code</h1><h1 id="10-Verification-of-class-Files"><a href="#10-Verification-of-class-Files" class="headerlink" title="10 Verification of class Files"></a>10 Verification of class Files</h1><h2 id="10-1-Verification-by-Type-Checking"><a href="#10-1-Verification-by-Type-Checking" class="headerlink" title="10.1 Verification by Type Checking"></a>10.1 Verification by Type Checking</h2><h2 id="10-2-Verification-by-Type-Inference"><a href="#10-2-Verification-by-Type-Inference" class="headerlink" title="10.2 Verification by Type Inference"></a>10.2 Verification by Type Inference</h2><h1 id="JVM的限制"><a href="#JVM的限制" class="headerlink" title="JVM的限制"></a>JVM的限制</h1><ul>
+<li><code>ClassFile</code>结构中16-bit的<code>constant_pool_count</code>限制了per-class或者per-interface的常量池最多只有<strong>65535</strong>个条目（entries）。这对单个类或接口的总体复杂性起到了内部限制作用。</li>
+<li><code>ClassFile</code>结构中的<code>fields_count</code>限制了一个class or interface能声明的<code>field</code>数量不能超过<strong>65535</strong>。（不包括继承的）</li>
+<li>方法数量限制同上。（<code>methods_count</code>）</li>
+<li>直接父接口的数量限制同上（<code>interfaces_count</code>）</li>
+<li>方法调用时创建的帧里面，本地变量表中的本地变量数量最多为<strong>65535</strong>，由<code>Code</code> attribute中的<code>max_locals</code> item所限制，以及由JVM指令集的16-bit本地变量索引所限制。<br>其中，<code>long</code>和<code>double</code>类型视为两个本地变量</li>
+<li><code>Code</code> attribute中的<code>max_stack</code> item限制了frame中的操作数栈的大小为<strong>65535</strong><br>其中，<code>long</code>和<code>double</code>类型的操作数视为两个单元</li>
+<li><code>method descriptor</code>的定义限制了方法参数的数量最多为<strong>255</strong><br>其中，实例方法的<code>this</code>占了一个单元，<code>long</code>和<code>double</code>类型的会占两个单元</li>
+<li>field和方法的名称、field和方法的descriptor以及其他string常量值（包括被<code>ConstantValue</code> attribute引用的）最多为<strong>65535</strong>个<strong>byte</strong>，由<code>CONSTANT_Utf8_info</code>结构中的16-bit无符号<code>length</code> item所限制</li>
+<li><p>数组的维度最多为<strong>255</strong>，由<code>multianewarray</code>指令中的opcode <code>dimensions</code>的大小所限制</p>
+<blockquote>
+<p>  The number of dimensions in an array is limited to 255 by the size of the dimensions opcode of the multianewarray instruction and by the constraints imposed on the multianewarray, anewarray, and newarray instructions</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0-概述&quot;&gt;&lt;a href=&quot;#0-概述&quot; class=&quot;headerlink&quot; title=&quot;0 概述&quot;&gt;&lt;/a&gt;0 概述&lt;/h1&gt;&lt;p&gt;这实际上是&lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《The Java&lt;sup&gt;&amp;reg;&lt;/sup&gt; Virtual Machine Specification - Java SE 8 Edition》&lt;/a&gt;中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;每一个class文件都包含了一个单独的class或者interface的定义。尽管一个class或者interface并不是有一个以文件形式存在的外部表达，但是下面还是通俗地将class或interface的任何有效表达称为类文件格式（&lt;em&gt;the class file format&lt;/em&gt;）。&lt;/p&gt;
+&lt;p&gt;一个类文件由一个&lt;code&gt;8位字节流&lt;/code&gt;组成。 所有的16位，32位和64位量分别通过读取2、4、8个连续的8位字节来构造。 多字节数据项总是以&lt;code&gt;big-endian顺序&lt;/code&gt;存储，其中高字节排在第一位。 在Java SE平台中，此格式由接口&lt;code&gt;java.io.DataInput&lt;/code&gt;和&lt;code&gt;java.io.DataOutput&lt;/code&gt;以及类如&lt;code&gt;java.io.DataInputStream&lt;/code&gt;和&lt;code&gt;java.io.DataOutputStream&lt;/code&gt;支持。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://bungder.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>Druid连接池监控的一次改造</title>
