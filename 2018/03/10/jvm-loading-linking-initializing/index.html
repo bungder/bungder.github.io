@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。 阅读本文内容需要先对java的cl">
+<meta name="description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正">
 <meta name="keywords" content="JVM, Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM加载、启动和初始化">
 <meta property="og:url" content="http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/index.html">
 <meta property="og:site_name" content="Gordon">
-<meta property="og:description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。 阅读本文内容需要先对java的cl">
+<meta property="og:description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-11T15:19:15.345Z">
+<meta property="og:updated_time" content="2018-03-11T15:27:34.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM加载、启动和初始化">
-<meta name="twitter:description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。 阅读本文内容需要先对java的cl">
+<meta name="twitter:description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正">
 
 
 
@@ -381,7 +381,7 @@
       
 
       
-        <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。</p>
+        <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
 <hr>
 <ul>

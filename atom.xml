@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2018-03-11T15:19:15.345Z</updated>
+  <updated>2018-03-11T15:27:34.554Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/"/>
     <id>http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/</id>
     <published>2018-03-09T17:08:12.000Z</published>
-    <updated>2018-03-11T15:19:15.345Z</updated>
+    <updated>2018-03-11T15:27:34.554Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。</p>
+    <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
 <hr>
 <ul>
@@ -308,7 +308,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;0-概述&quot;&gt;&lt;a href=&quot;#0-概述&quot; class=&quot;headerlink&quot; title=&quot;0 概述&quot;&gt;&lt;/a&gt;0 概述&lt;/h1&gt;&lt;p&gt;这实际上是&lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《The Java&lt;sup&gt;&amp;reg;&lt;/sup&gt; Virtual Machine Specification - Java SE 8 Edition》&lt;/a&gt;中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。&lt;/p&gt;
+      &lt;h1 id=&quot;0-概述&quot;&gt;&lt;a href=&quot;#0-概述&quot; class=&quot;headerlink&quot; title=&quot;0 概述&quot;&gt;&lt;/a&gt;0 概述&lt;/h1&gt;&lt;p&gt;这实际上是&lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《The Java&lt;sup&gt;&amp;reg;&lt;/sup&gt; Virtual Machine Specification - Java SE 8 Edition》&lt;/a&gt;中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。&lt;/p&gt;
 &lt;p&gt;阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 &lt;a href=&quot;/2018/03/10/java-class-file-format/&quot;&gt;Java class文件格式&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
@@ -329,9 +329,9 @@
     <link href="http://bungder.github.io/2018/03/10/java-class-file-format/"/>
     <id>http://bungder.github.io/2018/03/10/java-class-file-format/</id>
     <published>2018-03-09T17:02:29.000Z</published>
-    <updated>2018-03-11T15:21:18.601Z</updated>
+    <updated>2018-03-11T15:27:36.187Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。</p>
+    <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <hr>
 <p>每一个class文件都包含了一个单独的class或者interface的定义。尽管一个class或者interface并不是有一个以文件形式存在的外部表达，但是下面还是通俗地将class或interface的任何有效表达称为类文件格式（<em>the class file format</em>）。</p>
 <p>一个类文件由一个<code>8位字节流</code>组成。 所有的16位，32位和64位量分别通过读取2、4、8个连续的8位字节来构造。 多字节数据项总是以<code>big-endian顺序</code>存储，其中高字节排在第一位。 在Java SE平台中，此格式由接口<code>java.io.DataInput</code>和<code>java.io.DataOutput</code>以及类如<code>java.io.DataInputStream</code>和<code>java.io.DataOutputStream</code>支持。</p>
@@ -674,7 +674,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;0-概述&quot;&gt;&lt;a href=&quot;#0-概述&quot; class=&quot;headerlink&quot; title=&quot;0 概述&quot;&gt;&lt;/a&gt;0 概述&lt;/h1&gt;&lt;p&gt;这实际上是&lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《The Java&lt;sup&gt;&amp;reg;&lt;/sup&gt; Virtual Machine Specification - Java SE 8 Edition》&lt;/a&gt;中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。&lt;/p&gt;
+      &lt;h1 id=&quot;0-概述&quot;&gt;&lt;a href=&quot;#0-概述&quot; class=&quot;headerlink&quot; title=&quot;0 概述&quot;&gt;&lt;/a&gt;0 概述&lt;/h1&gt;&lt;p&gt;这实际上是&lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《The Java&lt;sup&gt;&amp;reg;&lt;/sup&gt; Virtual Machine Specification - Java SE 8 Edition》&lt;/a&gt;中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;每一个class文件都包含了一个单独的class或者interface的定义。尽管一个class或者interface并不是有一个以文件形式存在的外部表达，但是下面还是通俗地将class或interface的任何有效表达称为类文件格式（&lt;em&gt;the class file format&lt;/em&gt;）。&lt;/p&gt;
 &lt;p&gt;一个类文件由一个&lt;code&gt;8位字节流&lt;/code&gt;组成。 所有的16位，32位和64位量分别通过读取2、4、8个连续的8位字节来构造。 多字节数据项总是以&lt;code&gt;big-endian顺序&lt;/code&gt;存储，其中高字节排在第一位。 在Java SE平台中，此格式由接口&lt;code&gt;java.io.DataInput&lt;/code&gt;和&lt;code&gt;java.io.DataOutput&lt;/code&gt;以及类如&lt;code&gt;java.io.DataInputStream&lt;/code&gt;和&lt;code&gt;java.io.DataOutputStream&lt;/code&gt;支持。&lt;/p&gt;
@@ -1123,9 +1123,9 @@
     </summary>
     
     
-      <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
-    
       <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
+    
+      <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
