@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Gordon">
 <meta property="og:description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。 阅读本文内容需要先对java的cl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-09T17:26:59.348Z">
+<meta property="og:updated_time" content="2018-03-11T15:19:15.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM加载、启动和初始化">
 <meta name="twitter:description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文。 阅读本文内容需要先对java的cl">
@@ -385,12 +385,9 @@
 <p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
 <hr>
 <ul>
-<li><p><strong>加载</strong>是这样一个过程：寻找一个特定名称的class或者interface的二进制表达形式（binary representation），然后从这个二进制表达形式中创建出一个class或者interface。</p>
-</li>
-<li><p><strong>链接</strong>是这样一个过程：取得class或者interface，然后将其结合到JVM的运行时状态，使得它可以被执行。</p>
-</li>
-<li><p><strong>初始化</strong>一个class或者interface的过程就是执行这个class或者interface的初始化方法<code>&lt;clinit&gt;</code>的过程。</p>
-</li>
+<li><strong>加载</strong>是这样一个过程：寻找一个特定名称的class或者interface的二进制表达形式（binary representation），然后从这个二进制表达形式中创建出一个class或者interface。</li>
+<li><strong>链接</strong>是这样一个过程：取得class或者interface，然后将其结合到JVM的运行时状态，使得它可以被执行。</li>
+<li><strong>初始化</strong>一个class或者interface的过程就是执行这个class或者interface的初始化方法<code>&lt;clinit&gt;</code>的过程。</li>
 </ul>
 <a id="more"></a>
 <h1 id="1-运行时常量池（Run-Time-Constant-Pool）"><a href="#1-运行时常量池（Run-Time-Constant-Pool）" class="headerlink" title="1 运行时常量池（Run-Time Constant Pool）"></a>1 运行时常量池（Run-Time Constant Pool）</h1><p>在class或interface被创建的时候，用二进制形式的class文件中的<code>constant_pool</code>表来构造运行时常量池。运行时常量池中的所有引用最初都是符号引用。运行时常量池中的符号引用来自二进制表达形式中的以下结构：</p>
@@ -451,7 +448,7 @@
 <p>数组类没有外部的二进制表达，由JVM来创建，而不是class loader。</p>
 <p>类加载器 $L$可以通过以下两种方式来创建$C$：</p>
 <ul>
-<li>直接定义$C$</li>
+<li>直接定义$C$    </li>
 <li>委托给另一个class loader</li>
 </ul>
 <p>如果$L$委托了另一个class loader来加载$C$，则说$L$启动了$C$的加载（$L$ <em>initiates loading of</em> $C$），或者等价地说，$L$是$C$的<code>initiating loader</code>。$N^L$ 表示由$L$ initiates loading的$C$。</p>
@@ -493,7 +490,10 @@
 </ul>
 </li>
 </ol>
-<h2 id="3-4-加载的限制"><a href="#3-4-加载的限制" class="headerlink" title="3.4 加载的限制"></a>3.4 加载的限制</h2><h2 id="3-5-从class文件表达形式中获得Class"><a href="#3-5-从class文件表达形式中获得Class" class="headerlink" title="3.5 从class文件表达形式中获得Class"></a>3.5 从class文件表达形式中获得<code>Class</code></h2><p>将一个非数组类型的class或者interface $C$ 记为 $N$，下面是用loader $L$从class文件格式中加载$C$为Class对象的步骤：</p>
+<h2 id="3-4-加载的约束"><a href="#3-4-加载的约束" class="headerlink" title="3.4 加载的约束"></a>3.4 加载的约束</h2><p>在class loader出现的时候，确保类型安全链接要特别小心。有可能存在这样一种情况：两个不同的class loader触发了由$N$表示的class or interface的加载，而$N$在每个class loader里可能表示了不同的class or interface。</p>
+<p style="color:red;font-size:30px;font-weight:BOLD">（TBD）</p>
+
+<h2 id="3-5-从class文件表达形式中获得Class"><a href="#3-5-从class文件表达形式中获得Class" class="headerlink" title="3.5 从class文件表达形式中获得Class"></a>3.5 从class文件表达形式中获得<code>Class</code></h2><p>将一个非数组类型的class或者interface $C$ 记为 $N$，下面是用loader $L$从class文件格式中加载$C$为Class对象的步骤：</p>
 <ol>
 <li>JVM判断$L$是否已经被标记为$N$的initiating loader，如果是，创建过程将不可用，并且抛出<code>LinkageError</code></li>
 <li>否则，JVM尝试解析给出的表达。但是，给出的表达不一定是$C$的一个有效的表达。这个加载阶段必须检查以下错误：<ul>
@@ -514,7 +514,26 @@
 </li>
 <li>JVM将$C$标记为拥有$L$作为其defining class loader，并且标记$L$是$C$的initiating loader</li>
 </ol>
-<h1 id="4-链接（Linking）"><a href="#4-链接（Linking）" class="headerlink" title="4 链接（Linking）"></a>4 链接（Linking）</h1><h2 id="4-1-验证（Verification）"><a href="#4-1-验证（Verification）" class="headerlink" title="4.1 验证（Verification）"></a>4.1 验证（Verification）</h2><h2 id="4-2-准备（Preparation）"><a href="#4-2-准备（Preparation）" class="headerlink" title="4.2 准备（Preparation）"></a>4.2 准备（Preparation）</h2><p>准备阶段包括创建class or interface的static fields，并初始化默认值。这个过程不需要执行任何JVM代码。静态字段的显式初始值设定是作为初始化的一部分执行，而不是准备阶段。</p>
+<h1 id="4-链接（Linking）"><a href="#4-链接（Linking）" class="headerlink" title="4 链接（Linking）"></a>4 链接（Linking）</h1><p>链接一个class或者interface包括<strong>验证</strong>和<strong>准备</strong>阶段，涉及到的对象有：</p>
+<ul>
+<li>该class或interface本身</li>
+<li>其直接父类</li>
+<li>其直接父接口</li>
+<li>如果这是数组类型，还涉及其元素类型</li>
+</ul>
+<p>解析class或interface中的符号链接是链接阶段可选的一部分。</p>
+<p>该规范允许实现的灵活性，以便在链接活动（以及由于递归、加载）发生时，只要保持以下所有属性：</p>
+<ul>
+<li>一个class或interface在链接前要被完全加载</li>
+<li>一个class或interface在初始化前要被完全验证</li>
+<li>程序执行的一些操作可能直接或间接地要求链接涉及错误的class或interface，当这些错误被检测到时，必须在发生这些操作的地方抛出这些错误。</li>
+</ul>
+<p>例如，一个JVM实现可能选择在使用到一个class或interface的时候才去解析其中的每个符号链接（懒加载或者延迟加载，”lazy” or “late” resolution），或者在验证class的时候一次性解析其中所有的符号链接（”eager” or “static” resolution）。这意味着在某些实现中，在class或interface初始化之后还有可能继续执行解析过程。无论采用哪种策略，在解析期间检测到的任何错误都必须在程序中的使用对class或interface的符号引用的地方抛出，不论是直接还是间接地使用到。</p>
+<p>由于链接阶段涉及到新数据结构的分配（allocation），有可能因<code>OutOfMEmoryError</code>而失败。</p>
+<h2 id="4-1-验证（Verification）"><a href="#4-1-验证（Verification）" class="headerlink" title="4.1 验证（Verification）"></a>4.1 验证（Verification）</h2><p>验证阶段确保了class或interface的二进制表达在结构上是正确的。验证阶段有可能引起其他类或接口被加载，但是不需要导致它们被验证或者准备。</p>
+<p>如果class或interface的二进制表达不满足<a href="/2018/03/10/java-class-file-format/#ConstraintsOnJavaVirtualMachineCode">The class File Format - Constraints on Java Virtual Machine Code</a>中列出的静态约束或结构型约束，那么在程序中导致class或interface被校验的地方必须要抛出<code>VerifyError</code>。</p>
+<p>如果因为抛出了LinkageError（或子类）实例错误导致JVM尝试验证class或interface失败，则随后尝试验证class或interface始终会失败，并抛出相同的错误 作为初步验证尝试的结果。</p>
+<h2 id="4-2-准备（Preparation）"><a href="#4-2-准备（Preparation）" class="headerlink" title="4.2 准备（Preparation）"></a>4.2 准备（Preparation）</h2><p>准备阶段包括创建class or interface的static fields，并初始化默认值。这个过程不需要执行任何JVM代码。静态字段的显式初始值设定是作为初始化的一部分执行，而不是准备阶段。</p>
 <p>在class or interface $C$ 的准备阶段，JVM有以下约束：</p>
 <p>令$L_1$为$C$的defining loader，$m$为$C$中覆盖自父类或者父接口&lt;$D, L_2$&gt;的方法，对于每个$m$，令其返回值为$T_r$，形参为$T_{f_1},…,T_{f_n}$，那么：</p>
 <ul>
@@ -522,9 +541,126 @@
 <li>对于$i=1, …, n$，如果$T_{f_i}$不是数组类型，令$T_i$为$T_{f_i}$；否则令$T_i$为$T_{f_i}$的元素类型</li>
 </ul>
 <p>则有：<br>$$ {T_i}^{L_1} = {T_i}^{L_2}, i=0, …, n $$</p>
-<p>更进一步，如果$C$实现了父接口&lt;$I, L_3$&gt;中的方法$m$，但是$C$没有声明方法$m$，但是$C$的父类&lt;$D, L_2$&gt;声明了方法$m$的实现，则有以下约束：</p>
+<p>更进一步的情况，如果$C$实现了父接口&lt;$I, L_3$&gt;中的方法$m$，但是$C$没有声明方法$m$，但是$C$的父类&lt;$D, L_2$&gt;声明了方法$m$的实现，则有以下约束：</p>
 <p>$m$的返回类型记为$T_r$，$m$的形参类型记为$T_{f1}, …, T_{fn}$，则：<br>如果$T_r$不是数组类型，令$T_0$为$T_r$，否则令$T_0$为$T_r$的元素类型（element type）。<br>对于所有$i=0, …, n$：如果$T_{fi}$不是数组类型，则$T_i$为$T_{fi}$，否则$T_i$为$T_{fi}$的元素类型。<br>那么有<br>$$ {T_i}^{L_2}={T_i}^{L_3}, i=0, …, n $$</p>
-<h2 id="4-3-解析（Resolution）"><a href="#4-3-解析（Resolution）" class="headerlink" title="4.3 解析（Resolution）"></a>4.3 解析（Resolution）</h2><h2 id="4-4-访问控制（Access-Control）"><a href="#4-4-访问控制（Access-Control）" class="headerlink" title="4.4 访问控制（Access Control）"></a>4.4 访问控制（Access Control）</h2><h2 id="4-5-覆盖（Overriding）"><a href="#4-5-覆盖（Overriding）" class="headerlink" title="4.5 覆盖（Overriding）"></a>4.5 覆盖（Overriding）</h2><h1 id="5-初始化（Initialization）"><a href="#5-初始化（Initialization）" class="headerlink" title="5 初始化（Initialization）"></a>5 初始化（Initialization）</h1><h1 id="6-绑定本地方法实现"><a href="#6-绑定本地方法实现" class="headerlink" title="6 绑定本地方法实现"></a>6 绑定本地方法实现</h1><h1 id="7-JVM-Exit"><a href="#7-JVM-Exit" class="headerlink" title="7 JVM Exit"></a>7 JVM Exit</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<h2 id="4-3-解析（Resolution）"><a href="#4-3-解析（Resolution）" class="headerlink" title="4.3 解析（Resolution）"></a>4.3 解析（Resolution）</h2><p>以下JVM指令对运行时常量池做了符号引用，执行任何这些指令都需要解析其符号引用：<br><code>anewarray</code>, <code>checkcast</code>, <code>getfield</code>, <code>getstatic</code>, <code>instanceof</code>, <code>invokedynamic</code>, <code>invokeinterface</code>, <code>invokespecial</code>, <code>invokestatic</code>, <code>invokevirtual</code>, <code>ldc</code>, <code>ldc_w</code>, <code>multianewarray</code>, <code>new</code>, <code>putfield</code>, and <code>putstatic</code>。</p>
+<p>解析是从运行时常量池中的符号引用中动态确定具体值的过程。</p>
+<p>解析某次出现的invokedynamic指令中的符号引用并不意味着该符号引用对于其它任何invokedynamic指令来说都被解析了。</p>
+<p>对于其他指令来说，解析了某次出现的指令中的符号引用，确实意味着该符号应用对于其他任意的非invokedynamic指令来说都视为被解析了。</p>
+<p>上文的意思是，由一个特定的invokedynamic指令确定的具体值是一个绑定到该特定invokedynamic指令的<code>call site object</code>。</p>
+<p style="color:red;font-size:30px;font-weight:BOLD">（TBD）</p>
+
+<p>下面部分阐述对一个class或interface $D$所引用的、尚在运行时常量池中的符号引用的解析过程。符号引用的类型不同，解析的细节也不同。</p>
+<h3 id="4-3-1-Class-and-Interface-Resolution-类和接口解析"><a href="#4-3-1-Class-and-Interface-Resolution-类和接口解析" class="headerlink" title="4.3.1 Class and Interface Resolution 类和接口解析"></a>4.3.1 Class and Interface Resolution 类和接口解析</h3><p><span id="ClassAndInterfaceResolution"></span></p>
+<p>执行以下步骤来将$D$所引用的、未解析的符号引用解析为由$N$表示的class或interface $C$：</p>
+<ol>
+<li>用$D$的defining class loader来创建由$N$表示的class或interface，细节在<a href="#creationAndLoading">第三节（Creation and Loading）</a>给出了。<br> 在创建过程中抛出的任何作为失败结果的exception都可以作为解析过程的失败结果抛出。</li>
+<li>如果$C$是数组类并且其元素类型是一个引用类型，则递归地调用<a href="#ClassAndInterfaceResolution">上一小节（Class and Interface Resolution）</a>中的算法来解析其元素类型的符号引用。</li>
+<li>最后，检查$C$的访问授权：<ul>
+<li>如果$C$不能被$D$访问，抛出<code>IllegalAccessError</code><br>  这种情况举例：如果$C$这个类本来是被声明为public的，但是在$D$编译完之后被改为了非public了。</li>
+</ul>
+</li>
+</ol>
+<p>如果第1、2步成功执行但是第3步失败了，$C$仍然是有效和可用的。尽管如此，这个解析过程也是失败了的，并且$D$也禁止访问$C$。</p>
+<h3 id="4-3-2-Field-Resolution-字段解析"><a href="#4-3-2-Field-Resolution-字段解析" class="headerlink" title="4.3.2 Field Resolution 字段解析"></a>4.3.2 Field Resolution 字段解析</h3><p>为了将$D$中未解析的符号引用解析为一个class或interface $C$中的一个字段（field），由字段引用（field reference）给出的到$C$的符号引用必须首先被解析（<a href="#ClassAndInterfaceResolution">4.3.1</a>）。</p>
+<p>在解析字段引用的时候，字段解析（field resolution）首先尝试查找在$C$及其父类中引用的字段：</p>
+<ol>
+<li>如果$C$使用了由字段引用指定的名称和描述符来声明一个字段，则字段查找（field lookup）成功。所声明的字段就是查找结果。</li>
+<li>否则，对$C$的直接父接口递归地进行字段查找。</li>
+<li>否则，如果$C$具有父类$S$，对$S$递归地进行字段查找。</li>
+<li>否则，字段查找失败。</li>
+</ol>
+<p>然后：</p>
+<ul>
+<li>如果字段查找失败了，字段解析抛出<code>NoSuchFieldError</code></li>
+<li>否则，如果字段查找成功了，但是$D$不能访问该引用字段，抛出<code>IllegalAccessError</code></li>
+<li>否则，令实际声明该引用字段的class或interface为&lt;$E, L_1$&gt;，令$L_2$为$D$的defining loading<br>  假设引用字段的类型为$T_f$，如果$T_f$不是数组类型，则$T$为$T_f$，如果$T_f$为数组类型，则$T$为$T_f$的元素类型。<br>  JVM必须保证$T^{L_1}=T^{L_2}$的约束。</li>
+</ul>
+<h3 id="4-3-3-Method-Resolution-方法解析"><a href="#4-3-3-Method-Resolution-方法解析" class="headerlink" title="4.3.3 Method Resolution 方法解析"></a>4.3.3 Method Resolution 方法解析</h3><p>为了将$D$中的符号引用解析为class $C$中的方法，由该方法引用给出的到$C$的符号引用要首先被解析（<a href="#ClassAndInterfaceResolution">4.3.1</a>）。</p>
+<p>当解析一个方法引用时：</p>
+<ol>
+<li>如果$C$是一个interface，抛出<code>IncompatibleClassChangeError</code></li>
+<li><p>否则，方法解析（method resolution）尝试在$C$及其父类中定位该引用方法：</p>
+<ul>
+<li><p>如果$C$刚好声明了一个由该方法引用指定的名字的方法，并且声明的方法是一个<em>signature polymorphic method</em>，那么方法查找成功。描述符中声明的所有类名都被解析了。</p>
+<blockquote>
+<p>The resolved method is the signature polymorphic method declaration. It is not necessary for C to declare a method with the descriptor specified by the method reference.</p>
+</blockquote>
+<p>  <strong>signature polymorphic method</strong>这个概念在<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>的 2.9 Special Methods 中定义：</p>
+<blockquote>
+<p>  A method is signature polymorphic if all of the following are true:<br>  • It is declared in the java.lang.invoke.MethodHandle class.<br>  • It has a single formal parameter of type Object[].<br>  • It has a return type of Object.<br>  • It has the ACC_VARARGS and ACC_NATIVE flags set.</p>
+</blockquote>
+</li>
+<li><p>否则，如果$C$用该方法引用指定的名字和描述符声明了一个方法，方法查找成功。</p>
+</li>
+<li>否则，如果$C$有父类，对$C$的直接父类递归地调用步骤2。</li>
+</ul>
+</li>
+<li>否则，方法解析尝试在$C$的父接口中定位引用方法：<ul>
+<li>If the maximally-specific superinterface methods of C for the name and descriptor specified by the method reference include exactly one method that does not have its <code>ACC_ABSTRACT</code> flag set, then this method is chosen and method lookup succeeds.</li>
+<li>Otherwise, if any superinterface of C declares a method with the name and descriptor specified by the method reference that has neither its <code>ACC_PRIVATE</code> flag nor its <code>ACC_STATIC</code> flag set, one of these is arbitrarily chosen and method lookup succeeds.</li>
+<li>Otherwise, method lookup fails.</li>
+</ul>
+</li>
+</ol>
+<p>A maximally-specific superinterface method of a class or interface $C$ for a particular method name and descriptor is any method for which all of the following are true:</p>
+<ul>
+<li>The method is declared in a superinterface (direct or indirect) of $C$.</li>
+<li>The method is declared with the specified name and descriptor.</li>
+<li>The method has neither its <code>ACC_PRIVATE</code> flag nor its <code>ACC_STATIC</code> flag set.</li>
+<li>Where the method is declared in interface I, there exists no other maximally- specific superinterface method of $C$ with the specified name and descriptor that is declared in a subinterface of $I$.</li>
+</ul>
+<p>The result of method resolution is determined by whether method lookup succeeds or fails:</p>
+<ul>
+<li>If method lookup fails, method resolution throws a <code>NoSuchMethodError</code>.</li>
+<li>Otherwise, if method lookup succeeds and the referenced method is not<br>accessible (§5.4.4) to $D$, method resolution throws an <code>IllegalAccessError</code>.</li>
+<li><p>Otherwise,let&lt;$E,L_1$&gt;be the class or interface in which the referenced method $m$ is actually declared, and let $L_2$ be the defining loader of $D$.<br>  Given that the return type of $m$ is $T_r$, and that the formal parameter types of $m$<br>are $T_{f_1}, …, T_{f_n}$, then:<br>  If $T_r$ is not an array type, let $T_0$ be $T_r$; otherwise, let $T_0$ be the element type (§2.4) of $T_r$.<br>  For $i = 1, …, n$: If $T_{f_i}$ is not an array type, let $T_i$ be $T_{f_i}$; otherwise, let $T_i$ be the element type (§2.4) of $T_{f_i}$.<br>  The Java Virtual Machine must impose the loading constraints $T^{L_1} = T^{L_2}$ for $i = 0, …, n$ (§5.3.4).<br>  When resolution searches for a method in the class’s superinterfaces, the best outcome is to identify a maximally-specific non-<code>abstract</code> method. It is possible that this method will be chosen by method selection, so it is desirable to add class loader constraints for it.<br>  Otherwise, the result is nondeterministic. This is not new: <em>The Java<sup>®</sup> Virtual Machine Specification</em> has never identified exactly which method is chosen, and how “ties” should be broken. Prior to Java SE 8, this was mostly an unobservable distinction. However, beginning with Java SE 8, the set of interface methods is more heterogenous, so care must be taken to avoid problems with nondeterministic behavior. Thus:</p>
+<ul>
+<li>Superinterface methods that are <code>private</code> and <code>static</code> are ignored by resolution. This is consistent with the Java programming language, where such interface methods are not inherited.</li>
+<li><p>Any behavior controlled by the resolved method should not depend on whether the method is <code>abstract</code> or not.</p>
+<p>Note that if the result of resolution is an abstract method, the referenced class $C$ may be non-abstract. Requiring $C$ to be <code>abstract</code> would conflict with the nondeterministic choice of superinterface methods. Instead, resolution assumes that the run time class of the invoked object has a concrete implementation of the method.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3-4-Interface-Method-Resolution"><a href="#4-3-4-Interface-Method-Resolution" class="headerlink" title="4.3.4 Interface Method Resolution"></a>4.3.4 Interface Method Resolution</h3><p style="color:red;font-size:30px;font-weight:BOLD">（TBD）</p>
+
+<h3 id="4-3-5-Method-Type-and-Method-Handle-Resolution"><a href="#4-3-5-Method-Type-and-Method-Handle-Resolution" class="headerlink" title="4.3.5 Method Type and Method Handle Resolution"></a>4.3.5 Method Type and Method Handle Resolution</h3><p style="color:red;font-size:30px;font-weight:BOLD">（TBD）</p>
+
+<h3 id="4-3-6-Call-Site-Specifier-Resolution"><a href="#4-3-6-Call-Site-Specifier-Resolution" class="headerlink" title="4.3.6 Call Site Specifier Resolution"></a>4.3.6 Call Site Specifier Resolution</h3><p style="color:red;font-size:30px;font-weight:BOLD">（TBD）</p>
+
+
+<h2 id="4-4-访问控制（Access-Control）"><a href="#4-4-访问控制（Access-Control）" class="headerlink" title="4.4 访问控制（Access Control）"></a>4.4 访问控制（Access Control）</h2><p>当且仅当以下都为真时，class或interface $C$对class或interface $D$来说是可访问的：</p>
+<ul>
+<li>$C$为<code>public</code>；</li>
+<li>$C$和$D$是同一个运行时包（run-time package）的成员。</li>
+</ul>
+<p>当且仅当以下都为真时，一个字段或方法$R$对class或interface $D$来说是可访问的：</p>
+<ul>
+<li>$R$为<code>public</code>；</li>
+<li>$R$为<code>protected</code>并且在类$C$中被声明，同时$D$是$C$的子类或者是$C$本身。更进一步，如果$R$不是<code>static</code>的，指向$R$的符号引用必须包含指向类$T$的符号引用，这个$T$是$D$的子类或者是$D$的父类或者是$D$本身；</li>
+<li>$R$是<code>protected</code>的，或者具有默认的访问级别（即没有显式声明访问修饰符，非<code>public</code>、非<code>protected</code>、非<code>private</code>），并且和$D$是同一个运行时包（run-time package）的成员；</li>
+<li>$R$是<code>private</code>的并且在$D$里声明。</li>
+</ul>
+<p>上述访问控制的讨论省略了调用<code>protected</code>方法或者访问<code>protected</code>字段的目标的相关限制（目标必须是$D$或者是$D$的子类型）。这种约束是<a href="/2018/03/10/java-class-file-format/#VerificationOfClassFiles">验证阶段</a>的一部分，不是链接时的访问控制。</p>
+<h2 id="4-5-覆盖（Overriding）"><a href="#4-5-覆盖（Overriding）" class="headerlink" title="4.5 覆盖（Overriding）"></a>4.5 覆盖（Overriding）</h2><p>有$C$类中声明的实例方法$m_C$和$A$类中声明的另一个实例方法$m_A$，当$m_C$和$m_A$一样或者下列条件都为真时，我们说$m_C$覆盖了$m_A$：</p>
+<ul>
+<li>$C$是$A$的子类</li>
+<li>$m_C$和$m_A$具有同样的名称和描述符</li>
+<li>$M_C$没有标记为<code>ACC_PRIVATE</code></li>
+<li>以下其中一个为真：<ul>
+<li>$m_A$被标记为<code>ACC_PUBLIC</code>；或者被标记为<code>ACC_PROTECTED</code>；或者都没有标记为<code>ACC_PUBLIC</code>、<code>ACC_PROTECTED</code>、<code>ACC_PRIVATE</code>并且$A$和$C$属于同一个运行时包。</li>
+<li>$m_C$覆盖了方法$m’$（$m’$与$m_C$和$m_A$都不同），而$m’$覆盖了$m_A$</li>
+</ul>
+</li>
+</ul>
+<h1 id="5-初始化（Initialization）"><a href="#5-初始化（Initialization）" class="headerlink" title="5 初始化（Initialization）"></a>5 初始化（Initialization）</h1><p style="color:red;font-size:30px;font-weight:BOLD">（TBD）</p>
+
+<h1 id="6-绑定本地方法实现（Binding-Native-Method-Implementations）"><a href="#6-绑定本地方法实现（Binding-Native-Method-Implementations）" class="headerlink" title="6 绑定本地方法实现（Binding Native Method Implementations）"></a>6 绑定本地方法实现（Binding Native Method Implementations）</h1><p>绑定是这样一个过程：一种用Java以外的语言编写的、实现本地方法的函数被集成到JVM中以便执行。</p>
+<p>虽然这个过程通常被称为链接，但术语『绑定』在这个规范中用来避免与JVM的类或接口链接混淆。</p>
+<h1 id="7-JVM-Exit"><a href="#7-JVM-Exit" class="headerlink" title="7 JVM Exit"></a>7 JVM Exit</h1><p>某个线程调用了<strong><code>Runtime</code>或<code>System</code>类的<code>exit</code></strong>方法或者<strong><code>Runtime</code>类的<code>halt</code></strong>方法、并且<code>exit</code>或<code>halt</code>操作得到了安全管理器（security manager）的准许时，JVM退出。</p>
+<p>另外，JNI（Java Native Interface）规范描述了当JNI Invocation API被用于加载和卸载JVM时JVM的终止。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a></li>
 </ul>
 
@@ -723,7 +859,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-概述"><span class="nav-number">1.</span> <span class="nav-text">0 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-运行时常量池（Run-Time-Constant-Pool）"><span class="nav-number">2.</span> <span class="nav-text">1 运行时常量池（Run-Time Constant Pool）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-JVM启动"><span class="nav-number">3.</span> <span class="nav-text">2 JVM启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-创建和加载（Creation-and-Loading）"><span class="nav-number">4.</span> <span class="nav-text">3 创建和加载（Creation and Loading）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#符号约定"><span class="nav-number">4.1.</span> <span class="nav-text">符号约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-用Bootstrap-Class-Loader加载"><span class="nav-number">4.2.</span> <span class="nav-text">3.1 用Bootstrap Class Loader加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-用User-defined-Class-Loader加载"><span class="nav-number">4.3.</span> <span class="nav-text">3.2 用User-defined Class Loader加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-创建数组类（Array-Classes）"><span class="nav-number">4.4.</span> <span class="nav-text">3.3 创建数组类（Array Classes）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-加载的限制"><span class="nav-number">4.5.</span> <span class="nav-text">3.4 加载的限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-从class文件表达形式中获得Class"><span class="nav-number">4.6.</span> <span class="nav-text">3.5 从class文件表达形式中获得Class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-链接（Linking）"><span class="nav-number">5.</span> <span class="nav-text">4 链接（Linking）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-验证（Verification）"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 验证（Verification）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-准备（Preparation）"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 准备（Preparation）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-解析（Resolution）"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 解析（Resolution）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-访问控制（Access-Control）"><span class="nav-number">5.4.</span> <span class="nav-text">4.4 访问控制（Access Control）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-覆盖（Overriding）"><span class="nav-number">5.5.</span> <span class="nav-text">4.5 覆盖（Overriding）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-初始化（Initialization）"><span class="nav-number">6.</span> <span class="nav-text">5 初始化（Initialization）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-绑定本地方法实现"><span class="nav-number">7.</span> <span class="nav-text">6 绑定本地方法实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-JVM-Exit"><span class="nav-number">8.</span> <span class="nav-text">7 JVM Exit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">9.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-概述"><span class="nav-number">1.</span> <span class="nav-text">0 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-运行时常量池（Run-Time-Constant-Pool）"><span class="nav-number">2.</span> <span class="nav-text">1 运行时常量池（Run-Time Constant Pool）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-JVM启动"><span class="nav-number">3.</span> <span class="nav-text">2 JVM启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-创建和加载（Creation-and-Loading）"><span class="nav-number">4.</span> <span class="nav-text">3 创建和加载（Creation and Loading）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#符号约定"><span class="nav-number">4.1.</span> <span class="nav-text">符号约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-用Bootstrap-Class-Loader加载"><span class="nav-number">4.2.</span> <span class="nav-text">3.1 用Bootstrap Class Loader加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-用User-defined-Class-Loader加载"><span class="nav-number">4.3.</span> <span class="nav-text">3.2 用User-defined Class Loader加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-创建数组类（Array-Classes）"><span class="nav-number">4.4.</span> <span class="nav-text">3.3 创建数组类（Array Classes）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-加载的约束"><span class="nav-number">4.5.</span> <span class="nav-text">3.4 加载的约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-从class文件表达形式中获得Class"><span class="nav-number">4.6.</span> <span class="nav-text">3.5 从class文件表达形式中获得Class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-链接（Linking）"><span class="nav-number">5.</span> <span class="nav-text">4 链接（Linking）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-验证（Verification）"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 验证（Verification）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-准备（Preparation）"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 准备（Preparation）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-解析（Resolution）"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 解析（Resolution）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1-Class-and-Interface-Resolution-类和接口解析"><span class="nav-number">5.3.1.</span> <span class="nav-text">4.3.1 Class and Interface Resolution 类和接口解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-2-Field-Resolution-字段解析"><span class="nav-number">5.3.2.</span> <span class="nav-text">4.3.2 Field Resolution 字段解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-3-Method-Resolution-方法解析"><span class="nav-number">5.3.3.</span> <span class="nav-text">4.3.3 Method Resolution 方法解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-4-Interface-Method-Resolution"><span class="nav-number">5.3.4.</span> <span class="nav-text">4.3.4 Interface Method Resolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-5-Method-Type-and-Method-Handle-Resolution"><span class="nav-number">5.3.5.</span> <span class="nav-text">4.3.5 Method Type and Method Handle Resolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-6-Call-Site-Specifier-Resolution"><span class="nav-number">5.3.6.</span> <span class="nav-text">4.3.6 Call Site Specifier Resolution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-访问控制（Access-Control）"><span class="nav-number">5.4.</span> <span class="nav-text">4.4 访问控制（Access Control）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-覆盖（Overriding）"><span class="nav-number">5.5.</span> <span class="nav-text">4.5 覆盖（Overriding）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-初始化（Initialization）"><span class="nav-number">6.</span> <span class="nav-text">5 初始化（Initialization）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-绑定本地方法实现（Binding-Native-Method-Implementations）"><span class="nav-number">7.</span> <span class="nav-text">6 绑定本地方法实现（Binding Native Method Implementations）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-JVM-Exit"><span class="nav-number">8.</span> <span class="nav-text">7 JVM Exit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">9.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
