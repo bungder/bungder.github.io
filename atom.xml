@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2018-03-12T07:58:55.004Z</updated>
+  <updated>2018-03-12T08:01:48.715Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://bungder.github.io/2018/03/12/jvm-run-time-data-area/"/>
     <id>http://bungder.github.io/2018/03/12/jvm-run-time-data-area/</id>
     <published>2018-03-12T07:51:06.000Z</published>
-    <updated>2018-03-12T07:58:55.004Z</updated>
+    <updated>2018-03-12T08:01:48.715Z</updated>
     
     <content type="html"><![CDATA[<p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
 <p><img src="http://otlnkjq1m.bkt.clouddn.com/5aa625a0eb085226a9000001.png" alt=""><br>JVM Specification定义的运行时数据区域模型↑↑↑</p>
@@ -128,7 +128,9 @@
     </summary>
     
     
-      <category term="Java JVM" scheme="http://bungder.github.io/tags/Java-JVM/"/>
+      <category term="Java" scheme="http://bungder.github.io/tags/Java/"/>
+    
+      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
     
   </entry>
   
@@ -137,7 +139,7 @@
     <link href="http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/"/>
     <id>http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/</id>
     <published>2018-03-09T17:08:12.000Z</published>
-    <updated>2018-03-11T15:35:17.885Z</updated>
+    <updated>2018-03-12T08:01:51.802Z</updated>
     
     <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
@@ -437,7 +439,9 @@
     </summary>
     
     
-      <category term="Java JVM" scheme="http://bungder.github.io/tags/Java-JVM/"/>
+      <category term="Java" scheme="http://bungder.github.io/tags/Java/"/>
+    
+      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
     
   </entry>
   
@@ -446,7 +450,7 @@
     <link href="http://bungder.github.io/2018/03/10/java-class-file-format/"/>
     <id>http://bungder.github.io/2018/03/10/java-class-file-format/</id>
     <published>2018-03-09T17:02:29.000Z</published>
-    <updated>2018-03-12T07:24:51.385Z</updated>
+    <updated>2018-03-12T08:01:42.577Z</updated>
     
     <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <hr>
@@ -803,7 +807,9 @@
     </summary>
     
     
-      <category term="Java JVM" scheme="http://bungder.github.io/tags/Java-JVM/"/>
+      <category term="Java" scheme="http://bungder.github.io/tags/Java/"/>
+    
+      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
     
   </entry>
   
@@ -1244,9 +1250,9 @@
     </summary>
     
     
-      <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
-    
       <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+      <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
     
   </entry>
   
