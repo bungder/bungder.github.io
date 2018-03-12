@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2018-03-12T07:57:34.804Z</updated>
+  <updated>2018-03-12T07:58:55.004Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -20,11 +20,12 @@
     <link href="http://bungder.github.io/2018/03/12/jvm-run-time-data-area/"/>
     <id>http://bungder.github.io/2018/03/12/jvm-run-time-data-area/</id>
     <published>2018-03-12T07:51:06.000Z</published>
-    <updated>2018-03-12T07:57:34.804Z</updated>
+    <updated>2018-03-12T07:58:55.004Z</updated>
     
     <content type="html"><![CDATA[<p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
 <p><img src="http://otlnkjq1m.bkt.clouddn.com/5aa625a0eb085226a9000001.png" alt=""><br>JVM Specification定义的运行时数据区域模型↑↑↑</p>
 <p>其中，方法区所属的区域并没有强制要求。不同的JVM实现，其内存分布细节会不同。</p>
+<a id="more"></a>
 <h1 id="1-PCR（程序计数寄存器-The-Program-Counter-Register）"><a href="#1-PCR（程序计数寄存器-The-Program-Counter-Register）" class="headerlink" title="1 PCR（程序计数寄存器 The Program Counter Register）"></a>1 PCR（程序计数寄存器 The Program Counter Register）</h1><blockquote>
 <p>The Java Virtual Machine can support many threads of execution at once (JLS §17). Each Java Virtual Machine thread has its own pc (program counter) register. At any point, each Java Virtual Machine thread is executing the code of a single method, namely the $current method$ (§2.6) for that thread. </p>
 <ul>
@@ -120,7 +121,9 @@
     
     <summary type="html">
     
-      &lt;p&gt;根据 &lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;The Java&lt;sup&gt;&amp;reg;&lt;/sup&gt; Virtual Mach
+      &lt;p&gt;根据 &lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;The Java&lt;sup&gt;&amp;reg;&lt;/sup&gt; Virtual Machine Specification - Java SE 8 Edition&lt;/a&gt;，可以整理出其定义的JVM内存结构如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://otlnkjq1m.bkt.clouddn.com/5aa625a0eb085226a9000001.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;JVM Specification定义的运行时数据区域模型↑↑↑&lt;/p&gt;
+&lt;p&gt;其中，方法区所属的区域并没有强制要求。不同的JVM实现，其内存分布细节会不同。&lt;/p&gt;
     
     </summary>
     

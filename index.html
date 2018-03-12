@@ -376,103 +376,16 @@
 
       
         
-          
-            <p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
+          <p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
 <p><img src="http://otlnkjq1m.bkt.clouddn.com/5aa625a0eb085226a9000001.png" alt=""><br>JVM Specification定义的运行时数据区域模型↑↑↑</p>
 <p>其中，方法区所属的区域并没有强制要求。不同的JVM实现，其内存分布细节会不同。</p>
-<h1 id="1-PCR（程序计数寄存器-The-Program-Counter-Register）"><a href="#1-PCR（程序计数寄存器-The-Program-Counter-Register）" class="headerlink" title="1 PCR（程序计数寄存器 The Program Counter Register）"></a>1 PCR（程序计数寄存器 The Program Counter Register）</h1><blockquote>
-<p>The Java Virtual Machine can support many threads of execution at once (JLS §17). Each Java Virtual Machine thread has its own pc (program counter) register. At any point, each Java Virtual Machine thread is executing the code of a single method, namely the $current method$ (§2.6) for that thread. </p>
-<ul>
-<li>If that method is <strong>not native</strong>, the pc register contains the <strong>address</strong> of the Java Virtual Machine instruction currently being executed. </li>
-<li>If the method currently being executed by the thread is <strong>native</strong>, the value of the Java Virtual Machine’s pc register is <strong>undefined</strong>. The Java Virtual Machine’s pc register is wide enough to hold a returnAddress or a native pointer on the specific platform.</li>
-</ul>
-</blockquote>
-<h1 id="2-JVM-Stack"><a href="#2-JVM-Stack" class="headerlink" title="2 JVM Stack"></a>2 JVM Stack</h1><h2 id="2-1-Frames-栈帧"><a href="#2-1-Frames-栈帧" class="headerlink" title="2.1 Frames 栈帧"></a>2.1 Frames 栈帧</h2><blockquote>
-<p>A $frame$ is used to store data and partial results, as well as to perform dynamic linking, return values for methods, and dispatch exceptions.</p>
-<p><strong>A new frame is created each time a method is invoked</strong>. <strong>A frame is destroyed when its method invocation completes, whether that completion is normal or abrupt</strong> (it throws an uncaught exception). Frames are <strong>allocated from the Java Virtual Machine stack (§2.5.2) of the thread creating the frame</strong>. Each frame has its own <strong>array of local variables</strong> (§2.6.1), its own <strong>operand stack</strong> (§2.6.2), and <strong>a reference to the run- time constant pool (§2.5.5) of the class of the current method</strong>.<br>The sizes of the local variable array and the operand stack are determined at compile-time and are supplied along with the code for the method associated with the frame (§4.7.3). Thus the size of the frame data structure depends only on the implementation of the Java Virtual Machine, and the memory for these structures can be allocated simultaneously on method invocation.<br>Only one frame, the frame for the executing method, is active at any point in a given thread of control. This frame is referred to as the $current frame$, and its method is known as the $current method$. The class in which the current method is defined is the $current class$. Operations on local variables and the operand stack are typically with reference to the current frame.<br>A frame <strong>ceases to be current</strong> if its method <strong>invokes another method</strong> or if its <strong>method completes</strong>. When a method is invoked, a new frame is created and becomes current when control transfers to the new method. On method return, the current frame passes back the result of its method invocation, if any, to the previous frame. The current frame is then discarded as the previous frame becomes the current one.<br>Note that a frame created by a thread is local to that thread and cannot be referenced by any other thread.</p>
-</blockquote>
-<h3 id="2-1-1-Local-Variables-本地变量表"><a href="#2-1-1-Local-Variables-本地变量表" class="headerlink" title="2.1.1 Local Variables 本地变量表"></a>2.1.1 Local Variables 本地变量表</h3><p>A <strong>single</strong> local variable can hold a value of type </p>
-<ul>
-<li>boolean, </li>
-<li>byte, </li>
-<li>char, </li>
-<li>short, </li>
-<li>int, </li>
-<li>float, </li>
-<li>reference</li>
-<li>returnAddress. </li>
-</ul>
-<p>A <strong>pair</strong> of local variables can hold a value of type <strong>long</strong> or <strong>double</strong>.</p>
-<p>本地变量表通过索引来处理，第一个本地变量的下标（index）为0.</p>
-<blockquote>
-<p>The Java Virtual Machine uses local variables to pass parameters on method invocation. On class method invocation, any parameters are passed in consecutive local variables starting from local variable 0. On instance method invocation, local variable 0 is always used to pass a reference to the object on which the instance method is being invoked (<code>this</code> in the Java programming language). Any parameters are subsequently passed in consecutive local variables starting from local variable 1.</p>
-</blockquote>
-<p>Java虚拟机使用局部变量在方法调用上传递参数。 在<strong>类方法</strong>（静态方法）调用中，任何参数都是<strong>从局部变量0开始</strong>的连续局部变量中传递的。在<strong>实例方法</strong>调用中，局部变量0用于将引用（<code>this</code>）传递给调用者。 随后从局部变量1开始，连续的局部变量传递任何参数。</p>
-<h3 id="2-1-2-Operand-Stacks-操作数栈"><a href="#2-1-2-Operand-Stacks-操作数栈" class="headerlink" title="2.1.2 Operand Stacks 操作数栈"></a>2.1.2 Operand Stacks 操作数栈</h3><blockquote>
-<p>The maximum depth of the operand stack of a frame is determined at compile-time and is supplied along with the code for the method associated with the frame</p>
-</blockquote>
-<p>用处：</p>
-<blockquote>
-<p>The operand stack is empty when the frame that contains it is created. The Java Virtual Machine supplies instructions to <strong>load constants or values from local variables or fields onto the operand stack</strong>. Other Java Virtual Machine instructions <strong>take operands from the operand stack, operate on them, and push the result back onto the operand stack</strong>. The operand stack is also used to <strong>prepare parameters to be passed to methods</strong> and to <strong>receive method results</strong>.</p>
-</blockquote>
-<h3 id="2-1-3-Return-Value"><a href="#2-1-3-Return-Value" class="headerlink" title="2.1.3 Return Value"></a>2.1.3 Return Value</h3><h3 id="2-1-4-Dynamic-Linking"><a href="#2-1-4-Dynamic-Linking" class="headerlink" title="2.1.4 Dynamic Linking"></a>2.1.4 Dynamic Linking</h3><blockquote>
-<p>Each frame (§2.6) contains <strong>a reference to the run-time constant pool</strong> (§2.5.5) for the type of the current method to support $dynamic linking$ of the method code. The class file code for a method refers to methods to be invoked and variables to be accessed via symbolic references. Dynamic linking translates these symbolic method references into concrete method references, loading classes as necessary to resolve as-yet-undefined symbols, and translates variable accesses into appropriate offsets in storage structures associated with the run-time location of these variables.</p>
-</blockquote>
-<p><a href="http://ifeve.com/jvm-internals/" target="_blank" rel="external">JVM内部原理</a>:</p>
-<blockquote>
-<p><strong>每个栈帧都包含了运行时常量池的引用</strong>。这个引用指向了这个栈帧正在执行的方法所在的类的常量池，它对动态链接提供了支持。</p>
-<p>C/C++ 代码通常编译成一个对象文件，然后多个文件被链接起来生成一个可用的文件比如一个可执行文件或者动态链接库。在链接阶段，符号引用在每个对象文件里被替换成一个和最终执行相关的实际的内存地址。在Java里，这个链接过程在运行时是自动发生的。</p>
-<p>当Java文件被编译时，所有的变量和方法引用都作为符号引用保存在class文件的常量池里。一个符号引用是一个逻辑引用并不是一个实际的指向一个物理内存地址的引用。不同的JVM实现能选择什么时候去解决符号引用，它通常发生在class文件加载后的验证，加载完成，立即调用或者静态解析等阶段，另外一种发生的时候是当符号引用第一次被使用，也叫做延迟或者延期解析。无论如何当每个引用第一次使用的时候，JVM必须保证解析发生，并抛出任何解析错误。<strong>绑定是一个字段、方法或者类在符号引用被替换为直接引用的过程</strong>，这仅仅发生一次，因为符号引用是完全替换的。如果符号引用关联到某个类，而这个类却还没准备好，就会引发类加载。每个直接引用被保存为偏移地址而不是和变量或者方法在运行时的位置相关的存储结构。</p>
-</blockquote>
-<h1 id="3-Heap-堆"><a href="#3-Heap-堆" class="headerlink" title="3 Heap 堆"></a>3 Heap 堆</h1><blockquote>
-<p>The Java Virtual Machine has a heap that is <strong>shared among all Java Virtual Machine threads</strong>. The heap is the <strong>run-time data area from which memory for all class instances and arrays is allocated</strong>.<br>…<br><strong>Heap storage for objects is reclaimed by</strong> an automatic storage management system (known as a <strong>garbage collector</strong>); objects are never explicitly deallocated.</p>
-</blockquote>
-<p><a href="https://www.zhihu.com/question/49044988/answer/113961406" target="_blank" rel="external">https://www.zhihu.com/question/49044988/answer/113961406</a> 评论里：</p>
-<blockquote>
-<p>如果“堆”是说<strong>Java heap</strong>，那么这个也对也错。因为JVM规范对抽象的“Java heap”的定义是“存储Java对象的地方”，也就是说Java对象在哪里，哪里就是Java heap。HotSpot的PermGen里是会存储部分Java对象的，例如说一些java.lang.String实例。这些String实例占的部分就得算是Java heap。</p>
-<p>如果“堆”是说<strong>GC heap</strong>，那么这个错误。<strong>PermGen是HotSpot的GC heap的一部分</strong>。</p>
-<p>一般说“native memory”都是跟GC heap相对的，所以一般取上述后者的定义</p>
-</blockquote>
-<h1 id="4-Method-Area"><a href="#4-Method-Area" class="headerlink" title="4 Method Area"></a>4 Method Area</h1><p><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>:</p>
-<blockquote>
-<p>The Java Virtual Machine has a method area that <strong>is shared among all Java Virtual Machine threads</strong>.</p>
-<p>It stores per-class structures such as the <strong>run-time constant pool</strong>, <strong>field</strong> and <strong>method data</strong>, and <strong>the code for methods and constructors</strong>, including the special methods (§2.9) used in class and instance initialization and interface initialization.</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>Although the method area is logically part of the heap, simple implementations may choose not to either garbage collect or compact it. This specification does not mandate the location of the method area or the policies used to manage compiled code.</p>
-</blockquote>
-<p>尽管方法区域在逻辑上是堆的一部分，但是简单的实现可以选择不垃圾收集或压缩它。 本规范不要求方法区域的位置或用于管理编译代码的策略</p>
-<hr>
-<h2 id="4-1-Run-Time-Const-Pool"><a href="#4-1-Run-Time-Const-Pool" class="headerlink" title="4.1 Run-Time Const Pool"></a>4.1 Run-Time Const Pool</h2><blockquote>
-<p>A run-time constant pool is a <strong>per-class or per-interface</strong> run-time representation of the constant_pool table in a class file.<br>…<br>The run-time constant pool for a class or interface <strong>is constructed when the class or interface is created</strong> (§5.3) by the Java Virtual Machine.</p>
-</blockquote>
-<p>根据上面这段引用，可知以下几点：</p>
-<ol>
-<li>每个类（或者interface，为便于行文，下面都统称为类）对应一个run-time constant pool</li>
-<li>是class文件中constant_pool的运行时表达</li>
-<li>在类被JVM加载时创建</li>
-</ol>
-<p>那么，要理清其结构，需要先了解class文件的结构。可参见我的另一篇博文：<a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
-<p style="color:red;font-weight:bold">其余具体的存储结构，JVM规范并没有作进一步阐述。</p>
-
-<h2 id="4-2-Field"><a href="#4-2-Field" class="headerlink" title="4.2 Field"></a>4.2 Field</h2><p style="color:red;font-weight:bold">具体的存储结构，JVM规范并没有作进一步阐述。</p>
-
-<h2 id="4-3-Method-Data"><a href="#4-3-Method-Data" class="headerlink" title="4.3 Method Data"></a>4.3 Method Data</h2><p style="color:red;font-weight:bold">具体的存储结构，JVM规范并没有作进一步阐述。</p>
-
-<h2 id="4-4-Code"><a href="#4-4-Code" class="headerlink" title="4.4 Code"></a>4.4 Code</h2><p style="color:red;font-weight:bold">具体的存储结构，JVM规范并没有作进一步阐述。</p>
-
-<h1 id="5-Native-Method-Stacks"><a href="#5-Native-Method-Stacks" class="headerlink" title="5 Native Method Stacks"></a>5 Native Method Stacks</h1><blockquote>
-<p>Java Virtual Machine implementations that cannot load native methods and that do not themselves rely on conventional stacks need not supply native method stacks. If supplied, <strong>native method stacks are typically allocated per thread when each thread is created</strong>.</p>
-</blockquote>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="http://ifeve.com/jvm-internals/" target="_blank" rel="external">JVM内部原理 | 并发编程网 – ifeve.com</a></li>
-<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a></li>
-<li><a href="http://openjdk.java.net/jeps/122" target="_blank" rel="external">JEP 122: Remove the Permanent Generation</a></li>
-<li><a href="https://www.zhihu.com/question/49044988/answer/113961406" target="_blank" rel="external">方法区的Class信息,又称为永久代,是否属于Java堆？ - 知乎</a></li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/12/jvm-run-time-data-area/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
