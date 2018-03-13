@@ -450,7 +450,7 @@
     <link href="http://bungder.github.io/2018/03/10/java-class-file-format/"/>
     <id>http://bungder.github.io/2018/03/10/java-class-file-format/</id>
     <published>2018-03-09T17:02:29.000Z</published>
-    <updated>2018-03-12T09:18:19.368Z</updated>
+    <updated>2018-03-13T00:52:21.090Z</updated>
     
     <content type="html"><![CDATA[<h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <hr>
@@ -467,7 +467,7 @@
 <h2 id="1-1-magic"><a href="#1-1-magic" class="headerlink" title="1.1 magic"></a>1.1 magic</h2><p>魔法数字，用于标识class文件格式，固定为<code>0xCAFEBABE</code></p>
 <h2 id="1-2-minor-version-major-version"><a href="#1-2-minor-version-major-version" class="headerlink" title="1.2 minor_version, major_version"></a>1.2 minor_version, major_version</h2><p>minor_version和major_version组合到一起，决定了class文件格式的版本。</p>
 <p>假设class文件的major_version为$M$，minor_version为$m$，那么我们将class文件格式的版本记为$M.m$，因此，这个版本号可以按字典序排序，例如$1.5&lt;2.0&lt;2.1$。</p>
-<p>一个JVM的实现可以支持的class文件格式版本记为$v$，当且仅当v落在连续区间 $Mi.0 \leq v \leq Mj.m$ 时成立。</p>
+<p>一个JVM的实现可以支持的class文件格式版本记为$v$，当且仅当$v$落在连续区间 $M_i.0 \leq v \leq M_j.m$ 时成立。</p>
 <p>JVM实现所遵循的Java SE平台的<strong>release level</strong>决定了其支持范围。</p>
 <p>例如</p>
 <ul>
@@ -483,7 +483,7 @@
 <li>字段名</li>
 <li>其他常量。</li>
 </ul>
-<p>每个constant_pool表项的格式由第一个“标记(tag)”字节表示。<br>constant_pool表下标的取值范围是$[1, constant_pool_count)$</p>
+<p>每个constant_pool表项的格式由第一个“标记(tag)”字节表示。<br>constant_pool表下标的取值范围是$[1,\ constant\_pool\_count)$</p>
 <h2 id="1-5-access-flags"><a href="#1-5-access-flags" class="headerlink" title="1.5 access_flags"></a>1.5 access_flags</h2><p>access_flags 项的值是用于<strong>表示对此类或接口的访问权限和属性</strong>的标志的掩码。</p>
 <p>16bit</p>
 <table>
