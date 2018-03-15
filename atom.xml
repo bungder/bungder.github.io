@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2018-03-15T15:09:03.239Z</updated>
+  <updated>2018-03-15T15:12:51.228Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -20,11 +20,12 @@
     <link href="http://bungder.github.io/2018/03/15/websocket-abstract/"/>
     <id>http://bungder.github.io/2018/03/15/websocket-abstract/</id>
     <published>2018-03-15T14:53:40.000Z</published>
-    <updated>2018-03-15T15:09:03.239Z</updated>
+    <updated>2018-03-15T15:12:51.228Z</updated>
     
     <content type="html"><![CDATA[<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1 概念"></a>1 概念</h1><h2 id="1-1-comet"><a href="#1-1-comet" class="headerlink" title="1.1 comet"></a>1.1 comet</h2><p>天不生WS，万古如长夜。</p>
 <p>在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为<code>comet</code>。</p>
 <p>但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方案时需要去了解之外，这些技术感觉价值不大了，所以不展开说，如果读者有兴趣，可以根据关键词找资料去了解。</p>
+<a id="more"></a>
 <blockquote>
 <p>Comet is a web application model in which a long-held HTTPS request allows a web server to push data to a browser, without the browser explicitly requesting it</p>
 </blockquote>
@@ -316,7 +317,9 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot; class=&quot;headerlink&quot; title=&quot;1 概念&quot;&gt;&lt;/a&gt;1 概念&lt;/h1&gt;&lt;h2 id=&quot;1-1-comet&quot;&gt;&lt;a href=&quot;#1-1-comet&quot; class=&quot;headerlink&quot; title=
+      &lt;h1 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot; class=&quot;headerlink&quot; title=&quot;1 概念&quot;&gt;&lt;/a&gt;1 概念&lt;/h1&gt;&lt;h2 id=&quot;1-1-comet&quot;&gt;&lt;a href=&quot;#1-1-comet&quot; class=&quot;headerlink&quot; title=&quot;1.1 comet&quot;&gt;&lt;/a&gt;1.1 comet&lt;/h2&gt;&lt;p&gt;天不生WS，万古如长夜。&lt;/p&gt;
+&lt;p&gt;在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为&lt;code&gt;comet&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方案时需要去了解之外，这些技术感觉价值不大了，所以不展开说，如果读者有兴趣，可以根据关键词找资料去了解。&lt;/p&gt;
     
     </summary>
     
@@ -1603,9 +1606,9 @@
     </summary>
     
     
-      <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
-    
       <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
+    
+      <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
     
   </entry>
   
