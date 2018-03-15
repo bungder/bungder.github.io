@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="WebSocket," />
 
 
 
@@ -95,13 +95,24 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gordon">
-<meta property="og:url" content="http://bungder.github.io/index.html">
+<meta name="description" content="1 概念1.1 comet天不生WS，万古如长夜。 在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为comet。 但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方">
+<meta name="keywords" content="WebSocket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebSocket简介">
+<meta property="og:url" content="http://bungder.github.io/2018/03/15/websocket-abstract/index.html">
 <meta property="og:site_name" content="Gordon">
+<meta property="og:description" content="1 概念1.1 comet天不生WS，万古如长夜。 在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为comet。 但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/osi.png">
+<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/websocket-frame.png">
+<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/websocket-prototype.png">
+<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/server-client-sample.png">
+<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/not-suing-jsr356.png">
+<meta property="og:updated_time" content="2018-03-15T15:09:03.239Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gordon">
+<meta name="twitter:title" content="WebSocket简介">
+<meta name="twitter:description" content="1 概念1.1 comet天不生WS，万古如长夜。 在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为comet。 但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方">
+<meta name="twitter:image" content="http://otlnkjq1m.bkt.clouddn.com/osi.png">
 
 
 
@@ -129,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://bungder.github.io/"/>
+  <link rel="canonical" href="http://bungder.github.io/2018/03/15/websocket-abstract/"/>
 
 
 
 
 
-  <title>Gordon</title>
+  <title>WebSocket简介 | Gordon</title>
   
 
 
@@ -169,9 +180,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
-   page-home 
- ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -298,9 +307,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -326,9 +335,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/15/websocket-abstract/" itemprop="url">WebSocket简介</a></h1>
+          <h1 class="post-title" itemprop="name headline">WebSocket简介</h1>
         
 
         <div class="post-meta">
@@ -360,6 +367,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> PV
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
 
@@ -375,9 +387,7 @@
       
 
       
-        
-          
-            <h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1 概念"></a>1 概念</h1><h2 id="1-1-comet"><a href="#1-1-comet" class="headerlink" title="1.1 comet"></a>1.1 comet</h2><p>天不生WS，万古如长夜。</p>
+        <h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1 概念"></a>1 概念</h1><h2 id="1-1-comet"><a href="#1-1-comet" class="headerlink" title="1.1 comet"></a>1.1 comet</h2><p>天不生WS，万古如长夜。</p>
 <p>在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为<code>comet</code>。</p>
 <p>但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方案时需要去了解之外，这些技术感觉价值不大了，所以不展开说，如果读者有兴趣，可以根据关键词找资料去了解。</p>
 <blockquote>
@@ -668,884 +678,90 @@
 <li><a href="https://www.w3.org/TR/websockets/" target="_blank" rel="external">The WebSocket API</a></li>
 </ul>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Gordon
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://bungder.github.io/2018/03/15/websocket-abstract/" title="WebSocket简介">http://bungder.github.io/2018/03/15/websocket-abstract/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+    <li class="post-copyright-date">
+        2018-3-15 22:03
+    </li>
+  </ul>
+
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2018/03/12/jvm-run-time-data-area/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/12/jvm-run-time-data-area/" itemprop="url">JVM运行时数据区域</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T15:51:06+08:00">
-                2018-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/WebSocket/" rel="tag"># WebSocket</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
-<p><img src="http://otlnkjq1m.bkt.clouddn.com/runtime2.png" alt=""><br>JVM Specification定义的运行时数据区域模型↑↑↑</p>
-<p>其中，方法区所属的区域并没有强制要求。不同的JVM实现，其内存分布细节会不同。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/12/jvm-run-time-data-area/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/jvm-run-time-data-area/" rel="next" title="JVM运行时数据区域">
+                <i class="fa fa-chevron-left"></i> JVM运行时数据区域
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2018/03/10/jvm-loading-linking-initializing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/jvm-loading-linking-initializing/" itemprop="url">JVM加载、启动和初始化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T01:08:12+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
-<p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
-<hr>
-<ul>
-<li><strong>加载</strong>是这样一个过程：寻找一个特定名称的class或者interface的二进制表达形式（binary representation），然后从这个二进制表达形式中创建出一个class或者interface。</li>
-<li><strong>链接</strong>是这样一个过程：取得class或者interface，然后将其结合到JVM的运行时状态，使得它可以被执行。</li>
-<li><strong>初始化</strong>一个class或者interface的过程就是执行这个class或者interface的初始化方法<code>&lt;clinit&gt;</code>的过程。</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/10/jvm-loading-linking-initializing/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2018/03/10/java-class-file-format/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/java-class-file-format/" itemprop="url">Java class文件格式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T01:02:29+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
-<hr>
-<p>每一个class文件都包含了一个单独的class或者interface的定义。尽管一个class或者interface并不是有一个以文件形式存在的外部表达，但是下面还是通俗地将class或interface的任何有效表达称为类文件格式（<em>the class file format</em>）。</p>
-<p>一个类文件由一个<code>8位字节流</code>组成。 所有的16位，32位和64位量分别通过读取2、4、8个连续的8位字节来构造。 多字节数据项总是以<code>big-endian顺序</code>存储，其中高字节排在第一位。 在Java SE平台中，此格式由接口<code>java.io.DataInput</code>和<code>java.io.DataOutput</code>以及类如<code>java.io.DataInputStream</code>和<code>java.io.DataOutputStream</code>支持。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/10/java-class-file-format/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/08/31/druid-monitor-remould/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/31/druid-monitor-remould/" itemprop="url">Druid连接池监控的一次改造</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-31T01:32:07+08:00">
-                2017-08-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>druid本身提供了监控功能，具体在我另一篇博文《<a href="/2017/08/27/druid-monitor/">Druid连接池监控</a>》里有介绍。当时提到有以下缺陷：</p>
-<ol>
-<li>无法灵活监控多个目标</li>
-<li>切换环境不方便</li>
-<li>JMX重连不会成功</li>
-</ol>
-<p>因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：<br><a href="https://github.com/bungder/druid-aggregated-monitor" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor</a></p>
-<p>对应本文的版本，已经打了tag：<br><a href="https://github.com/bungder/druid-aggregated-monitor/releases/tag/0.0.1" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor/releases/tag/0.0.1</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/31/druid-monitor-remould/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/08/27/druid-monitor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/27/druid-monitor/" itemprop="url">Druid连接池监控</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T17:43:32+08:00">
-                2017-08-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-普通的web监控"><a href="#1-普通的web监控" class="headerlink" title="1. 普通的web监控"></a>1. 普通的web监控</h1><p>阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：<a href="https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE" target="_blank" rel="external">配置_StatViewServlet配置 · alibaba/driud wiki</a></p>
-<p>其实主要就是配置一个Servlet，但是github wiki上的做法只能在druid所在的项目中启用web服务的做法，在如今盛行的微服务架构中，很多时候druid所在的服务里并不提供web服务，这就需要额外的配置。其实druid本身也提供了这种功能，只是wiki里没有说。</p>
-<p>druid本身可以通过启用JMX端口来将监控数据传输到远端进行处理，具体做法是：</p>
-<ol>
-<li>在启动服务的时候加上JVM启动参数（下文说）</li>
-<li>在远端启用web服务，配置StatViewServlet，在initParam中指定JMX地址</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/27/druid-monitor/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/07/24/CI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/24/CI/" itemprop="url">持续集成简述</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T21:51:48+08:00">
-                2017-07-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>互联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
-<p>本文主要介绍持续集成的概念以及一些工具与实践。</p>
-<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2    概念"></a>2    概念</h1><p><img src="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation.png" alt="图2.1 持续集成概念示意图之一"><br>图2.1 持续集成概念示意图之一</p>
-<p>上图来源于<a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="external">谈谈持续集成，持续交付，持续部署之间的区别</a>，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成密切相关的概念还有持续交付、持续部署，因此在下文将会就这三个概念进行阐述。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/24/CI/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2017/07/24/REST/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gordon">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gordon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/24/REST/" itemprop="url">一种RESTful接口的约定</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T21:05:13+08:00">
-                2017-07-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-撰写目的"><a href="#1-1-撰写目的" class="headerlink" title="1.1 撰写目的"></a>1.1 撰写目的</h2><p>本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派（死板），在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远，而在书本以及网上大部分介绍RESTful的资料里，却都是这样的方案（URL命名风格、请求与响应的设计）。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇文章其实是旧文了，2016年年底就已经写好，但是一直躺在电脑的硬盘里，不想白费了当时的功夫，因此在此公开。</p>
-<h2 id="1-2-为什么采用REST"><a href="#1-2-为什么采用REST" class="headerlink" title="1.2    为什么采用REST"></a>1.2    为什么采用REST</h2><p>目的是为了服务端与客户端的解耦。SOA仅仅是从结构上将前后端分离，但是实际上数据逻辑还是没有实现解耦，服务端接口升级往往会影响客户端，两者的行为需要严格约定。而REST采用HTTP协议进行约定，客户端仅仅需要按照HTTP协议来理解服务端返回的数据，虽然与业务相关的数据结构还是需要约定，但是这确实进一步解耦了服务端与客户端。</p>
-<p>另外，由于严格遵照HTTP协议进行数据返回，对于安全的接口，可以在返回的Header里设置缓存策略（接口安全性的概念在下文会解释）。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/24/REST/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -1553,6 +769,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -1573,8 +793,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg"
@@ -1634,6 +863,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概念"><span class="nav-number">1.</span> <span class="nav-text">1 概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-comet"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 comet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-实现"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-1-Streaming"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1.1 Streaming</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-1-1-Hidden-iframe"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">1.1.1.1.1 Hidden iframe</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-1-2-XMLHttpRequest"><span class="nav-number">1.1.1.1.2.</span> <span class="nav-text">1.1.1.1.2 XMLHttpRequest</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-2-Ajax-Long-pulling"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.1.2 Ajax Long-pulling</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-2-1-XMLHttpRequest-long-polling"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">1.1.1.2.1 XMLHttpRequest long polling</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-1-2-2-Script-tag-long-polling"><span class="nav-number">1.1.1.2.2.</span> <span class="nav-text">1.1.1.2.2 Script tag long polling</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-WebSocket协议"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 WebSocket协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-握手"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 握手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-Frame"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 Frame</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-心跳"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2.3 心跳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-优点"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.2.4 优点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-API"><span class="nav-number">2.</span> <span class="nav-text">2 API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-JavaScript-API"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 JavaScript API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Java-API"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Java API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-Java-EE"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 Java EE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-非Java-EE"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 非Java EE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Fallback"><span class="nav-number">3.</span> <span class="nav-text">3 Fallback</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-sockjs"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 sockjs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-实现"><span class="nav-number">4.</span> <span class="nav-text">4 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Netty"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Netty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Undertow"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Undertow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-Jetty"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Jetty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-Vert-x"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Vert.x</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-Spray-WebSocket"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 Spray-WebSocket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-nodejs-websocket"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 nodejs-websocket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-7-Grizzly"><span class="nav-number">4.7.</span> <span class="nav-text">4.7 Grizzly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-8-Go"><span class="nav-number">4.8.</span> <span class="nav-text">4.8 Go</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-进一步封装的协议"><span class="nav-number">5.</span> <span class="nav-text">5 进一步封装的协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-STOMP"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 STOMP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-采用STOMP的理由"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1 采用STOMP的理由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-帧"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2 帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-Heart-beating"><span class="nav-number">5.1.3.</span> <span class="nav-text">5.1.3 Heart-beating</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-4-发布-订阅模型"><span class="nav-number">5.1.4.</span> <span class="nav-text">5.1.4 发布-订阅模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-5-事务"><span class="nav-number">5.1.5.</span> <span class="nav-text">5.1.5 事务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-SocketIO"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 SocketIO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-协议定义"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 协议定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-2-实现"><span class="nav-number">5.2.2.</span> <span class="nav-text">5.2.2 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-1-socket-io"><span class="nav-number">5.2.2.1.</span> <span class="nav-text">5.2.2.1 socket.io</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-2-netty-socketio"><span class="nav-number">5.2.2.2.</span> <span class="nav-text">5.2.2.2 netty-socketio</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-测试"><span class="nav-number">6.</span> <span class="nav-text">6 测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-FAQ"><span class="nav-number">7.</span> <span class="nav-text">7 FAQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-Socket和WebSocket有什么关系？"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 Socket和WebSocket有什么关系？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1768,10 +1013,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2018-03-13T05:08:57.049Z</updated>
+  <updated>2018-03-15T15:09:03.239Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -14,6 +14,316 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>WebSocket简介</title>
+    <link href="http://bungder.github.io/2018/03/15/websocket-abstract/"/>
+    <id>http://bungder.github.io/2018/03/15/websocket-abstract/</id>
+    <published>2018-03-15T14:53:40.000Z</published>
+    <updated>2018-03-15T15:09:03.239Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1 概念"></a>1 概念</h1><h2 id="1-1-comet"><a href="#1-1-comet" class="headerlink" title="1.1 comet"></a>1.1 comet</h2><p>天不生WS，万古如长夜。</p>
+<p>在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为<code>comet</code>。</p>
+<p>但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方案时需要去了解之外，这些技术感觉价值不大了，所以不展开说，如果读者有兴趣，可以根据关键词找资料去了解。</p>
+<blockquote>
+<p>Comet is a web application model in which a long-held HTTPS request allows a web server to push data to a browser, without the browser explicitly requesting it</p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Comet_(programming" target="_blank" rel="external">https://en.wikipedia.org/wiki/Comet_(programming)</a>)</p>
+<blockquote>
+<p>With long-polling we set the bar to cross-browser push. With XHR streaming and ActiveXObject(’htmlfile’) we raised it to cross-browser streaming. With SSE we’ve been trying to raise the bar to native, cross-browser streaming</p>
+</blockquote>
+<h3 id="1-1-1-实现"><a href="#1-1-1-实现" class="headerlink" title="1.1.1 实现"></a>1.1.1 实现</h3><h4 id="1-1-1-1-Streaming"><a href="#1-1-1-1-Streaming" class="headerlink" title="1.1.1.1 Streaming"></a>1.1.1.1 Streaming</h4><h5 id="1-1-1-1-1-Hidden-iframe"><a href="#1-1-1-1-1-Hidden-iframe" class="headerlink" title="1.1.1.1.1 Hidden iframe"></a>1.1.1.1.1 Hidden iframe</h5><h5 id="1-1-1-1-2-XMLHttpRequest"><a href="#1-1-1-1-2-XMLHttpRequest" class="headerlink" title="1.1.1.1.2 XMLHttpRequest"></a>1.1.1.1.2 XMLHttpRequest</h5><h4 id="1-1-1-2-Ajax-Long-pulling"><a href="#1-1-1-2-Ajax-Long-pulling" class="headerlink" title="1.1.1.2 Ajax Long-pulling"></a>1.1.1.2 Ajax Long-pulling</h4><h5 id="1-1-1-2-1-XMLHttpRequest-long-polling"><a href="#1-1-1-2-1-XMLHttpRequest-long-polling" class="headerlink" title="1.1.1.2.1 XMLHttpRequest long polling"></a>1.1.1.2.1 XMLHttpRequest long polling</h5><h5 id="1-1-1-2-2-Script-tag-long-polling"><a href="#1-1-1-2-2-Script-tag-long-polling" class="headerlink" title="1.1.1.2.2 Script tag long polling"></a>1.1.1.2.2 Script tag long polling</h5><h2 id="1-2-WebSocket协议"><a href="#1-2-WebSocket协议" class="headerlink" title="1.2 WebSocket协议"></a>1.2 WebSocket协议</h2><p>WebSocket是一种在单个TCP连接上进行全双工通讯的协议。是有别于HTTP的另一个TCP协议，它们都属于OSI模型中的第七层:</p>
+<p><img src="http://otlnkjq1m.bkt.clouddn.com/osi.png" alt=""></p>
+<p><a href="https://tools.ietf.org/html/rfc6455" target="_blank" rel="external"><strong>RFC 6455</strong></a> states that WebSocket “is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries” thus making it <strong>compatible with the HTTP</strong> protocol.</p>
+<p>原文为：</p>
+<blockquote>
+<p>The WebSocket Protocol attempts to address the<br>goals of existing bidirectional HTTP technologies in the context of<br>the existing HTTP infrastructure; as such, <b>it is designed to work<br>over HTTP ports 80 and 443 as well as to support HTTP proxies and<br>intermediaries</b>, even if this implies some complexity specific to the<br>current environment.</p>
+</blockquote>
+<h3 id="1-2-1-握手"><a href="#1-2-1-握手" class="headerlink" title="1.2.1 握手"></a>1.2.1 握手</h3><blockquote>
+<p>To establish a WebSocket connection, the client sends a WebSocket handshake request, for which the server returns a WebSocket handshake response, as shown in the example below:</p>
+</blockquote>
+<ul>
+<li><p>客户端请求</p>
+  <figure class="highlight http"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">GET</span> <span class="string">/</span> HTTP/1.1</div><div class="line"><span class="attribute">Upgrade</span>: websocket    </div><div class="line"><span class="attribute">Connection</span>: Upgrade</div><div class="line"><span class="attribute">Host</span>: example.com</div><div class="line"><span class="attribute">Origin</span>: http://example.com</div><div class="line"><span class="attribute">Sec-WebSocket-Key</span>: sN9cRrP/n9NdMgdcy2VJFQ==</div><div class="line"><span class="attribute">Sec-WebSocket-Version</span>: 13</div></pre></td></tr></table></figure>
+</li>
+<li><p>服务器回应</p>
+  <figure class="highlight http"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 <span class="number">101</span> Switching Protocols</div><div class="line"><span class="attribute">Upgrade</span>: websocket</div><div class="line"><span class="attribute">Connection</span>: Upgrade</div><div class="line"><span class="attribute">Sec-WebSocket-Accept</span>: fFBooB7FAkLlXgRSz0BT3v4hq5s=</div><div class="line"><span class="attribute">Sec-WebSocket-Location</span>: ws://example.com/</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>The handshake resembles HTTP in allowing servers to handle HTTP connections as well as WebSocket connections on the same port. Once the connection is established, communication switches to a bidirectional binary protocol which doesn’t conform to the HTTP protocol.</p>
+</blockquote>
+<h3 id="1-2-2-Frame"><a href="#1-2-2-Frame" class="headerlink" title="1.2.2 Frame"></a>1.2.2 Frame</h3><p>WebSocket传输的数据是基于帧的，一帧数据里包含两部分：数据主体和控制帧</p>
+<blockquote>
+<p>there are types for textual data (which is interpreted as UTF-8 [RFC3629]<br>text), binary data (whose interpretation is left up to the<br>application), and control frames (which are not intended to carry<br>data for the application but instead for protocol-level signaling,<br>such as to signal that the connection should be closed)</p>
+</blockquote>
+<p>为了避免混淆网络中间件（例如拦截代理）以及出于安全原因，</p>
+<ul>
+<li>客户端必须屏蔽（mask）所有发送给服务器的帧，如果服务器收到了未屏蔽的帧，必须关闭连接。在这种情况下，服务器可以发送一个<code>Close</code>帧，状态码为<code>1002</code>。</li>
+<li>服务器不能屏蔽任何发送给客户端的帧，如果客户端收到了屏蔽过的帧，必须关闭连接。这种情况下，也可以利用状态码<code>1002</code>。</li>
+<li></li>
+</ul>
+<p>基本的帧协议（The Base Framing Protocol）简单地定义以下部分：</p>
+<p>Frame：</p>
+<ul>
+<li>opcode：操作码，用于定义一个帧的类型</li>
+<li>Payload data<ul>
+<li>Extension data：<ul>
+<li>payload length：载荷长度</li>
+<li>designated locations：指定位置</li>
+</ul>
+</li>
+<li>Application Data</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://otlnkjq1m.bkt.clouddn.com/websocket-frame.png" alt=""></p>
+<h3 id="1-2-3-心跳"><a href="#1-2-3-心跳" class="headerlink" title="1.2.3 心跳"></a>1.2.3 心跳</h3><p>一端发送<code>Ping</code>帧，另一端发送<code>Pong</code>帧作为响应</p>
+<ul>
+<li>The <code>Ping</code> frame contains an opcode of <code>0x9</code>.</li>
+<li>The <code>Pong</code> frame contains an opcode of <code>0xA</code>.</li>
+</ul>
+<h3 id="1-2-4-优点"><a href="#1-2-4-优点" class="headerlink" title="1.2.4 优点"></a>1.2.4 优点</h3><blockquote>
+<ul>
+<li>较少的控制开销。在连接创建后，服务器和客户端之间交换数据时，用于协议控制的数据包头部相对较小。在不包含扩展的情况下，对于服务器到客户端的内容，此头部大小只有2至10字节（和数据包长度有关）；对于客户端到服务器的内容，此头部还需要加上额外的4字节的掩码。相对于HTTP请求每次都要携带完整的头部，此项开销显著减少了。</li>
+<li>更强的实时性。由于协议是全双工的，所以服务器可以随时主动给客户端下发数据。相对于HTTP请求需要等待客户端发起请求服务端才能响应，延迟明显更少；即使是和Comet等类似的长轮询比较，其也能在短时间内更多次地传递数据。</li>
+<li>保持连接状态。于HTTP不同的是，Websocket需要先创建连接，这就使得其成为一种有状态的协议，之后通信时可以省略部分状态信息。而HTTP请求可能需要在每个请求都携带状态信息（如身份认证等）。</li>
+<li>更好的二进制支持。Websocket定义了二进制帧，相对HTTP，可以更轻松地处理二进制内容。</li>
+<li>可以支持扩展。Websocket定义了扩展，用户可以扩展协议、实现部分自定义的子协议。如部分浏览器支持压缩等。</li>
+<li>更好的压缩效果。相对于HTTP压缩，Websocket在适当的扩展支持下，可以沿用之前内容的上下文，在传递类似的数据时，可以显著地提高压缩率。</li>
+</ul>
+</blockquote>
+<h1 id="2-API"><a href="#2-API" class="headerlink" title="2 API"></a>2 API</h1><h2 id="2-1-JavaScript-API"><a href="#2-1-JavaScript-API" class="headerlink" title="2.1 JavaScript API"></a>2.1 JavaScript API</h2><p><a href="https://www.w3.org/TR/websockets/" target="_blank" rel="external">The WebSocket API</a>:</p>
+<p>The WebSocket Interface<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">interface WebSocket : EventTarget &#123;</div><div class="line">  readonly attribute DOMString url;</div><div class="line"></div><div class="line">  <span class="comment">// ready state</span></div><div class="line">  <span class="keyword">const</span> unsigned short CONNECTING = <span class="number">0</span>;</div><div class="line">  <span class="keyword">const</span> unsigned short OPEN = <span class="number">1</span>;</div><div class="line">  <span class="keyword">const</span> unsigned short CLOSING = <span class="number">2</span>;</div><div class="line">  <span class="keyword">const</span> unsigned short CLOSED = <span class="number">3</span>;</div><div class="line">  readonly attribute unsigned short readyState;</div><div class="line">  readonly attribute unsigned long bufferedAmount;</div><div class="line"></div><div class="line">  <span class="comment">// networking</span></div><div class="line">           attribute EventHandler onopen;</div><div class="line">           attribute EventHandler onerror;</div><div class="line">           attribute EventHandler onclose;</div><div class="line">  readonly attribute DOMString extensions;</div><div class="line">  readonly attribute DOMString protocol;</div><div class="line">  <span class="keyword">void</span> close([Clamp] optional unsigned short code, optional DOMString reason);</div><div class="line"></div><div class="line">  <span class="comment">// messaging</span></div><div class="line">           attribute EventHandler onmessage;</div><div class="line">           attribute DOMString binaryType;</div><div class="line">  <span class="keyword">void</span> send(DOMString data);</div><div class="line">  <span class="keyword">void</span> send(Blob data);</div><div class="line">  <span class="keyword">void</span> send(<span class="built_in">ArrayBuffer</span> data);</div><div class="line">  <span class="keyword">void</span> send(ArrayBufferView data);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><img src="http://otlnkjq1m.bkt.clouddn.com/websocket-prototype.png" alt=""></p>
+<h2 id="2-2-Java-API"><a href="#2-2-Java-API" class="headerlink" title="2.2 Java API"></a>2.2 Java API</h2><h3 id="2-2-1-Java-EE"><a href="#2-2-1-Java-EE" class="headerlink" title="2.2.1 Java EE"></a>2.2.1 Java EE</h3><p><a href="http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html" target="_blank" rel="external">JSR 356, Java API for WebSocket</a></p>
+<p>JSR 356是Java EE 7标准的一部分。</p>
+<p>开源实现有：</p>
+<ul>
+<li>GlassFish</li>
+<li>Jetty 9.1.+</li>
+</ul>
+<p>以下是一个典型的例子：<br><img src="http://otlnkjq1m.bkt.clouddn.com/server-client-sample.png" alt=""></p>
+<p>服务端由Java实现，用JSR 356的一个实现来处理WebSocket协议的细节。<br>客户端中，JavaFX客户端可以依赖任何符合JSR 356的客户端来处理WebSocket协议，而其他客户端则可以使用符合RFC 6455的实现来与服务器通信。</p>
+<p>兼容JSR 356的好处：</p>
+<ul>
+<li>防止供应商锁定（vendor-lock），可以自由地选择库和应用服务器</li>
+</ul>
+<p>JSR 356的缺点：</p>
+<p><a href="https://books.google.com/books?id=EkBPDwAAQBAJ&amp;pg=PA282&amp;lpg=PA282&amp;dq=netty+jsr+356&amp;source=bl&amp;ots=9nbhtR3VEn&amp;sig=wVmL3ImgmRmE_69OCpHLHjrYv2c&amp;hl=zh-CN&amp;sa=X&amp;ved=0ahUKEwiYnY7rse3ZAhUMzGMKHX_kDBg4ChDoAQgvMAE#v=onepage&amp;q=netty%20jsr%20356&amp;f=false" target="_blank" rel="external">Learning Spring Boot 2.0: Simplify the development of lightning fast … - Greg L. Turnquist - Google 图书</a></p>
+<ul>
+<li>基于Servlet 3.1<br>  目前兼容Servlet 3.1的有tomcat，但是如果在使用Netty，则不兼容了<br>  <img src="http://otlnkjq1m.bkt.clouddn.com/not-suing-jsr356.png" alt=""></li>
+<li>J2EE标准前景不太好<br>  J2EE标准发布比较慢，RFC6455在2011年12月就正式发布了，而相应的JSR 356却在2013年5月才发布，相应地，Jetty在2013年11月才发布对JSR 356支持的稳定版本，从RFC标准发布到JSR标准实现之间相距了2年。</li>
+<li>考虑到在一般的场景下，WebSocket客户端都不是Java客户端，所以花费精力去适配JSR 356没必要，别的语言才不管J2EE的标准。</li>
+</ul>
+<h3 id="2-2-2-非Java-EE"><a href="#2-2-2-非Java-EE" class="headerlink" title="2.2.2 非Java EE"></a>2.2.2 非Java EE</h3><p>实现了RFC6455标准即可。</p>
+<h1 id="3-Fallback"><a href="#3-Fallback" class="headerlink" title="3 Fallback"></a>3 Fallback</h1><p>目前主流的浏览器基本都支持WebSocket，但是，IE 10（不含10）以下的版本不支持，而这些版本的IE用户量还是不少的，因此需要有后备方案。</p>
+<h2 id="3-1-sockjs"><a href="#3-1-sockjs" class="headerlink" title="3.1 sockjs"></a>3.1 sockjs</h2><p>项目主页：<br><a href="https://github.com/sockjs/sockjs-client" target="_blank" rel="external">https://github.com/sockjs/sockjs-client</a></p>
+<ul>
+<li>The API should follow HTML5 Websockets API as closely as possible.</li>
+<li>All the transports must support cross domain connections out of the box. It’s possible and recommended to host a SockJS server on a different server than your main web site.</li>
+<li>There is support for at least one streaming protocol for every major browser.</li>
+<li>Streaming transports should work cross-domain and should support cookies (for cookie-based sticky sessions).</li>
+<li>Polling transports are used as a fallback for old browsers and hosts behind restrictive proxies.</li>
+<li>Connection establishment should be fast and lightweight.</li>
+<li>No Flash inside (no need to open port 843 - which doesn’t work through proxies, no need to host ‘crossdomain.xml’, no need to wait for 3 seconds in order to detect problems)</li>
+</ul>
+<hr>
+<ul>
+<li>API尽量接近HTML5 WebSocket的API</li>
+<li>开箱即用地对所有协议支持跨域连接，可以在主站点以外架设SockJS服务器，并且也推荐这样做。</li>
+<li>对每个主流的浏览器至少支持一种streaming协议</li>
+<li>流传输（streaming transports）应该能跨域工作，并且支持cookies（基于cookies的会话）</li>
+<li>Polling传输作为一种后备方案，支持老版本的浏览器和被限制性代理所限制的主机</li>
+<li>连接的建立应该是快速和轻量级的</li>
+<li>不包含Flash（不必开启843端口）</li>
+</ul>
+<p>协议：<br><a href="http://sockjs.github.io/sockjs-protocol/sockjs-protocol-0.3.3.html" target="_blank" rel="external">sockjs-protocol-0.3.3.py</a></p>
+<p>在底层的实现上，SockJS会首先尝试使用原生的WebSocket，如果失败了，再根据浏览器来决定采取相应的传输协议。</p>
+<blockquote>
+<p>Under the hood SockJS tries to use native WebSockets first. If that fails it can use a variety of browser-specific transport protocols and presents them through WebSocket-like abstractions.</p>
+</blockquote>
+<p>Supported transports, by browser (html served from http:// or https://)</p>
+<table>
+<thead>
+<tr>
+<th>_Browser_</th>
+<th>_Websockets_</th>
+<th>_Streaming_</th>
+<th>_Polling_</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IE 6, 7</td>
+<td>no</td>
+<td>no</td>
+<td>jsonp-polling</td>
+</tr>
+<tr>
+<td>IE 8, 9 (cookies=no)</td>
+<td>no</td>
+<td>xdr-streaming &dagger;</td>
+<td>xdr-polling &dagger;</td>
+</tr>
+<tr>
+<td>IE 8, 9 (cookies=yes)</td>
+<td>no</td>
+<td>iframe-htmlfile</td>
+<td>iframe-xhr-polling</td>
+</tr>
+<tr>
+<td>IE 10</td>
+<td>rfc6455</td>
+<td>xhr-streaming</td>
+<td>xhr-polling</td>
+</tr>
+<tr>
+<td>Chrome 6-13</td>
+<td>hixie-76</td>
+<td>xhr-streaming</td>
+<td>xhr-polling</td>
+</tr>
+<tr>
+<td>Chrome 14+</td>
+<td>hybi-10 / rfc6455</td>
+<td>xhr-streaming</td>
+<td>xhr-polling</td>
+</tr>
+<tr>
+<td>Firefox &lt;10</td>
+<td>no &Dagger;</td>
+<td>xhr-streaming</td>
+<td>xhr-polling</td>
+</tr>
+<tr>
+<td>Firefox 10+</td>
+<td>hybi-10 / rfc6455</td>
+<td>xhr-streaming</td>
+<td>xhr-polling</td>
+</tr>
+<tr>
+<td>Safari 5.x</td>
+<td>hixie-76</td>
+<td>xhr-streaming</td>
+<td>xhr-polling</td>
+</tr>
+<tr>
+<td>Safari 6+</td>
+<td>rfc6455</td>
+<td>xhr-streaming</td>
+<td>xhr-polling</td>
+</tr>
+<tr>
+<td>Opera 10.70+</td>
+<td>no &Dagger;</td>
+<td>iframe-eventsource</td>
+<td>iframe-xhr-polling</td>
+</tr>
+<tr>
+<td>Opera 12.10+</td>
+<td>rfc6455</td>
+<td>xhr-streaming</td>
+<td>xhr-polling</td>
+</tr>
+<tr>
+<td>Konqueror</td>
+<td>no</td>
+<td>no</td>
+<td>jsonp-polling</td>
+</tr>
+</tbody>
+</table>
+<h1 id="4-实现"><a href="#4-实现" class="headerlink" title="4 实现"></a>4 实现</h1><h2 id="4-1-Netty"><a href="#4-1-Netty" class="headerlink" title="4.1 Netty"></a>4.1 Netty</h2><p><a href="http://netty.io/" target="_blank" rel="external">http://netty.io/</a></p>
+<h2 id="4-2-Undertow"><a href="#4-2-Undertow" class="headerlink" title="4.2 Undertow"></a>4.2 Undertow</h2><p><a href="http://undertow.io/" target="_blank" rel="external">http://undertow.io/</a></p>
+<h2 id="4-3-Jetty"><a href="#4-3-Jetty" class="headerlink" title="4.3 Jetty"></a>4.3 Jetty</h2><h2 id="4-4-Vert-x"><a href="#4-4-Vert-x" class="headerlink" title="4.4 Vert.x"></a>4.4 Vert.x</h2><p><a href="http://http//vertx.io" target="_blank" rel="external">http://http//vertx.io</a></p>
+<h2 id="4-5-Spray-WebSocket"><a href="#4-5-Spray-WebSocket" class="headerlink" title="4.5 Spray-WebSocket"></a>4.5 Spray-WebSocket</h2><p><a href="https://github.com/dcaoyuan/spray-websocket" target="_blank" rel="external">https://github.com/dcaoyuan/spray-websocket</a></p>
+<h2 id="4-6-nodejs-websocket"><a href="#4-6-nodejs-websocket" class="headerlink" title="4.6 nodejs-websocket"></a>4.6 nodejs-websocket</h2><p><a href="https://github.com/sitegui/nodejs-websocket" target="_blank" rel="external">https://github.com/sitegui/nodejs-websocket</a></p>
+<h2 id="4-7-Grizzly"><a href="#4-7-Grizzly" class="headerlink" title="4.7 Grizzly"></a>4.7 Grizzly</h2><p><a href="https://javaee.github.io/grizzly/" target="_blank" rel="external">https://javaee.github.io/grizzly/</a></p>
+<h2 id="4-8-Go"><a href="#4-8-Go" class="headerlink" title="4.8 Go"></a>4.8 Go</h2><h1 id="5-进一步封装的协议"><a href="#5-进一步封装的协议" class="headerlink" title="5 进一步封装的协议"></a>5 进一步封装的协议</h1><p><strong>为什么不直接使用WebSocket协议？</strong></p>
+<ol>
+<li>数据的解析是未定义的。<br> WebSocket支持text和binary两种传输数据格式，无论是哪种格式，客户端和服务器都需要约定如何包装、解析数据。因此在WebSocket协议的基础上，还需要再定义一层协议，客户端和服务端才能完成协作。</li>
+<li>兼容Fallback方案。<br> 当WebSocket不能工作的时候（例如在IE 6上），采用后备方案实现消息推送，除了通信的实现方式改变之外，数据解析的协议应当保持不变。</li>
+</ol>
+<h2 id="5-1-STOMP"><a href="#5-1-STOMP" class="headerlink" title="5.1 STOMP"></a>5.1 STOMP</h2><blockquote>
+<p>Simple (or Streaming) Text Orientated Messaging Protocol 的缩写。</p>
+</blockquote>
+<p>项目主页：<br><a href="http://stomp.github.io" target="_blank" rel="external">http://stomp.github.io</a></p>
+<p>STOMP是基于帧的消息协议。</p>
+<blockquote>
+<p>A frame consists of a command, a set of optional headers and an optional body. It is an alternative to other open messaging protocols such as AMQP and implementation specific wire protocols used in JMS brokers such as OpenWire. </p>
+<p>STOMP is text based but also allows for the transmission of binary messages. </p>
+</blockquote>
+<h3 id="5-1-1-采用STOMP的理由"><a href="#5-1-1-采用STOMP的理由" class="headerlink" title="5.1.1 采用STOMP的理由"></a>5.1.1 采用STOMP的理由</h3><ul>
+<li>目前RabbitMQ和Spring都支持STOMP协议，表明STOMP已经是一个主流的消息协议之一，基于主流的协议，可以替换各种实现；</li>
+<li>STOMP协议的帧格式比较简洁，由command + headers + body构成，各部分使用<code>EOL</code>进行划分，冗余字符较少，不会浪费带宽。（EOL（end-of-line，consists of an OPTIONAL carriage return (octet 13) followed by a REQUIRED line feed (octet 10)））</li>
+<li>支持发布/订阅模型和事务<br>  每个STOMP客户端既可以作为生产者，也可以作为消费者</li>
+</ul>
+<h3 id="5-1-2-帧"><a href="#5-1-2-帧" class="headerlink" title="5.1.2 帧"></a>5.1.2 帧</h3><p>STOMP消息帧由以下部分组成：</p>
+<ul>
+<li>Command</li>
+<li>Headers（Optional）</li>
+<li>Body（Optional）</li>
+</ul>
+<p>示例：<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">COMMAND</div><div class="line"><span class="symbol">header1:</span>value1</div><div class="line"><span class="symbol">header2:</span>value2</div><div class="line"></div><div class="line">Body^@</div></pre></td></tr></table></figure></p>
+<h3 id="5-1-3-Heart-beating"><a href="#5-1-3-Heart-beating" class="headerlink" title="5.1.3 Heart-beating"></a>5.1.3 Heart-beating</h3><p>略。</p>
+<h3 id="5-1-4-发布-订阅模型"><a href="#5-1-4-发布-订阅模型" class="headerlink" title="5.1.4 发布-订阅模型"></a>5.1.4 发布-订阅模型</h3><p>通过以下帧来控制：</p>
+<ul>
+<li>SUBSCRIBE</li>
+<li>UNSUBSCRIBE</li>
+</ul>
+<p>在RFC 6455里，限制了一个客户端到一个host的连接数：</p>
+<blockquote>
+<p>If the client already has a WebSocket connection to the remote<br>       host (IP address) identified by /host/ and port /port/ pair, even<br>       if the remote host is known by another name, the client MUST wait<br>       until that connection has been established or for that connection<br>       to have failed.  There MUST be no more than one connection in a<br>       CONNECTING state.  If multiple connections to the same IP address<br>       are attempted simultaneously, the client MUST serialize them so<br>       that there is no more than one connection at a time running<br>       through the following steps.</p>
+</blockquote>
+<p>因此，如果直接利用原始的WebSocket全双工通信连接进行通信，在适配业务逻辑的时候很可能会耗费大量的工作，而通过发布-订阅模型，则可以复用同一个连接实现不同主题消息的分发</p>
+<h3 id="5-1-5-事务"><a href="#5-1-5-事务" class="headerlink" title="5.1.5 事务"></a>5.1.5 事务</h3><p>通过以下帧来控制：</p>
+<ul>
+<li>ACK</li>
+<li>NACK</li>
+<li>BEGIN</li>
+<li>COMMIT</li>
+<li>ABORT</li>
+</ul>
+<h2 id="5-2-SocketIO"><a href="#5-2-SocketIO" class="headerlink" title="5.2 SocketIO"></a>5.2 SocketIO</h2><p><a href="https://github.com/socketio/socket.io-protocol" target="_blank" rel="external">socketio/socket.io-protocol: Socket.IO 1.0 Protocol specification and parser component / node.js module.</a></p>
+<p>SocketIO实际上也定义了发布订阅模型。通过namespace来订阅不同的『主题』，namespace下继续划分room，，类似于二级主题。</p>
+<h3 id="5-2-1-协议定义"><a href="#5-2-1-协议定义" class="headerlink" title="5.2.1 协议定义"></a>5.2.1 协议定义</h3><h3 id="5-2-2-实现"><a href="#5-2-2-实现" class="headerlink" title="5.2.2 实现"></a>5.2.2 实现</h3><h4 id="5-2-2-1-socket-io"><a href="#5-2-2-1-socket-io" class="headerlink" title="5.2.2.1 socket.io"></a>5.2.2.1 socket.io</h4><p><a href="https://github.com/socketio/socket.io/" target="_blank" rel="external">https://github.com/socketio/socket.io/</a></p>
+<h4 id="5-2-2-2-netty-socketio"><a href="#5-2-2-2-netty-socketio" class="headerlink" title="5.2.2.2 netty-socketio"></a>5.2.2.2 netty-socketio</h4><p><a href="https://github.com/mrniko/netty-socketio" target="_blank" rel="external">https://github.com/mrniko/netty-socketio</a></p>
+<h1 id="6-测试"><a href="#6-测试" class="headerlink" title="6 测试"></a>6 测试</h1><p><a href="https://github.com/crossbario/autobahn-testsuite" target="_blank" rel="external">https://github.com/crossbario/autobahn-testsuite</a></p>
+<h1 id="7-FAQ"><a href="#7-FAQ" class="headerlink" title="7 FAQ"></a>7 FAQ</h1><h2 id="7-1-Socket和WebSocket有什么关系？"><a href="#7-1-Socket和WebSocket有什么关系？" class="headerlink" title="7.1 Socket和WebSocket有什么关系？"></a>7.1 Socket和WebSocket有什么关系？</h2><p>就像Java和JavaScript，并没有什么太大的关系，但又不能说完全没关系。</p>
+<p>通常所说的<strong>Socket</strong> API，是指操作系统中（也可能不是操作系统）提供的对于传输层（TCP/UDP）抽象的接口。</p>
+<p><strong>WebSocket</strong>是一种在单个TCP连接上进行全双工通讯的协议。</p>
+<p><a href="http://blog.jobbole.com/106009/" target="_blank" rel="external">WebSocket这个名称的由来</a>：</p>
+<blockquote>
+<p>08年6月18日，一群WHATWG的工程师在讨论一些技术问题，一个工程师提到说「我们之前讨论的那个东西，不要叫TCPConnection 了，还是起个别的名字吧 」，接着几个名字被提及，DuplexConnection，TCPSocket，SocketConnection ，一个叫mcarter（Michael Carter ）的工程师说他马上要写一篇关于Comet的文章，如果可以确定这个名称，想在文章中引用这个名字。</p>
+<p>Socket一直以来都被人用来表示网络中一个连接的两端，考虑到怎么让工程师更容易接受，后来Hixie说了一句「我看WebSocket这个名字就很适合嘛（Hixie briefly pops back online to record that “WebSocket” would probably be a good new name for the TCPConnection object）」，大家都没有异议，紧接着mcarter在Comet Daily中发表了文章<a href="http://cometdaily.com/2008/07/04/html5-websocket/index.html" target="_blank" rel="external">Independence Day: HTML5 WebSocket Liberates Comet From Hacks</a>，后来随着各大浏览器对WebSocket的支持，它变成了实际的标准，IETF也沿用了这个名字。</p>
+</blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="http://colobu.com/2015/07/14/performance-comparison-of-7-websocket-frameworks/" target="_blank" rel="external">七种WebSocket框架的性能比较</a></li>
+<li><a href="https://github.com/smallnest/C1000K-Servers" target="_blank" rel="external">smallnest/C1000K-Servers - GitHub</a></li>
+<li><a href="http://colobu.com/2015/05/22/implement-C1000K-servers-by-spray-netty-undertow-and-node-js/" target="_blank" rel="external">使用四种框架分别实现百万websocket常连接的服务器</a></li>
+<li><a href="https://en.wikipedia.org/wiki/WebSocket" target="_blank" rel="external">WebSocket - Wikipedia</a></li>
+<li><a href="https://tools.ietf.org/html/rfc6455" target="_blank" rel="external">RFC 6455</a></li>
+<li><a href="http://stomp.github.io" target="_blank" rel="external">STOMP</a></li>
+<li><a href="http://jmesnil.net/stomp-websocket/doc/" target="_blank" rel="external">STOMP Over WebSocket</a></li>
+<li><a href="http://stomp.github.io/stomp-specification-1.2.html" target="_blank" rel="external">STOMP Protocol Specification, Version 1.2</a></li>
+<li><a href="https://github.com/sockjs/sockjs-client" target="_blank" rel="external">sockjs/sockjs-client</a></li>
+<li><a href="http://blog.jobbole.com/106009/" target="_blank" rel="external">WebSocket 和 Socket 的区别 - 文章 - 伯乐在线</a></li>
+<li><a href="http://cometdaily.com/2008/07/04/html5-websocket/index.html" target="_blank" rel="external">Comet Daily  » Blog Archive   » Independence Day: HTML5 WebSocket Liberates Comet From Hacks</a></li>
+<li><a href="https://www.w3.org/TR/websockets/" target="_blank" rel="external">The WebSocket API</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot; class=&quot;headerlink&quot; title=&quot;1 概念&quot;&gt;&lt;/a&gt;1 概念&lt;/h1&gt;&lt;h2 id=&quot;1-1-comet&quot;&gt;&lt;a href=&quot;#1-1-comet&quot; class=&quot;headerlink&quot; title=
+    
+    </summary>
+    
+    
+      <category term="WebSocket" scheme="http://bungder.github.io/tags/WebSocket/"/>
+    
+  </entry>
   
   <entry>
     <title>JVM运行时数据区域</title>
@@ -1293,9 +1603,9 @@
     </summary>
     
     
-      <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
-    
       <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+      <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
     
   </entry>
   
