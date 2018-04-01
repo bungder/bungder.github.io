@@ -116,7 +116,7 @@
 <meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/GC-11.png">
 <meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/GC-12.png">
 <meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/GC-13.png">
-<meta property="og:updated_time" content="2018-04-01T20:30:33.531Z">
+<meta property="og:updated_time" content="2018-04-01T20:35:48.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM GC相关问题">
 <meta name="twitter:description" content="1. 概念http://blog.csdn.net/u011080472/article/details/51324422 1.0 并发和并行这两个名词都是并发编程中的概念，在谈论垃圾收集器的上下文语境中，它们可以解释如下。  并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。  并发（Concurrent）：指用户线程与垃圾收集线程同时执行（但不一定是并行的，">
@@ -409,6 +409,7 @@
 <li><p>老年代GC（Major GC / Full GC / FGC）：指发生在老年代的GC，出现了Major GC，经常会伴随至少一次的Minor GC（但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行Major GC的策略选择过程）。Major GC的速度一般会比Minor GC慢10倍以上。</p>
 </li>
 </ul>
+<a id="more"></a>
 <h1 id="2-Java中什么样的对象才能作为gc-root，gc-roots有哪些呢？"><a href="#2-Java中什么样的对象才能作为gc-root，gc-roots有哪些呢？" class="headerlink" title="2 Java中什么样的对象才能作为gc root，gc roots有哪些呢？"></a>2 Java中什么样的对象才能作为gc root，gc roots有哪些呢？</h1><p><span id="gcRoot"></span></p>
 <p><a href="http://blog.csdn.net/fenglibing/article/details/8928927" target="_blank" rel="external">http://blog.csdn.net/fenglibing/article/details/8928927</a></p>
 <blockquote>

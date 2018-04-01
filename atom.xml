@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2018-04-01T20:30:33.531Z</updated>
+  <updated>2018-04-01T20:35:48.679Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://bungder.github.io/2018/04/02/jvm-gc-issues/"/>
     <id>http://bungder.github.io/2018/04/02/jvm-gc-issues/</id>
     <published>2018-04-01T20:10:21.000Z</published>
-    <updated>2018-04-01T20:30:33.531Z</updated>
+    <updated>2018-04-01T20:35:48.679Z</updated>
     
     <content type="html"><![CDATA[<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h1><p><a href="http://blog.csdn.net/u011080472/article/details/51324422" target="_blank" rel="external">http://blog.csdn.net/u011080472/article/details/51324422</a></p>
 <h2 id="1-0-并发和并行"><a href="#1-0-并发和并行" class="headerlink" title="1.0 并发和并行"></a>1.0 并发和并行</h2><p>这两个名词都是并发编程中的概念，在谈论垃圾收集器的上下文语境中，它们可以解释如下。</p>
@@ -36,6 +36,7 @@
 <li><p>老年代GC（Major GC / Full GC / FGC）：指发生在老年代的GC，出现了Major GC，经常会伴随至少一次的Minor GC（但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行Major GC的策略选择过程）。Major GC的速度一般会比Minor GC慢10倍以上。</p>
 </li>
 </ul>
+<a id="more"></a>
 <h1 id="2-Java中什么样的对象才能作为gc-root，gc-roots有哪些呢？"><a href="#2-Java中什么样的对象才能作为gc-root，gc-roots有哪些呢？" class="headerlink" title="2 Java中什么样的对象才能作为gc root，gc roots有哪些呢？"></a>2 Java中什么样的对象才能作为gc root，gc roots有哪些呢？</h1><p><span id="gcRoot"></span></p>
 <p><a href="http://blog.csdn.net/fenglibing/article/details/8928927" target="_blank" rel="external">http://blog.csdn.net/fenglibing/article/details/8928927</a></p>
 <blockquote>
@@ -429,7 +430,20 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot; class=&quot;headerlink&quot; title=&quot;1. 概念&quot;&gt;&lt;/a&gt;1. 概念&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/u011080472/article/details/513
+      &lt;h1 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot; class=&quot;headerlink&quot; title=&quot;1. 概念&quot;&gt;&lt;/a&gt;1. 概念&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/u011080472/article/details/51324422&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/u011080472/article/details/51324422&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-0-并发和并行&quot;&gt;&lt;a href=&quot;#1-0-并发和并行&quot; class=&quot;headerlink&quot; title=&quot;1.0 并发和并行&quot;&gt;&lt;/a&gt;1.0 并发和并行&lt;/h2&gt;&lt;p&gt;这两个名词都是并发编程中的概念，在谈论垃圾收集器的上下文语境中，它们可以解释如下。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;并发（Concurrent）：指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替执行），用户程序在继续运行，而垃圾收集程序运行于另一个CPU上。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;1-1-Minor-GC-和-Full-GC&quot;&gt;&lt;a href=&quot;#1-1-Minor-GC-和-Full-GC&quot; class=&quot;headerlink&quot; title=&quot;1.1 Minor GC 和 Full GC&quot;&gt;&lt;/a&gt;1.1 Minor GC 和 Full GC&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;新生代GC（Minor GC / Young GC /  YGC）：指发生在新生代的垃圾收集动作，因为Java对象大多都具备朝生夕灭的特性，所以Minor GC非常频繁，一般回收速度也比较快。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;老年代GC（Major GC / Full GC / FGC）：指发生在老年代的GC，出现了Major GC，经常会伴随至少一次的Minor GC（但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行Major GC的策略选择过程）。Major GC的速度一般会比Minor GC慢10倍以上。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
     
     </summary>
     
