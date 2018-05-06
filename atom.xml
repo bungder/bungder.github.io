@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bungder.github.io/"/>
-  <updated>2018-04-01T20:35:48.679Z</updated>
+  <updated>2018-05-06T10:07:18.237Z</updated>
   <id>http://bungder.github.io/</id>
   
   <author>
@@ -14,6 +14,831 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>几种开源的媒体服务器对比</title>
+    <link href="http://bungder.github.io/2018/05/06/compare-of-some-open-source-media-server/"/>
+    <id>http://bungder.github.io/2018/05/06/compare-of-some-open-source-media-server/</id>
+    <published>2018-05-06T09:52:27.000Z</published>
+    <updated>2018-05-06T10:07:18.237Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文对几种开源的流媒体服务器做对比。</p>
+<a id="more"></a>
+<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1 概念"></a>1 概念</h1><h2 id="1-1-RTP"><a href="#1-1-RTP" class="headerlink" title="1.1 RTP"></a>1.1 RTP</h2><p><a href="https://zh.wikipedia.org/wiki/%E5%AE%9E%E6%97%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE" target="_blank" rel="external">实时传输协议 - 维基百科，自由的百科全书</a></p>
+<blockquote>
+<p><strong>实时传输协议（Real-time Transport Protocol或简写RTP）</strong>是一个网络传输协议，它是由IETF的多媒体传输工作小组1996年在RFC 1889中公布的。</p>
+<p>RTP协议详细说明了在互联网上传递音频和视频的标准数据包格式。它一开始被设计为一个多播协议，但后来被用在很多单播应用中。RTP协议常用于流媒体系统（配合RTSP协议），视频会议和一键通（Push to Talk）系统（配合H.323或SIP），使它成为IP电话产业的技术基础。RTP协议和RTP控制协议RTCP一起使用，而且它是创建在<strong>UDP</strong>协议上的。</p>
+</blockquote>
+<h2 id="1-2-RTMP"><a href="#1-2-RTMP" class="headerlink" title="1.2 RTMP"></a>1.2 RTMP</h2><p><a href="https://zh.wikipedia.org/wiki/%E5%AE%9E%E6%97%B6%E6%B6%88%E6%81%AF%E5%8D%8F%E8%AE%AE" target="_blank" rel="external">实时消息协议 - 维基百科，自由的百科全书</a></p>
+<blockquote>
+<p><strong>实时消息协议（英语：Real-Time Messaging Protocol，缩写RTMP）</strong>也称实时消息传输协议，是最初由Macromedia为通过互联网在Flash播放器与一个服务器之间传输流媒体音频、视频和数据而开发的一个专有协议。Macromedia后被Adobe Systems收购，该协议也已发布了不完整的规范供公众使用。</p>
+<p>RTMP协议有许多变种：</p>
+<ol>
+<li>默认使用TCP端口1935的纯粹（plain）协议。</li>
+<li><strong>RTMPS</strong>，通过一个TLS/SSL连接传输RTMP。</li>
+<li><strong>RTMPE</strong>，使用Adobe自有安全机制加密的RTMP。虽然实现的细节为专有，但该机制使用行业标准的密码学原函数。</li>
+<li><strong>RTMPT</strong>，用HTTP封装以穿透防火墙。RTMPT通常在TCP通信端口80和443上使用明文请求来绕过大多数的公司流量过滤。封装的会话中可能携带纯粹的RTMP、RTMPS或RTMPE数据包。</li>
+<li><strong>RTMFP</strong>, 使用UDP而非TCP的RTMP，取代RTMP Chunk Stream。Adobe Systems开发了安全的实时媒体流协议包，可以让最终用户直接地相互连接（P2P）。</li>
+</ol>
+</blockquote>
+<h2 id="1-3-WebRTC"><a href="#1-3-WebRTC" class="headerlink" title="1.3 WebRTC"></a>1.3 WebRTC</h2><p><a href="https://webrtc.org/" target="_blank" rel="external">https://webrtc.org/</a></p>
+<blockquote>
+<p><strong>WebRTC is a free, open project</strong> that provides browsers and mobile applications with <em>Real-Time Communications (RTC)</em> capabilities via simple APIs. The WebRTC components have been optimized to best serve this purpose.</p>
+<p><strong>Our mission</strong>: To enable rich, high-quality RTC applications to be developed for the browser, mobile platforms, and IoT devices, and allow them all to communicate via a common set of protocols.</p>
+<p>The WebRTC initiative is a project supported by <strong>Google</strong>, <strong>Mozilla</strong> and <strong>Opera</strong>, amongst others.</p>
+</blockquote>
+<p>支持的浏览器和平台：</p>
+<ul>
+<li>Chrome</li>
+<li>Firefox</li>
+<li>Opera</li>
+<li>Android</li>
+<li>iOS</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>基于浏览器，且主流浏览器都支持，跨平台能力强</li>
+<li>默认P2P，但是需要TURN服务器作为fallback</li>
+<li>自适应码率<ul>
+<li><a href="http://www.newrtc.com/2017/10/15/webrtc-openh264-1/" target="_blank" rel="external">webrtc 视频编码之 h264 自动调节分辨率 — newrtc</a></li>
+<li><a href="https://stackoverflow.com/questions/37128928/does-webrtc-support-adaptive-bitrate-streaming-for-video" target="_blank" rel="external">webm - Does WebRTC support Adaptive Bitrate Streaming for video? - Stack Overflow</a></li>
+</ul>
+</li>
+</ul>
+<p>相关资料：</p>
+<ul>
+<li><a href="http://io13webrtc.appspot.com" target="_blank" rel="external">2013 Google I/O 大会上WebRTC的幻灯片</a></li>
+<li><a href="https://www.html5rocks.com/en/tutorials/webrtc/basics" target="_blank" rel="external">Getting Started with WebRTC - Sam Dutton</a></li>
+<li><a href="https://www.html5rocks.com/en/tutorials/webrtc/infrastructure" target="_blank" rel="external">WebRTC in the real world: STUN, TURN and signaling - Sam Dutton</a></li>
+<li><a href="https://tools.ietf.org/wg/rtcweb/" target="_blank" rel="external">IETF Real-Time Communication in WEB-browsers (rtcweb) Working Group</a></li>
+<li><a href="https://tools.ietf.org/html/rfc7742" target="_blank" rel="external">RFC7742 - WebRTC Video Processing and Codec Requirements</a></li>
+</ul>
+<h2 id="1-4-HLS"><a href="#1-4-HLS" class="headerlink" title="1.4 HLS"></a>1.4 HLS</h2><p><a href="https://zh.wikipedia.org/wiki/HTTP_Live_Streaming" target="_blank" rel="external">HTTP Live Streaming - 维基百科，自由的百科全书</a></p>
+<blockquote>
+<p><strong>HTTP Live Streaming</strong>（缩写是HLS）是一个由苹果公司提出的基于HTTP的流媒体网络传输协议。它的工作原理是把整个流分成一个个小的基于HTTP的文件来下载，每次只下载一些。当媒体流正在播放时，客户端可以选择从许多不同的备用源中以不同的速率下载同样的资源，允许流媒体会话适应不同的数据速率。在开始一个流媒体会话时，客户端会下载一个包含元数据的extended M3U (m3u8) playlist文件，用于寻找可用的媒体流。</p>
+<p>HLS只请求基本的HTTP报文，与实时传输协议（RTP）不同，HLS可以穿过任何允许HTTP数据通过的防火墙或者代理服务器。它也很容易使用内容分发网络（CDN）来传输媒体流。</p>
+<p>2017年8月，<a href="https://tools.ietf.org/html/rfc8216" target="_blank" rel="external">RFC 8216</a>发布，描述了HLS协议第7版的定义</p>
+</blockquote>
+<p><a href="https://tools.ietf.org/html/rfc8216" target="_blank" rel="external">RFC 8216</a></p>
+<h1 id="2-开源方案"><a href="#2-开源方案" class="headerlink" title="2 开源方案"></a>2 开源方案</h1><h2 id="2-0-开源方案选型要考虑的因素："><a href="#2-0-开源方案选型要考虑的因素：" class="headerlink" title="2.0 开源方案选型要考虑的因素："></a>2.0 开源方案选型要考虑的因素：</h2><p><a href="https://bloggeek.me/choosing-webrtc-open-source-media-server/" target="_blank" rel="external"><br>10 Tips for Choosing the Right WebRTC Open Source Media Server Framework</a></p>
+<ol>
+<li>你是否深刻理解其代码？</li>
+<li>代码版本是否足够新？</li>
+<li>有谁在使用它？</li>
+<li>它的文档是否齐全？</li>
+<li>它可以debug吗？</li>
+<li>它可以伸缩吗？</li>
+<li>它使用哪种语言？<ul>
+<li>对于媒体服务器而言，这种语言的性能是否足够？</li>
+<li>团队是否足够了解这门语言？</li>
+</ul>
+</li>
+<li>是否适应你现有的Signaling范式？<ul>
+<li>你在看的Media Server是否容易与你决定使用的STUN/TURN服务器集成</li>
+</ul>
+</li>
+<li>许可证是否适合你？</li>
+<li>谁在提供支持？<ul>
+<li>很多成功的、被良好维护的开源项目背后都有一个商业模式，尤其是中小型的项目，这意味着有一个团队以此为谋生手段。</li>
+<li>具备可选的付费支持意味着：<ul>
+<li>有人愿意全职来改善这东西，而不是作为爱好来维护。 </li>
+<li>如果你需要紧急帮助，只要花钱就能得到。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-1-Red5"><a href="#2-1-Red5" class="headerlink" title="2.1 Red5"></a>2.1 Red5</h2><p>官网 <a href="http://red5.org/" target="_blank" rel="external">http://red5.org/</a><br>Github <a href="https://github.com/Red5" target="_blank" rel="external">https://github.com/Red5</a></p>
+<p>非官方资料：</p>
+<ul>
+<li><a href="https://github.com/rajdeeprath/red5-development-series" target="_blank" rel="external">red5-development-series</a></li>
+</ul>
+<p>特性：</p>
+<ul>
+<li>Server<ul>
+<li>自动伸缩集群</li>
+<li>Adaptive Stream Rebuffering</li>
+<li>支持多协议：<ul>
+<li>WebRTC</li>
+<li>RTMP</li>
+<li>RTSP</li>
+<li>HLS</li>
+<li>FLV</li>
+<li>MP4</li>
+</ul>
+</li>
+<li>实时流录制</li>
+<li>离线部署</li>
+</ul>
+</li>
+<li>Browser<ul>
+<li>定制化HTML5播放器，支持旋转</li>
+<li>实时HLS流</li>
+<li>支持Flash作为后备方案</li>
+</ul>
+</li>
+<li>移动端SDK（iOS, Android）<ul>
+<li>自适应比特率发布</li>
+<li>硬件编码和解码</li>
+<li>定制视频源</li>
+<li>直播摄像头切换</li>
+<li>双路视频聊天</li>
+<li>多方视频会议</li>
+<li>Adaptive Stream Rebuffering</li>
+<li>低延迟播放器</li>
+<li>高级通知API</li>
+<li>消息与RPC</li>
+<li>HD h.264, AAC编码高达4k</li>
+</ul>
+</li>
+</ul>
+<p>粗略的特性收费情况调查结果：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">-</th>
+<th style="text-align:center">开源版本</th>
+<th style="text-align:center">付费版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">自动伸缩集群</td>
+<td style="text-align:center">不支持</td>
+<td style="text-align:center">\$279/MO</td>
+</tr>
+<tr>
+<td style="text-align:center">多协议支持</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">支持</td>
+</tr>
+<tr>
+<td style="text-align:center">转码</td>
+<td style="text-align:center">不支持</td>
+<td style="text-align:center">\$109/MO</td>
+</tr>
+<tr>
+<td style="text-align:center">离线部署</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">\$999+/MO</td>
+</tr>
+</tbody>
+</table>
+<p>来自<a href="https://github.com/rajdeeprath/red5-development-series/wiki/Red5-open-source-vs-Red5pro" target="_blank" rel="external">Red5 open source vs Red5pro · rajdeeprath/red5-development-series Wiki</a> 的数据</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">FEATURES</th>
+<th style="text-align:center">RED5 OS</th>
+<th style="text-align:center">RED5 PRO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">实时流</td>
+<td style="text-align:center">&#10004;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">视频录制</td>
+<td style="text-align:center">&#10004;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">WebSockets</td>
+<td style="text-align:center">&#10004;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">移动端回放(HLS)</td>
+<td style="text-align:center">Community</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">Adobe Flash 支持</td>
+<td style="text-align:center">&#10004;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">WebRTC</td>
+<td style="text-align:center">&#10006;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">第二屏</td>
+<td style="text-align:center">&#10006;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">自动伸缩</td>
+<td style="text-align:center">&#10006;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">集群</td>
+<td style="text-align:center">&#10006;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">移动端SDK</td>
+<td style="text-align:center">&#10006;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">扩展文档</td>
+<td style="text-align:center">&#10006;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">客户支持</td>
+<td style="text-align:center">Community</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">管理API (RESTful)</td>
+<td style="text-align:center">&#10006;</td>
+<td style="text-align:center">&#10004;</td>
+</tr>
+</tbody>
+</table>
+<p>缺点：</p>
+<ul>
+<li>开源版本很难用，官方几乎没有文档，即使有，也是几年前的了，也没有教程。</li>
+</ul>
+<p>考察点总结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">考察点</th>
+<th style="text-align:left">OS</th>
+<th style="text-align:left">PRO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">语言</td>
+<td style="text-align:left">Java</td>
+<td style="text-align:left">Java</td>
+</tr>
+<tr>
+<td style="text-align:center">最新发布日期</td>
+<td style="text-align:left">2017-01-12</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">谁在用</td>
+<td style="text-align:left">?</td>
+<td style="text-align:left">Intel, LimeLight,…,etc（最经典的方案）</td>
+</tr>
+<tr>
+<td style="text-align:center">文档</td>
+<td style="text-align:left">&#10006;</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">伸缩</td>
+<td style="text-align:left">&#10006;</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">debug</td>
+<td style="text-align:left">?</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">许可证</td>
+<td style="text-align:left">Apache License v2</td>
+<td style="text-align:left">付费</td>
+</tr>
+<tr>
+<td style="text-align:center">网络协议</td>
+<td style="text-align:left">HLS, WebSockets, RTSP, RTMP, RTMPT, RTMPS, RTMPE</td>
+<td style="text-align:left">HLS, WebSockets, RTSP, RTMP, RTMPT, RTMPS, RTMPE, WebRTC</td>
+</tr>
+<tr>
+<td style="text-align:center">自适应码率</td>
+<td style="text-align:left">?</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">流控</td>
+<td style="text-align:left">?</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">录制</td>
+<td style="text-align:left">?</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">回放</td>
+<td style="text-align:left">?</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-2-kurento"><a href="#2-2-kurento" class="headerlink" title="2.2 kurento"></a>2.2 kurento</h2><p>主页：<a href="http://www.kurento.org/" target="_blank" rel="external">http://www.kurento.org/</a><br>github：<a href="https://github.com/kurento" target="_blank" rel="external">https://github.com/kurento</a></p>
+<p>服务端采用C++实现：<a href="https://github.com/Kurento/kurento-media-server" target="_blank" rel="external">https://github.com/Kurento/kurento-media-server</a></p>
+<p>特性：</p>
+<ul>
+<li>支持HTTP、RTP和WebRTC</li>
+<li>集成OpenCV，支持分析图像抽取信息</li>
+<li>转码（这个是刚需了）</li>
+<li>广播</li>
+<li>提供Kurento API，可以在此基础上构建服务器的高层逻辑，并提供了Java和NodeJS的实现，基于此可以实现权限校验等业务逻辑</li>
+<li>支持NAT穿越</li>
+</ul>
+<p>文档地址：<a href="http://readthedocs.org/projects/doc-kurento/downloads/pdf/stable/" target="_blank" rel="external">http://readthedocs.org/projects/doc-kurento/downloads/pdf/stable/</a></p>
+<p>考察点总结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">考察点</th>
+<th style="text-align:left">情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">语言</td>
+<td style="text-align:left">C++</td>
+</tr>
+<tr>
+<td style="text-align:center">最新发布日期</td>
+<td style="text-align:left">2018-03-21</td>
+</tr>
+<tr>
+<td style="text-align:center">谁在用</td>
+<td style="text-align:left">没有业界权威在用，Github 800+Star</td>
+</tr>
+<tr>
+<td style="text-align:center">文档</td>
+<td style="text-align:left">比较全</td>
+</tr>
+<tr>
+<td style="text-align:center">伸缩</td>
+<td style="text-align:left">&#10006;</td>
+</tr>
+<tr>
+<td style="text-align:center">debug</td>
+<td style="text-align:left">？</td>
+</tr>
+<tr>
+<td style="text-align:center">许可证</td>
+<td style="text-align:left">LGPL v2.1</td>
+</tr>
+<tr>
+<td style="text-align:center">网络协议</td>
+<td style="text-align:left">HTTP, RTP, WebRTC</td>
+</tr>
+<tr>
+<td style="text-align:center">自适应码率</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">流控</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">录制</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">回放</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-3-RestComm"><a href="#2-3-RestComm" class="headerlink" title="2.3 RestComm"></a>2.3 RestComm</h2><p>官网 <a href="https://www.restcomm.com/" target="_blank" rel="external">https://www.restcomm.com/</a><br>GitHub <a href="https://github.com/RestComm" target="_blank" rel="external">https://github.com/RestComm</a><br>文档 <a href="https://www.restcomm.com/docs/" target="_blank" rel="external">https://www.restcomm.com/docs/</a></p>
+<p>免费版本功能受限<br><img src="http://otlnkjq1m.bkt.clouddn.com/WechatIMG1467.jpeg" alt=""></p>
+<p>考察点总结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">考察点</th>
+<th style="text-align:left">情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">语言</td>
+<td style="text-align:left">Java</td>
+</tr>
+<tr>
+<td style="text-align:center">最新发布日期</td>
+<td style="text-align:left">2018-04-20</td>
+</tr>
+<tr>
+<td style="text-align:center">谁在用</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">文档</td>
+<td style="text-align:left">齐全</td>
+</tr>
+<tr>
+<td style="text-align:center">伸缩</td>
+<td style="text-align:left">付费</td>
+</tr>
+<tr>
+<td style="text-align:center">debug</td>
+<td style="text-align:left">？</td>
+</tr>
+<tr>
+<td style="text-align:center">许可证</td>
+<td style="text-align:left">AGPL-3.0</td>
+</tr>
+<tr>
+<td style="text-align:center">网络协议</td>
+<td style="text-align:left">WebRTC</td>
+</tr>
+<tr>
+<td style="text-align:center">自适应码率</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">流控</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">录制</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">回放</td>
+<td style="text-align:left">?</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-4-Ant-Media-Server"><a href="#2-4-Ant-Media-Server" class="headerlink" title="2.4 Ant Media Server"></a>2.4 Ant Media Server</h2><p>官网 <a href="https://antmedia.io/" target="_blank" rel="external">https://antmedia.io/</a><br>文档 <a href="https://antmedia.io/documentation" target="_blank" rel="external">https://antmedia.io/documentation</a><br>Github <a href="https://github.com/ant-media/ant-media-server" target="_blank" rel="external">https://github.com/ant-media/ant-media-server</a></p>
+<p><a class="github-button" href="https://github.com/ant-media/Ant-Media-Server" data-size="large" data-show-count="true" aria-label="Star ant-media/Ant-Media-Server on GitHub" target="_blank" rel="external">Star</a>  <a class="github-button" href="https://github.com/ant-media/Ant-Media-Server/fork" data-size="large" data-show-count="true" aria-label="Fork ant-media/Ant-Media-Server on GitHub" target="_blank" rel="external">Fork</a></p>
+<p>服务端采用Java实现，是Red5-server的分叉版本</p>
+<p>特性：</p>
+<ul>
+<li>实时流发布</li>
+<li>支持RTMP、RTSP、WebRTC、HLS</li>
+<li>WebRTC转RTMP适配器</li>
+<li>IP摄像头支持</li>
+<li>录制实时流（FLV、MP4和HLS容器）</li>
+<li>同步重制流到社交媒体（企业版里Facebook和Youtube）</li>
+<li>低延迟1:N WebRTC实时流（企业版）</li>
+<li>实时流自适应比特率转换（FLV、MP4、HLS）（企业版）</li>
+</ul>
+<p>考察点总结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">考察点</th>
+<th style="text-align:left">情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">语言</td>
+<td style="text-align:left">Java</td>
+</tr>
+<tr>
+<td style="text-align:center">最新发布日期</td>
+<td style="text-align:left">2018-05-01</td>
+</tr>
+<tr>
+<td style="text-align:center">谁在用</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">文档</td>
+<td style="text-align:left">齐全</td>
+</tr>
+<tr>
+<td style="text-align:center">伸缩</td>
+<td style="text-align:left">收费</td>
+</tr>
+<tr>
+<td style="text-align:center">debug</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">许可证</td>
+<td style="text-align:left">Apache License v2</td>
+</tr>
+<tr>
+<td style="text-align:center">网络协议</td>
+<td style="text-align:left">RTMP、RTSP、WebRTC、HLS</td>
+</tr>
+<tr>
+<td style="text-align:center">自适应码率</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">流控</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:center">录制</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">回放</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-5-BigBlueButton"><a href="#2-5-BigBlueButton" class="headerlink" title="2.5 BigBlueButton"></a>2.5 BigBlueButton</h2><p>官网 <a href="https://bigbluebutton.org/" target="_blank" rel="external">https://bigbluebutton.org/</a><br>文档 <a href="http://docs.bigbluebutton.org/" target="_blank" rel="external">http://docs.bigbluebutton.org/</a><br>github <a href="https://github.com/bigbluebutton/bigbluebutton" target="_blank" rel="external">https://github.com/bigbluebutton/bigbluebutton</a><br><a class="github-button" href="https://github.com/bigbluebutton/bigbluebutton" data-size="large" data-show-count="true" aria-label="Star bigbluebutton/bigbluebutton on GitHub" target="_blank" rel="external">Star</a> <a class="github-button" href="https://github.com/bigbluebutton/bigbluebutton/fork" data-size="large" data-show-count="true" aria-label="Fork bigbluebutton/bigbluebutton on GitHub" target="_blank" rel="external">Fork</a></p>
+<p>采用Java开发，主要针对场景是授课</p>
+<p>特性：</p>
+<ul>
+<li>实时添加字幕</li>
+<li>屏幕共享</li>
+<li>分组讨论室</li>
+<li>录制与回放</li>
+</ul>
+<p>考察点总结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">考察点</th>
+<th style="text-align:left">情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">语言</td>
+<td style="text-align:left">Java</td>
+</tr>
+<tr>
+<td style="text-align:center">最新发布日期</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">谁在用</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">文档</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">伸缩</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">debug</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">许可证</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">网络协议</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">自适应码率</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">流控</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">录制</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">回放</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-6-NextRTC"><a href="#2-6-NextRTC" class="headerlink" title="2.6 NextRTC"></a>2.6 NextRTC</h2><p>主页 <a href="https://nextrtc.org/" target="_blank" rel="external">https://nextrtc.org/</a><br>Github <a href="https://github.com/mslosarz/nextrtc-signaling-server" target="_blank" rel="external">https://github.com/mslosarz/nextrtc-signaling-server</a></p>
+<p>考察点总结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">考察点</th>
+<th style="text-align:left">情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">语言</td>
+<td style="text-align:left">Java</td>
+</tr>
+<tr>
+<td style="text-align:center">最新发布日期</td>
+<td style="text-align:left">2018-04-05</td>
+</tr>
+<tr>
+<td style="text-align:center">谁在用</td>
+<td style="text-align:left">（估计没人）</td>
+</tr>
+<tr>
+<td style="text-align:center">文档</td>
+<td style="text-align:left">简单</td>
+</tr>
+<tr>
+<td style="text-align:center">伸缩</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">debug</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">许可证</td>
+<td style="text-align:left">MIT</td>
+</tr>
+<tr>
+<td style="text-align:center">网络协议</td>
+<td style="text-align:left">WebRTC</td>
+</tr>
+<tr>
+<td style="text-align:center">自适应码率</td>
+<td style="text-align:left">&#10004;</td>
+</tr>
+<tr>
+<td style="text-align:center">流控</td>
+<td style="text-align:left">&#10006;</td>
+</tr>
+<tr>
+<td style="text-align:center">录制</td>
+<td style="text-align:left">&#10006;</td>
+</tr>
+<tr>
+<td style="text-align:center">回放</td>
+<td style="text-align:left">&#10006;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-7-OpenBroadcaster"><a href="#2-7-OpenBroadcaster" class="headerlink" title="2.7 OpenBroadcaster"></a>2.7 OpenBroadcaster</h2><p><a href="https://obsproject.com/" target="_blank" rel="external">https://obsproject.com/</a><br><a href="https://github.com/obsproject" target="_blank" rel="external">https://github.com/obsproject</a></p>
+<p>TBD</p>
+<hr>
+<p><a href="https://en.wikipedia.org/wiki/Comparison_of_streaming_media_systems" target="_blank" rel="external">Comparison of streaming media systems - Wikipedia</a></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>创建者</th>
+<th>最新稳定版(发布日期)</th>
+<th>最新发布日期</th>
+<th>价钱 (USD)</th>
+<th>许可证</th>
+<th>支持媒体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cameleon</td>
+<td>Yatko</td>
+<td>1.0.7 (2016-11-11)</td>
+<td>2016-11-11</td>
+<td>Free</td>
+<td>专有</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>Helix Universal Server</td>
+<td>RealNetworks</td>
+<td>15.2.1 (2014-09-16)</td>
+<td>2014-09-16</td>
+<td>Free for 12 months (Basic) and \$1,000-\$10,000</td>
+<td>专有</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>IIS Media Services</td>
+<td>Microsoft</td>
+<td>4.1 (2011-11-09)</td>
+<td>2011-11-09</td>
+<td>Free</td>
+<td>专有</td>
+<td>Audio/Video/Data</td>
+</tr>
+<tr>
+<td>Nimble Streamer</td>
+<td>WMSPanel</td>
+<td>2.15.1-3 (2016-03-21)</td>
+<td>2016-03-21</td>
+<td>Free</td>
+<td>专有</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>Open Broadcaster Software</td>
+<td>OBS Project</td>
+<td>0.657 (2015-11-24)</td>
+<td>2015-11-24</td>
+<td>Free</td>
+<td>GPL v2</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>OpenBroadcaster</td>
+<td>OpenBroadcaster</td>
+<td>5.0.0 (2018-01-27)</td>
+<td>2018-01-27</td>
+<td>Free</td>
+<td>AGPLv3</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>Plex (software)</td>
+<td>Plex Media Server</td>
+<td>1.0.3.2461-35f0caa (2016-07-28)</td>
+<td>2016-07-28</td>
+<td>Free</td>
+<td>GPL</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>Red5 (open source)</td>
+<td>Infrared5/community</td>
+<td>1.0.6 (2015-09-08)</td>
+<td>2015-09-08</td>
+<td>Free</td>
+<td>Apache License v2</td>
+<td>Audio/Video/Data</td>
+</tr>
+<tr>
+<td>Unified Streaming Platform</td>
+<td>Unified Streaming</td>
+<td>1.7.18 (2016-04-11)</td>
+<td>2016-04-11</td>
+<td>Free Trial license; Perpetual License; Amazon EC2 with embedded license; Microsoft Azure</td>
+<td>专有</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>Unreal Media Server</td>
+<td>Unreal Streaming Technologies</td>
+<td>12.0 (2017-04-03)</td>
+<td>2017-04-03</td>
+<td>\$995 perpetual license</td>
+<td>专有</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>VLC media player</td>
+<td>VideoLAN</td>
+<td>2.2.4 (2016-06-05)</td>
+<td>2016-06-05</td>
+<td>Free</td>
+<td>GPL v2</td>
+<td>Audio/Video</td>
+</tr>
+<tr>
+<td>Wowza Streaming Engine</td>
+<td>Wowza Media Systems</td>
+<td>4.5.0 build 18676 (2016-06-23)[2]</td>
+<td>2016-06-23</td>
+<td>Free Developer and Trial licenses; Subscription Licenses at \$65/month; Perpetual Pro License at \$1995; Amazon EC2 with embedded license starting at \$0.15/hour</td>
+<td>专有</td>
+<td>Audio/Video/Data</td>
+</tr>
+</tbody>
+</table>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+<p>-</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文对几种开源的流媒体服务器做对比。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="直播" scheme="http://bungder.github.io/tags/%E7%9B%B4%E6%92%AD/"/>
+    
+      <category term="流媒体" scheme="http://bungder.github.io/tags/%E6%B5%81%E5%AA%92%E4%BD%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java-collection</title>
+    <link href="http://bungder.github.io/2018/04/19/java-collection/"/>
+    <id>http://bungder.github.io/2018/04/19/java-collection/</id>
+    <published>2018-04-19T01:49:58.000Z</published>
+    <updated>2018-04-21T06:26:08.346Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="attach/java-collection/uml.svg" alt=""></p>
+<hr>
+<p><img src="http://otlnkjq1m.bkt.clouddn.com/diagram2.svg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;attach/java-collection/uml.svg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;http://otlnkjq1m.bkt.clouddn.com/diagram2.svg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>JVM GC相关问题</title>
@@ -448,9 +1273,9 @@
     </summary>
     
     
-      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
-    
       <category term="Java" scheme="http://bungder.github.io/tags/Java/"/>
+    
+      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
     
   </entry>
   
@@ -880,9 +1705,9 @@
     </summary>
     
     
-      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
-    
       <category term="Java" scheme="http://bungder.github.io/tags/Java/"/>
+    
+      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
     
   </entry>
   
@@ -1191,9 +2016,9 @@
     </summary>
     
     
-      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
-    
       <category term="Java" scheme="http://bungder.github.io/tags/Java/"/>
+    
+      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
     
   </entry>
   
@@ -1602,9 +2427,9 @@
     </summary>
     
     
-      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
-    
       <category term="Java" scheme="http://bungder.github.io/tags/Java/"/>
+    
+      <category term="JVM" scheme="http://bungder.github.io/tags/JVM/"/>
     
   </entry>
   
@@ -2045,9 +2870,9 @@
     </summary>
     
     
-      <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
-    
       <category term="持续集成" scheme="http://bungder.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+      <category term="软件工程" scheme="http://bungder.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
     
   </entry>
   
