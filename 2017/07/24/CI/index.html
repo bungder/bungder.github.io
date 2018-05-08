@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="持续集成,软件工程," />
+  <meta name="keywords" content="软件工程,持续集成," />
 
 
 
@@ -96,7 +96,7 @@
 
 
 <meta name="description" content="1    概述互联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。 本文主要介绍持续集成的概念以及一些工具与实践。 2    概念图2.1 持续集成概念示意图之一 上图来源于谈谈持续集成，持续交付，持续部署之间的区别，这图很直观地描述了持续集成相关的概念之间的关系，与持续集">
-<meta name="keywords" content="持续集成,软件工程">
+<meta name="keywords" content="软件工程,持续集成">
 <meta property="og:type" content="article">
 <meta property="og:title" content="持续集成简述">
 <meta property="og:url" content="http://bungder.github.io/2017/07/24/CI/index.html">
@@ -391,9 +391,9 @@
         <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>互联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
 <p>本文主要介绍持续集成的概念以及一些工具与实践。</p>
 <h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2    概念"></a>2    概念</h1><p><img src="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation.png" alt="图2.1 持续集成概念示意图之一"><br>图2.1 持续集成概念示意图之一</p>
-<p>上图来源于<a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="external">谈谈持续集成，持续交付，持续部署之间的区别</a>，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成密切相关的概念还有持续交付、持续部署，因此在下文将会就这三个概念进行阐述。</p>
+<p>上图来源于<a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="noopener">谈谈持续集成，持续交付，持续部署之间的区别</a>，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成密切相关的概念还有持续交付、持续部署，因此在下文将会就这三个概念进行阐述。</p>
 <a id="more"></a>
-<h2 id="2-1-持续集成"><a href="#2-1-持续集成" class="headerlink" title="2.1    持续集成"></a>2.1    持续集成</h2><p>维基百科的定义（<a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank" rel="external">Continuous integration - Wikipedia</a>）：</p>
+<h2 id="2-1-持续集成"><a href="#2-1-持续集成" class="headerlink" title="2.1    持续集成"></a>2.1    持续集成</h2><p>维基百科的定义（<a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank" rel="noopener">Continuous integration - Wikipedia</a>）：</p>
 <blockquote>
 <p>在软件工程里，持续集成（Continuous Integration, CI）是指这样的一种实践：在一天里多次将所有开发人员的代码合并到一个共享的主干里，每次合并都会触发持续集成服务器进行自动构建，这个过程包括了编译、单元测试、集成测试、质量分析等步骤，结果只有两个：成功或者失败。如果得到失败的结果，说明有人提交了不合格的代码，这就能及时发现问题。</p>
 </blockquote>
@@ -407,7 +407,7 @@
 <li>部署</li>
 <li>维护</li>
 </ul>
-<p>而一般在实际的开发中，基本也就遵循这些步骤进行开发，大部分情况下，不会完全按照瀑布流的方式执行，但是这些步骤都是有的，无非就是在文档的落实、步骤的次序与侧重有所变化。其中，所谓的集成，在平时的开发过程中很少直接提到这个名词，其含义是（见：<a href="https://en.wikipedia.org/wiki/System_integration" target="_blank" rel="external">System integration - Wikipedia</a>）：</p>
+<p>而一般在实际的开发中，基本也就遵循这些步骤进行开发，大部分情况下，不会完全按照瀑布流的方式执行，但是这些步骤都是有的，无非就是在文档的落实、步骤的次序与侧重有所变化。其中，所谓的集成，在平时的开发过程中很少直接提到这个名词，其含义是（见：<a href="https://en.wikipedia.org/wiki/System_integration" target="_blank" rel="noopener">System integration - Wikipedia</a>）：</p>
 <blockquote>
 <p>将子系统的组件整合到一个系统中并且确保子系统的功能可以组合为一个系统的过程。</p>
 </blockquote>
@@ -590,26 +590,26 @@
 </table>
 <p>其实这里的支持，意思应该是直接的支持，例如Jenkins，其实和git结合也很简单，通过脚本就可以实现。</p>
 <h1 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5    参考资料"></a>5    参考资料</h1><ol>
-<li>Maven实战（五）——自动化Web应用集成测试<br><a href="http://www.infoq.com/cn/news/2011/03/xxb-maven-5-integration-test" target="_blank" rel="external">http://www.infoq.com/cn/news/2011/03/xxb-maven-5-integration-test</a></li>
-<li>单元测试 - 维基百科<br><a href="https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95</a></li>
-<li>Integration testing – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Integration_testing" target="_blank" rel="external">https://en.wikipedia.org/wiki/Integration_testing</a></li>
-<li>Continuous integration – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank" rel="external">https://en.wikipedia.org/wiki/Continuous_integration</a></li>
-<li>Continuous integration | ThoughtWorks<br><a href="https://www.thoughtworks.com/continuous-integration" target="_blank" rel="external">https://www.thoughtworks.com/continuous-integration</a></li>
-<li>另一种声音：持续集成已死<br><a href="http://www.infoq.com/cn/news/2014/10/continuous-integration" target="_blank" rel="external">http://www.infoq.com/cn/news/2014/10/continuous-integration</a></li>
-<li>持续集成是什么？<br><a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html</a></li>
-<li>25 best continuous integration tools as of 2017 - Slant<br><a href="https://www.slant.co/topics/799/~best-continuous-integration-tools" target="_blank" rel="external">https://www.slant.co/topics/799/~best-continuous-integration-tools</a></li>
-<li>Bamboo vs Jenkins Comparison | Atlassian<br><a href="https://www.atlassian.com/software/bamboo/comparison/bamboo-vs-jenkins" target="_blank" rel="external">https://www.atlassian.com/software/bamboo/comparison/bamboo-vs-jenkins</a></li>
-<li>通过Docker容器运行持续集成/持续部署<br><a href="http://dockone.io/article/468" target="_blank" rel="external">http://dockone.io/article/468</a></li>
-<li>Continuous Integration, Deployment &amp; Delivery with Codeship<br><a href="https://codeship.com" target="_blank" rel="external">https://codeship.com</a></li>
-<li>谈谈持续集成，持续交付，持续部署之间的区别<br><a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="external">http://blog.flow.ci/cicd_difference/</a></li>
-<li>Continuous delivery – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Continuous_delivery" target="_blank" rel="external">https://en.wikipedia.org/wiki/Continuous_delivery</a></li>
-<li>Build automation – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Build_automation" target="_blank" rel="external">https://en.wikipedia.org/wiki/Build_automation</a></li>
-<li>List of build automation software – Wikipedia<br><a href="https://en.wikipedia.org/wiki/List_of_build_automation_software" target="_blank" rel="external">https://en.wikipedia.org/wiki/List_of_build_automation_software</a></li>
-<li>Software development process - Wikipedia<br><a href="https://en.wikipedia.org/wiki/Software_development_process" target="_blank" rel="external">https://en.wikipedia.org/wiki/Software_development_process</a></li>
-<li>System integration - Wikipedia<br><a href="https://en.wikipedia.org/wiki/System_integration" target="_blank" rel="external">https://en.wikipedia.org/wiki/System_integration</a></li>
-<li>Continuous Integration - Martin Fowler<br><a href="https://martinfowler.com/articles/continuousIntegration.html#PracticesOfContinuousIntegration" target="_blank" rel="external">https://martinfowler.com/articles/continuousIntegration.html#PracticesOfContinuousIntegration</a></li>
-<li>Integration Testing - Software Testing Fundamentals<br><a href="http://softwaretestingfundamentals.com/integration-testing/" target="_blank" rel="external">http://softwaretestingfundamentals.com/integration-testing/</a></li>
-<li>Practical continuous deployment: a guide to automated software delivery<br><a href="https://www.atlassian.com/blog/continuous-delivery/practical-continuous-deployment" target="_blank" rel="external">https://www.atlassian.com/blog/continuous-delivery/practical-continuous-deployment</a></li>
+<li>Maven实战（五）——自动化Web应用集成测试<br><a href="http://www.infoq.com/cn/news/2011/03/xxb-maven-5-integration-test" target="_blank" rel="noopener">http://www.infoq.com/cn/news/2011/03/xxb-maven-5-integration-test</a></li>
+<li>单元测试 - 维基百科<br><a href="https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95</a></li>
+<li>Integration testing – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Integration_testing" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Integration_testing</a></li>
+<li>Continuous integration – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Continuous_integration</a></li>
+<li>Continuous integration | ThoughtWorks<br><a href="https://www.thoughtworks.com/continuous-integration" target="_blank" rel="noopener">https://www.thoughtworks.com/continuous-integration</a></li>
+<li>另一种声音：持续集成已死<br><a href="http://www.infoq.com/cn/news/2014/10/continuous-integration" target="_blank" rel="noopener">http://www.infoq.com/cn/news/2014/10/continuous-integration</a></li>
+<li>持续集成是什么？<br><a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html</a></li>
+<li>25 best continuous integration tools as of 2017 - Slant<br><a href="https://www.slant.co/topics/799/~best-continuous-integration-tools" target="_blank" rel="noopener">https://www.slant.co/topics/799/~best-continuous-integration-tools</a></li>
+<li>Bamboo vs Jenkins Comparison | Atlassian<br><a href="https://www.atlassian.com/software/bamboo/comparison/bamboo-vs-jenkins" target="_blank" rel="noopener">https://www.atlassian.com/software/bamboo/comparison/bamboo-vs-jenkins</a></li>
+<li>通过Docker容器运行持续集成/持续部署<br><a href="http://dockone.io/article/468" target="_blank" rel="noopener">http://dockone.io/article/468</a></li>
+<li>Continuous Integration, Deployment &amp; Delivery with Codeship<br><a href="https://codeship.com" target="_blank" rel="noopener">https://codeship.com</a></li>
+<li>谈谈持续集成，持续交付，持续部署之间的区别<br><a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="noopener">http://blog.flow.ci/cicd_difference/</a></li>
+<li>Continuous delivery – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Continuous_delivery" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Continuous_delivery</a></li>
+<li>Build automation – Wikipedia<br><a href="https://en.wikipedia.org/wiki/Build_automation" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Build_automation</a></li>
+<li>List of build automation software – Wikipedia<br><a href="https://en.wikipedia.org/wiki/List_of_build_automation_software" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/List_of_build_automation_software</a></li>
+<li>Software development process - Wikipedia<br><a href="https://en.wikipedia.org/wiki/Software_development_process" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Software_development_process</a></li>
+<li>System integration - Wikipedia<br><a href="https://en.wikipedia.org/wiki/System_integration" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/System_integration</a></li>
+<li>Continuous Integration - Martin Fowler<br><a href="https://martinfowler.com/articles/continuousIntegration.html#PracticesOfContinuousIntegration" target="_blank" rel="noopener">https://martinfowler.com/articles/continuousIntegration.html#PracticesOfContinuousIntegration</a></li>
+<li>Integration Testing - Software Testing Fundamentals<br><a href="http://softwaretestingfundamentals.com/integration-testing/" target="_blank" rel="noopener">http://softwaretestingfundamentals.com/integration-testing/</a></li>
+<li>Practical continuous deployment: a guide to automated software delivery<br><a href="https://www.atlassian.com/blog/continuous-delivery/practical-continuous-deployment" target="_blank" rel="noopener">https://www.atlassian.com/blog/continuous-delivery/practical-continuous-deployment</a></li>
 </ol>
 
       
@@ -658,9 +658,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/持续集成/" rel="tag"># 持续集成</a>
-          
             <a href="/tags/软件工程/" rel="tag"># 软件工程</a>
+          
+            <a href="/tags/持续集成/" rel="tag"># 持续集成</a>
           
         </div>
       

@@ -381,7 +381,7 @@
       
 
       
-        <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
+        <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
 <hr>
 <ul>
@@ -586,7 +586,7 @@
 <blockquote>
 <p>The resolved method is the signature polymorphic method declaration. It is not necessary for C to declare a method with the descriptor specified by the method reference.</p>
 </blockquote>
-<p>  <strong>signature polymorphic method</strong>这个概念在<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>的 2.9 Special Methods 中定义：</p>
+<p>  <strong>signature polymorphic method</strong>这个概念在<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>的 2.9 Special Methods 中定义：</p>
 <blockquote>
 <p>  A method is signature polymorphic if all of the following are true:<br>  • It is declared in the java.lang.invoke.MethodHandle class.<br>  • It has a single formal parameter of type Object[].<br>  • It has a return type of Object.<br>  • It has the ACC_VARARGS and ACC_NATIVE flags set.</p>
 </blockquote>
@@ -661,7 +661,7 @@
 <h1 id="7-JVM-Exit"><a href="#7-JVM-Exit" class="headerlink" title="7 JVM Exit"></a>7 JVM Exit</h1><p>某个线程调用了<strong><code>Runtime</code>或<code>System</code>类的<code>exit</code></strong>方法或者<strong><code>Runtime</code>类的<code>halt</code></strong>方法、并且<code>exit</code>或<code>halt</code>操作得到了安全管理器（security manager）的准许时，JVM退出。</p>
 <p>另外，JNI（Java Native Interface）规范描述了当JNI Invocation API被用于加载和卸载JVM时JVM的终止。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a></li>
 </ul>
 
       

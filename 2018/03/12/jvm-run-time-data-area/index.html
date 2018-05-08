@@ -383,7 +383,7 @@
       
 
       
-        <p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
+        <p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
 <p><img src="http://otlnkjq1m.bkt.clouddn.com/runtime2.png" alt=""><br>JVM Specification定义的运行时数据区域模型↑↑↑</p>
 <p>其中，方法区所属的区域并没有强制要求。不同的JVM实现，其内存分布细节会不同。</p>
 <a id="more"></a>
@@ -425,7 +425,7 @@
 <h3 id="2-1-3-Return-Value"><a href="#2-1-3-Return-Value" class="headerlink" title="2.1.3 Return Value"></a>2.1.3 Return Value</h3><h3 id="2-1-4-Dynamic-Linking"><a href="#2-1-4-Dynamic-Linking" class="headerlink" title="2.1.4 Dynamic Linking"></a>2.1.4 Dynamic Linking</h3><blockquote>
 <p>Each frame (§2.6) contains <strong>a reference to the run-time constant pool</strong> (§2.5.5) for the type of the current method to support $dynamic linking$ of the method code. The class file code for a method refers to methods to be invoked and variables to be accessed via symbolic references. Dynamic linking translates these symbolic method references into concrete method references, loading classes as necessary to resolve as-yet-undefined symbols, and translates variable accesses into appropriate offsets in storage structures associated with the run-time location of these variables.</p>
 </blockquote>
-<p><a href="http://ifeve.com/jvm-internals/" target="_blank" rel="external">JVM内部原理</a>:</p>
+<p><a href="http://ifeve.com/jvm-internals/" target="_blank" rel="noopener">JVM内部原理</a>:</p>
 <blockquote>
 <p><strong>每个栈帧都包含了运行时常量池的引用</strong>。这个引用指向了这个栈帧正在执行的方法所在的类的常量池，它对动态链接提供了支持。</p>
 <p>C/C++ 代码通常编译成一个对象文件，然后多个文件被链接起来生成一个可用的文件比如一个可执行文件或者动态链接库。在链接阶段，符号引用在每个对象文件里被替换成一个和最终执行相关的实际的内存地址。在Java里，这个链接过程在运行时是自动发生的。</p>
@@ -434,13 +434,13 @@
 <h1 id="3-Heap-堆"><a href="#3-Heap-堆" class="headerlink" title="3 Heap 堆"></a>3 Heap 堆</h1><blockquote>
 <p>The Java Virtual Machine has a heap that is <strong>shared among all Java Virtual Machine threads</strong>. The heap is the <strong>run-time data area from which memory for all class instances and arrays is allocated</strong>.<br>…<br><strong>Heap storage for objects is reclaimed by</strong> an automatic storage management system (known as a <strong>garbage collector</strong>); objects are never explicitly deallocated.</p>
 </blockquote>
-<p><a href="https://www.zhihu.com/question/49044988/answer/113961406" target="_blank" rel="external">https://www.zhihu.com/question/49044988/answer/113961406</a> 评论里：</p>
+<p><a href="https://www.zhihu.com/question/49044988/answer/113961406" target="_blank" rel="noopener">https://www.zhihu.com/question/49044988/answer/113961406</a> 评论里：</p>
 <blockquote>
 <p>如果“堆”是说<strong>Java heap</strong>，那么这个也对也错。因为JVM规范对抽象的“Java heap”的定义是“存储Java对象的地方”，也就是说Java对象在哪里，哪里就是Java heap。HotSpot的PermGen里是会存储部分Java对象的，例如说一些java.lang.String实例。这些String实例占的部分就得算是Java heap。</p>
 <p>如果“堆”是说<strong>GC heap</strong>，那么这个错误。<strong>PermGen是HotSpot的GC heap的一部分</strong>。</p>
 <p>一般说“native memory”都是跟GC heap相对的，所以一般取上述后者的定义</p>
 </blockquote>
-<h1 id="4-Method-Area"><a href="#4-Method-Area" class="headerlink" title="4 Method Area"></a>4 Method Area</h1><p><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>:</p>
+<h1 id="4-Method-Area"><a href="#4-Method-Area" class="headerlink" title="4 Method Area"></a>4 Method Area</h1><p><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>:</p>
 <blockquote>
 <p>The Java Virtual Machine has a method area that <strong>is shared among all Java Virtual Machine threads</strong>.</p>
 <p>It stores per-class structures such as the <strong>run-time constant pool</strong>, <strong>field</strong> and <strong>method data</strong>, and <strong>the code for methods and constructors</strong>, including the special methods (§2.9) used in class and instance initialization and interface initialization.</p>
@@ -473,10 +473,10 @@
 <p>Java Virtual Machine implementations that cannot load native methods and that do not themselves rely on conventional stacks need not supply native method stacks. If supplied, <strong>native method stacks are typically allocated per thread when each thread is created</strong>.</p>
 </blockquote>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="http://ifeve.com/jvm-internals/" target="_blank" rel="external">JVM内部原理 | 并发编程网 – ifeve.com</a></li>
-<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a></li>
-<li><a href="http://openjdk.java.net/jeps/122" target="_blank" rel="external">JEP 122: Remove the Permanent Generation</a></li>
-<li><a href="https://www.zhihu.com/question/49044988/answer/113961406" target="_blank" rel="external">方法区的Class信息,又称为永久代,是否属于Java堆？ - 知乎</a></li>
+<li><a href="http://ifeve.com/jvm-internals/" target="_blank" rel="noopener">JVM内部原理 | 并发编程网 – ifeve.com</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a></li>
+<li><a href="http://openjdk.java.net/jeps/122" target="_blank" rel="noopener">JEP 122: Remove the Permanent Generation</a></li>
+<li><a href="https://www.zhihu.com/question/49044988/answer/113961406" target="_blank" rel="noopener">方法区的Class信息,又称为永久代,是否属于Java堆？ - 知乎</a></li>
 </ul>
 
       

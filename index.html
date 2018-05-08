@@ -608,7 +608,7 @@
 
       
         
-          <h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h1><p><a href="http://blog.csdn.net/u011080472/article/details/51324422" target="_blank" rel="external">http://blog.csdn.net/u011080472/article/details/51324422</a></p>
+          <h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h1><p><a href="http://blog.csdn.net/u011080472/article/details/51324422" target="_blank" rel="noopener">http://blog.csdn.net/u011080472/article/details/51324422</a></p>
 <h2 id="1-0-并发和并行"><a href="#1-0-并发和并行" class="headerlink" title="1.0 并发和并行"></a>1.0 并发和并行</h2><p>这两个名词都是并发编程中的概念，在谈论垃圾收集器的上下文语境中，它们可以解释如下。</p>
 <ul>
 <li><p>并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。</p>
@@ -855,7 +855,7 @@
 
       
         
-          <p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
+          <p>根据 <a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition</a>，可以整理出其定义的JVM内存结构如下：</p>
 <p><img src="http://otlnkjq1m.bkt.clouddn.com/runtime2.png" alt=""><br>JVM Specification定义的运行时数据区域模型↑↑↑</p>
 <p>其中，方法区所属的区域并没有强制要求。不同的JVM实现，其内存分布细节会不同。</p>
           <!--noindex-->
@@ -973,7 +973,7 @@
 
       
         
-          <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
+          <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第五章内容（Loading, Linking, and Initializing）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <p>阅读本文内容需要先对java的class文件结构有所了解。如果尚不了解，不妨参考我的另一篇博文 <a href="/2018/03/10/java-class-file-format/">Java class文件格式</a></p>
 <hr>
 <ul>
@@ -1096,7 +1096,7 @@
 
       
         
-          <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="external">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
+          <h1 id="0-概述"><a href="#0-概述" class="headerlink" title="0 概述"></a>0 概述</h1><p>这实际上是<a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank" rel="noopener">《The Java<sup>&reg;</sup> Virtual Machine Specification - Java SE 8 Edition》</a>中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我』就可以发邮件给我）。</p>
 <hr>
 <p>每一个class文件都包含了一个单独的class或者interface的定义。尽管一个class或者interface并不是有一个以文件形式存在的外部表达，但是下面还是通俗地将class或interface的任何有效表达称为类文件格式（<em>the class file format</em>）。</p>
 <p>一个类文件由一个<code>8位字节流</code>组成。 所有的16位，32位和64位量分别通过读取2、4、8个连续的8位字节来构造。 多字节数据项总是以<code>big-endian顺序</code>存储，其中高字节排在第一位。 在Java SE平台中，此格式由接口<code>java.io.DataInput</code>和<code>java.io.DataOutput</code>以及类如<code>java.io.DataInputStream</code>和<code>java.io.DataOutputStream</code>支持。</p>
@@ -1221,8 +1221,8 @@
 <li>切换环境不方便</li>
 <li>JMX重连不会成功</li>
 </ol>
-<p>因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：<br><a href="https://github.com/bungder/druid-aggregated-monitor" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor</a></p>
-<p>对应本文的版本，已经打了tag：<br><a href="https://github.com/bungder/druid-aggregated-monitor/releases/tag/0.0.1" target="_blank" rel="external">https://github.com/bungder/druid-aggregated-monitor/releases/tag/0.0.1</a></p>
+<p>因此针对这些问题，对其进行改造。改造后的源码已经放在个人的github上：<br><a href="https://github.com/bungder/druid-aggregated-monitor" target="_blank" rel="noopener">https://github.com/bungder/druid-aggregated-monitor</a></p>
+<p>对应本文的版本，已经打了tag：<br><a href="https://github.com/bungder/druid-aggregated-monitor/releases/tag/0.0.1" target="_blank" rel="noopener">https://github.com/bungder/druid-aggregated-monitor/releases/tag/0.0.1</a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/08/31/druid-monitor-remould/#more" rel="contents">
@@ -1338,7 +1338,7 @@
 
       
         
-          <h1 id="1-普通的web监控"><a href="#1-普通的web监控" class="headerlink" title="1. 普通的web监控"></a>1. 普通的web监控</h1><p>阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：<a href="https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE" target="_blank" rel="external">配置_StatViewServlet配置 · alibaba/driud wiki</a></p>
+          <h1 id="1-普通的web监控"><a href="#1-普通的web监控" class="headerlink" title="1. 普通的web监控"></a>1. 普通的web监控</h1><p>阿里开源的连接池Druid自带了web监控的功能，具体的操作在其github的wiki上可以找到：<a href="https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE" target="_blank" rel="noopener">配置_StatViewServlet配置 · alibaba/driud wiki</a></p>
 <p>其实主要就是配置一个Servlet，但是github wiki上的做法只能在druid所在的项目中启用web服务的做法，在如今盛行的微服务架构中，很多时候druid所在的服务里并不提供web服务，这就需要额外的配置。其实druid本身也提供了这种功能，只是wiki里没有说。</p>
 <p>druid本身可以通过启用JMX端口来将监控数据传输到远端进行处理，具体做法是：</p>
 <ol>
@@ -1463,7 +1463,7 @@
           <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1    概述"></a>1    概述</h1><p>互联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration, CI）。持续集成也被认为是敏捷开发的最重要实践之一。</p>
 <p>本文主要介绍持续集成的概念以及一些工具与实践。</p>
 <h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2    概念"></a>2    概念</h1><p><img src="http://otlnkjq1m.bkt.clouddn.com/CI-notion-relation.png" alt="图2.1 持续集成概念示意图之一"><br>图2.1 持续集成概念示意图之一</p>
-<p>上图来源于<a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="external">谈谈持续集成，持续交付，持续部署之间的区别</a>，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成密切相关的概念还有持续交付、持续部署，因此在下文将会就这三个概念进行阐述。</p>
+<p>上图来源于<a href="http://blog.flow.ci/cicd_difference/" target="_blank" rel="noopener">谈谈持续集成，持续交付，持续部署之间的区别</a>，这图很直观地描述了持续集成相关的概念之间的关系，与持续集成密切相关的概念还有持续交付、持续部署，因此在下文将会就这三个概念进行阐述。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/24/CI/#more" rel="contents">

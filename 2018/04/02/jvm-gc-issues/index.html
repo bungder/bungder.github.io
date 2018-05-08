@@ -395,7 +395,7 @@
       
 
       
-        <h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h1><p><a href="http://blog.csdn.net/u011080472/article/details/51324422" target="_blank" rel="external">http://blog.csdn.net/u011080472/article/details/51324422</a></p>
+        <h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h1><p><a href="http://blog.csdn.net/u011080472/article/details/51324422" target="_blank" rel="noopener">http://blog.csdn.net/u011080472/article/details/51324422</a></p>
 <h2 id="1-0-并发和并行"><a href="#1-0-并发和并行" class="headerlink" title="1.0 并发和并行"></a>1.0 并发和并行</h2><p>这两个名词都是并发编程中的概念，在谈论垃圾收集器的上下文语境中，它们可以解释如下。</p>
 <ul>
 <li><p>并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。</p>
@@ -411,7 +411,7 @@
 </ul>
 <a id="more"></a>
 <h1 id="2-Java中什么样的对象才能作为gc-root，gc-roots有哪些呢？"><a href="#2-Java中什么样的对象才能作为gc-root，gc-roots有哪些呢？" class="headerlink" title="2 Java中什么样的对象才能作为gc root，gc roots有哪些呢？"></a>2 Java中什么样的对象才能作为gc root，gc roots有哪些呢？</h1><p><span id="gcRoot"></span></p>
-<p><a href="http://blog.csdn.net/fenglibing/article/details/8928927" target="_blank" rel="external">http://blog.csdn.net/fenglibing/article/details/8928927</a></p>
+<p><a href="http://blog.csdn.net/fenglibing/article/details/8928927" target="_blank" rel="noopener">http://blog.csdn.net/fenglibing/article/details/8928927</a></p>
 <blockquote>
 <p>常说的GC(Garbage Collector) roots，特指的是垃圾收集器（Garbage Collector）的对象，GC会收集那些不是GC roots且没有被GC roots引用的对象。</p>
 <p>一个对象可以属于多个root，GC root有几下种：</p>
@@ -425,7 +425,7 @@
 <li><strong>Held by JVM</strong> - 用于JVM特殊目的由GC保留的对象，但实际上这个与JVM的实现是有关的。可能已知的一些类型是：系统类加载器、一些JVM知道的重要的异常类、一些用于处理异常的预分配对象以及一些自定义的类加载器等。然而，JVM并没有为这些对象提供其它的信息，因此就只有留给分析分员去确定哪些是属于”JVM持有”的了。</li>
 </ul>
 </blockquote>
-<p><a href="http://help.eclipse.org/luna/index.jsp?topic=%2Forg.eclipse.mat.ui.help%2Fconcepts%2Fgcroots.html&amp;cp=37_2_3" target="_blank" rel="external">Help - Eclipse Platform</a></p>
+<p><a href="http://help.eclipse.org/luna/index.jsp?topic=%2Forg.eclipse.mat.ui.help%2Fconcepts%2Fgcroots.html&amp;cp=37_2_3" target="_blank" rel="noopener">Help - Eclipse Platform</a></p>
 <blockquote>
 <p><strong>Garbage Collection Roots</strong><br>A garbage collection root is an object that is accessible from outside the heap. The following reasons make an object a GC root:</p>
 <ul>
@@ -444,9 +444,9 @@
 <li><strong>Unknown</strong><br>An object of unknown root type. Some dumps, such as IBM Portable Heap Dump files, do not have root information. For these dumps the MAT parser marks objects which are have no inbound references or are unreachable from any other root as roots of this type. This ensures that MAT retains all the objects in the dump.</li>
 </ul>
 </blockquote>
-<p><a href="https://www.zhihu.com/question/53613423/answer/135743258" target="_blank" rel="external">java的gc为什么要分代？ - 知乎</a></p>
+<p><a href="https://www.zhihu.com/question/53613423/answer/135743258" target="_blank" rel="noopener">java的gc为什么要分代？ - 知乎</a></p>
 <blockquote>
-<p>作者：RednaxelaFX<br>链接：<a href="https://www.zhihu.com/question/53613423/answer/135743258" target="_blank" rel="external">https://www.zhihu.com/question/53613423/answer/135743258</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>作者：RednaxelaFX<br>链接：<a href="https://www.zhihu.com/question/53613423/answer/135743258" target="_blank" rel="noopener">https://www.zhihu.com/question/53613423/answer/135743258</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 <p><strong>所谓“GC roots”，或者说tracing GC的“根集合”，就是一组必须活跃的引用</strong>。<br>例如说，这些引用可能包括：</p>
 <ul>
 <li>所有Java线程当前活跃的栈帧里指向GC堆里的对象的引用；换句话说，当前所有正在被调用的方法的引用类型的参数/局部变量/临时值。</li>
@@ -464,8 +464,8 @@
 <p><strong>那么分代有什么好处？</strong><span id="goodsForGeneration"><br>对传统的、基本的GC实现来说，由于它们在GC的整个工作过程中都要“stop-the-world”，如果能想办法缩短GC一次工作的时间长度就是件重要的事情。如果说收集整个GC堆耗时太长，那不如只收集其中的一部分？<br>于是就有好几种不同的划分（partition）GC堆的方式来实现部分收集，而分代式GC就是这其中的一个思路。<br>这个思路所基于的基本假设大家都很熟悉了：<strong>weak generational hypothesis</strong>——大部分对象的生命期很短（die young），而没有die young的对象则很可能会存活很长时间（live long）。<br>这是对过往的很多应用行为分析之后得出的一个假设。基于这个假设，如果让新创建的对象都在young gen里创建，然后频繁收集young gen，则大部分垃圾都能在young GC中被收集掉。<strong>由于young gen的大小配置通常只占整个GC堆的较小部分，而且较高的对象死亡率（或者说较低的对象存活率）让它非常适合使用copying算法来收集，这样就不但能降低单次GC的时间长度，还可以提高GC的工作效率</strong>。（参见<a href="#threeComparing">三种基本算法的对比</a>）</span></p>
 <p>放几个传送门：</p>
 <ul>
-<li><a href="https://www.zhihu.com/question/33210180/answer/56348818" target="_blank" rel="external">JVM GC遍历一次新生代所有对象是否可达需要多久？- RednaxelaFX 的回答 - 知乎</a></li>
-<li><a href="https://www.zhihu.com/question/42181722/answer/93871206" target="_blank" rel="external">有关 Copying GC 的疑问？- RednaxelaFX 的回答 - 知乎</a></li>
+<li><a href="https://www.zhihu.com/question/33210180/answer/56348818" target="_blank" rel="noopener">JVM GC遍历一次新生代所有对象是否可达需要多久？- RednaxelaFX 的回答 - 知乎</a></li>
+<li><a href="https://www.zhihu.com/question/42181722/answer/93871206" target="_blank" rel="noopener">有关 Copying GC 的疑问？- RednaxelaFX 的回答 - 知乎</a></li>
 </ul>
 <p>但是！有些比较先进的GC算法是增量式（incremental）的，或者部分并发（mostly-concurrent），或者干脆完全并发（fully-concurrent）的。<br>例如鄙司Azul Systems的<strong>Zing JVM里的C4 GC</strong>，就是一个完全并发的GC算法。它不存在“GC整个工作流程中都要把应用stop-the-world”的问题——从算法的设计上就不存在。<br>然而C4却也是一个分两代的分代式GC。为什么呢？<br>C4 GC的前身是Azul System的上一代JVM里的“Pauseless GC”算法，而Pauseless是一个完全并发但是不分代的GC。<br>Oracle的HotSpot VM里的G1 GC，在最初设计的时候是不分代的部分并发+增量式GC，而后来在实际投入生产的时候使用的却也是分两代的分代式GC设计。现在Red Hat正在开发中的Shenandoah GC是一个并发GC，它目前的设计还是不分代的，但根据过往经验看，它后期渐渐发展为分代式的可能性极其高——如果这个项目能活足够久的话。<br>对于这些GC来说，解决stop-the-world时间太长的问题并不是选择分代的主要原因。<br>就Azul的Pauless到C4的发展历程来看，<strong>选择实现分代的最大好处是，GC能够应付的应用内存分配速率（allocation rate）可以得到巨大的提升</strong>。<br>并发GC根本上要跟应用玩追赶游戏：应用一边在分配，GC一边在收集，如果GC收集的速度能跟得上应用分配的速度，那就一切都很完美；一旦GC开始跟不上了，垃圾就会渐渐堆积起来，最终到可用空间彻底耗尽的时候，应用的分配请求就只能暂时等一等了，等GC追赶上来。<br>所以，对于一个并发GC来说，能够尽快回收出越多空间，就能够应付越高的应用内存分配速率，从而更好地保持GC以完美的并发模式工作。<br>虽然并不是所有应用中的对象生命周期都完美吻合weak generational hypothesis的假设，但<strong>这个假设在很大范围内还是适用的</strong>，因而也可以帮助并发GC改善性能。</p>
 </blockquote>
@@ -558,7 +558,7 @@
 <p>现在的商业虚拟机都采用这种收集算法来回收新生代，IBM公司的专门研究表明，新生代中的对象98%是“朝生夕死”的，所以并不需要按照1:1的比例来划分内存空间，而是将内存分为<strong>一块较大的Eden空间</strong>和<strong>两块较小的Survivor空间</strong>，每次使用Eden和其中一块Survivor。当回收时，将Eden和Survivor中还存活着的对象一次性地复制到另外一块Survivor空间上，最后清理掉Eden和刚才用过的Survivor空间。HotSpot虚拟机默认Eden和Survivor的大小比例是8:1，也就是每次新生代中可用内存空间为整个新生代容量的90%（80%+10%），只有10%的内存会被“浪费”。当然，98%的对象可回收只是一般场景下的数据，我们没有办法保证每次回收都只有不多于10%的对象存活，当Survivor空间不够用时，需要依赖其他内存（这里指老年代）进行分配担保（Handle Promotion）。</p>
 <p>内存的分配担保就好比我们去银行借款，如果我们信誉很好，在98%的情况下都能按时偿还，于是银行可能会默认我们下一次也能按时按量地偿还贷款，只需要有一个担保人能保证如果我不能还款时，可以从他的账户扣钱，那银行就认为没有风险了。内存的分配担保也一样，如果另外一块Survivor空间没有足够空间存放上一次新生代收集下来的存活对象时，这些对象将直接通过分配担保机制进入老年代。</p>
 </blockquote>
-<p><a href="https://www.zhihu.com/question/33210180/answer/56348818" target="_blank" rel="external">JVM GC遍历一次新生代所有对象是否可达需要多久？ - 知乎</a>：<br><strong>Copying GC算法的特征之一就是它的开销只跟活对象的多少（live data set）有关系，而跟它所管理的堆空间的大小没关系。</strong></p>
+<p><a href="https://www.zhihu.com/question/33210180/answer/56348818" target="_blank" rel="noopener">JVM GC遍历一次新生代所有对象是否可达需要多久？ - 知乎</a>：<br><strong>Copying GC算法的特征之一就是它的开销只跟活对象的多少（live data set）有关系，而跟它所管理的堆空间的大小没关系。</strong></p>
 <h3 id="3-2-3-标记-整理（Mark-Compact）算法"><a href="#3-2-3-标记-整理（Mark-Compact）算法" class="headerlink" title="3.2.3 标记-整理（Mark-Compact）算法"></a>3.2.3 标记-整理（Mark-Compact）算法</h3><p>周志明. 深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）:</p>
 <blockquote>
 <p>复制收集算法<strong>在对象存活率较高时</strong>就要进行较多的复制操作，效率将会变低。更关键的是，如果不想浪费50%的空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都100%存活的极端情况，所以在老年代一般不能直接选用这种算法。</p>
@@ -631,9 +631,9 @@
 <p>In order to support <strong>precise enumeration</strong>, JIT compiler should do additional work, because only JIT knows exactly stack frame info and register contents. When JIT compiles a method, for every instruction, it can <strong>book-keep the root reference information</strong> in case the execution is suspended at that instruction. </p>
 <p>But to remember the info for every instruction is <strong>too expensive</strong>. It requires substantial space to store the information. This is also unnecessary, because <strong>only a few instructions will have the chances to be the suspension points in real execution</strong>. JIT <strong>only needs to book-keep information for those instruction points</strong> – they are called safe-points. Safe-point means it is a safe suspension point for root set enumeration.</p>
 </blockquote>
-<p>进一步阐述：<br><a href="https://www.zhihu.com/question/29268019/answer/43762165" target="_blank" rel="external">现代JVM中的Safe Region和Safe Point到底是如何定义和划分的?</a></p>
+<p>进一步阐述：<br><a href="https://www.zhihu.com/question/29268019/answer/43762165" target="_blank" rel="noopener">现代JVM中的Safe Region和Safe Point到底是如何定义和划分的?</a></p>
 <blockquote>
-<p>作者：RednaxelaFX<br>链接：<a href="https://www.zhihu.com/question/29268019/answer/43762165" target="_blank" rel="external">https://www.zhihu.com/question/29268019/answer/43762165</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>作者：RednaxelaFX<br>链接：<a href="https://www.zhihu.com/question/29268019/answer/43762165" target="_blank" rel="noopener">https://www.zhihu.com/question/29268019/answer/43762165</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 <p>其实在高度优化的现代JVM里，safepoint有几种不同的用法。GC safepoint是最常见、大家听说得最多的，但还有deoptimization safepoint也很重要。<br>在HotSpot VM里，这两种safepoint目前实现在一起，但其实概念上它们俩没有直接联系，需要的数据不一样。<br>无论是哪种safepoint，最简洁的定义是<strong>“A point in program where the state of execution is known by the VM”</strong>。这里“state of execution”特意说得模糊，是因为不同种类的safepoint需要的数据不一样。<br><strong>GC safepoint需要知道在那个程序位置上，调用栈、寄存器等一些重要的数据区域里什么地方包含了GC管理的指针；</strong><br>Deoptimization safepoint需要知道在那个程序位置上，原本抽象概念上的JVM的执行状态（所有局部变量、临时变量、锁，等等）到底分配到了什么地方，是在栈帧￼的具体某个slot还是在某个寄存器里，之类的。<br>如果要触发一次GC，那么JVM里的所有Java线程都必须到达GC safepoint；<br>如果要执行一次deoptimization，那么需要执行deoptimization的线程要在到达deoptimization safepoint之后才可以开始deoptimize。<br>不同JVM实现会选用不同的位置放置safepoint。<br>以HotSpot VM为例，<br>在解释器里每条字节码的边界都可以是一个safepoint，因为HotSpot的解释器总是能很容易的找出完整的“state of execution”。<br>而在JIT编译的代码里，HotSpot会在所有方法的临返回之前，以及所有非counted loop的循环的回跳之前放置safepoint。<br>HotSpot的JIT编译器不但会生成机器码，还会额外在每个safepoint生成一些“调试符号信息”，以便VM能找到所需的“state of execution”。<br>为GC生成的符号信息是<strong>OopMap</strong>，指出栈上和寄存器里哪里有GC管理的指针；<br>为deoptimization生成的符号信息是debugInfo，指出如果要把当前栈帧从compiled frame转换为interpreted frame的话，要从哪里把相应的局部变量、临时变量、锁等信息找出来。<br><strong>之所以只在选定的位置放置safepoint是因为：</strong></p>
 <ul>
 <li><strong>挂在safepoint的调试符号信息要占用空间</strong>。如果允许每条机器码都可以是safepoint的话，需要存储的数据量会很大（当然这有办法解决，例如用delta存储和用压缩）</li>
@@ -643,7 +643,7 @@
 <p>还有一种情况是当某个线程在执行native函数的时候。此时该线程在执行JVM管理之外的代码，不能对JVM的执行状态做任何修改，因而JVM要进入safepoint不需要关心它。所以也<strong>可以把正在执行native函数的线程看作“已经进入了safepoint”，或者把这种情况叫做“在safe-region里”</strong>。<br>JVM外部要对JVM执行状态做修改必须要通过JNI。<strong>所有能修改JVM执行状态的JNI函数在入口处都有safepoint检查，一旦JVM已经发出通知说此时应该已经到达safepoint就会在这些检查的地方停下来把控制权交给JVM。</strong><br>换一个JVM说，JRockit选择放置safepoint的地方在方法的入口以及循环末尾回跳之前，跟HotSpot略为不同。</p>
 </blockquote>
 <h3 id="3-3-3-Polling-Point"><a href="#3-3-3-Polling-Point" class="headerlink" title="3.3.3 Polling Point"></a>3.3.3 Polling Point</h3><p><span id="pollingPoint"></span></p>
-<p><a href="http://xiao-feng.blogspot.com/2008/01/gc-safe-point-and-safe-region.html" target="_blank" rel="external">GC safe-point (or safepoint) and safe-region | Xiao-Feng Li</a></p>
+<p><a href="http://xiao-feng.blogspot.com/2008/01/gc-safe-point-and-safe-region.html" target="_blank" rel="noopener">GC safe-point (or safepoint) and safe-region | Xiao-Feng Li</a></p>
 <blockquote>
 <p> For voluntary suspension, a more serious problem is the polling overhead. So the basic principles for polling point insertion are: Firstly, <strong>polling points should be frequent enough</strong> so that GC does not wait too long for a mutator to suspend, because other mutators might be waiting for GC to free the space in order to continue. Secondly, <strong>polling points should not be too frequent</strong> to introduce big runtime overhead. </p>
 <p>The best result is to have only adequate polling points that are necessary and sufficient. </p>
@@ -658,23 +658,23 @@
 <p><strong>安全区域是指在一段代码片段之中，引用关系不会发生变化。在这个区域中的任意地方开始GC都是安全的。我们也可以把Safe Region看做是被扩展了的safe-point。</strong></p>
 <p>在线程执行到SafeRegion中的代码时，首先标识自己已经进入了Safe Region，那样，当在这段时间里JVM要发起GC时，就不用管标识自己为Safe Region状态的线程了。在线程要离开Safe Region时，它要检查系统是否已经完成了根节点枚举（或者是整个GC过程），如果完成了，那线程就继续执行，否则它就必须等待直到收到可以安全离开Safe Region的信号为止。</p>
 </blockquote>
-<p><a href="http://xiao-feng.blogspot.com/2008/01/gc-safe-point-and-safe-region.html" target="_blank" rel="external">GC safe-point (or safepoint) and safe-region | Xiao-Feng Li</a></p>
+<p><a href="http://xiao-feng.blogspot.com/2008/01/gc-safe-point-and-safe-region.html" target="_blank" rel="noopener">GC safe-point (or safepoint) and safe-region | Xiao-Feng Li</a></p>
 <blockquote>
 <p>In safe-point design, the mutator polling for GC event will respond <strong>if the event is triggered</strong>. It <strong>responds by setting a ready flag</strong> when it’s sure to suspend. <strong>Then the GC can proceed</strong> with root set enumeration. This is a <strong>hand-shaking</strong> protocol. </p>
 <p>Safe-region just follows this protocol. The mutator sets the ready flag when it enters a safe-region. Before it leaves the region, it checks if GC has finished its enumeration (or collection), and no longer needs the mutator under suspension state. If it’s true, it goes ahead and leaves the region; otherwise, it suspends itself as in a safe-point.</p>
 <p>In Harmony implementation, we insert <strong>suspend_enable</strong> and <strong>suspend_disable</strong> to delimit the scope of safe-region.</p>
 </blockquote>
 <h1 id="4-各种垃圾收集器的异同"><a href="#4-各种垃圾收集器的异同" class="headerlink" title="4 各种垃圾收集器的异同"></a>4 各种垃圾收集器的异同</h1><h2 id="4-1-HotSpot"><a href="#4-1-HotSpot" class="headerlink" title="4.1 HotSpot"></a>4.1 HotSpot</h2><ul>
-<li><a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf" target="_blank" rel="external">Memory Management in the Java HotSpot™ Virtual Machine</a></li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf" target="_blank" rel="noopener">Memory Management in the Java HotSpot™ Virtual Machine</a></li>
 <li><img src="http://otlnkjq1m.bkt.clouddn.com/GC-05.png" alt=""></li>
 </ul>
 <h3 id="4-1-1-GC自适应的调节策略（GC-Ergonomics）"><a href="#4-1-1-GC自适应的调节策略（GC-Ergonomics）" class="headerlink" title="4.1.1 GC自适应的调节策略（GC Ergonomics）"></a>4.1.1 GC自适应的调节策略（GC Ergonomics）</h3><p><span id="GCErgonomics"></span></p>
-<p><a href="https://blog.codecentric.de/en/2013/01/useful-jvm-flags-part-6-throughput-collector/" target="_blank" rel="external">Useful JVM Flags - Part 6 (Throughput Collector) - codecentric AG Blog</a></p>
+<p><a href="https://blog.codecentric.de/en/2013/01/useful-jvm-flags-part-6-throughput-collector/" target="_blank" rel="noopener">Useful JVM Flags - Part 6 (Throughput Collector) - codecentric AG Blog</a></p>
 <blockquote>
 <p>The throughput collectors offer an interesting (but common, at least on modern JVMs) mechanism to improve user-friendliness of GC configuration. This mechanism is part of what is known as “ergonomics”, a concept <strong>introduced for HotSpot with Java 5</strong>. With ergonomics, <strong>the garbage collector may dynamically apply modifications to the different heap areas sizes as well as the GC settings if it has evidence that these modifications would improve GC performance</strong>. The precise meaning of “improve GC performance” may be specified by the user via the flags <code>-XX:GCTimeRatio</code> and <code>-XX:MaxGCPauseMillis</code> (see below).</p>
 <p>It is important to know that <strong>ergonomics is activated by default</strong> – which is fine, as adaptive behavior is one of the biggest strengths of the JVM. Still, sometimes we may have a pretty clear idea of what settings are best for a particular application, and in these cases we might not want the JVM to mess around with our settings. Whenever we find ourselves in such a situation, we may consider deactivating some of the ergonomics by setting <strong><code>-XX:-UseAdaptiveSizePolicy</code></strong>.</p>
 </blockquote>
-<p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/vm/gc-ergonomics.html" target="_blank" rel="external">Garbage Collection Ergonomics</a></p>
+<p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/vm/gc-ergonomics.html" target="_blank" rel="noopener">Garbage Collection Ergonomics</a></p>
 <blockquote>
 <p><strong>Garbage Collector Ergonomics</strong><br>The following changes take effect with J2SE 5.0.</p>
 <ul>
@@ -698,7 +698,7 @@
 </li>
 </ul>
 </blockquote>
-<h3 id="4-1-2-Fast-Allocation"><a href="#4-1-2-Fast-Allocation" class="headerlink" title="4.1.2 Fast Allocation"></a>4.1.2 Fast Allocation</h3><p>这个概念应该不重要，很多地方都没提到，就<a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf" target="_blank" rel="external">Memory Management in the Java HotSpot™ Virtual Machine</a>提到了这个概念。</p>
+<h3 id="4-1-2-Fast-Allocation"><a href="#4-1-2-Fast-Allocation" class="headerlink" title="4.1.2 Fast Allocation"></a>4.1.2 Fast Allocation</h3><p>这个概念应该不重要，很多地方都没提到，就<a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf" target="_blank" rel="noopener">Memory Management in the Java HotSpot™ Virtual Machine</a>提到了这个概念。</p>
 <h3 id="4-1-3-Serial-Collector"><a href="#4-1-3-Serial-Collector" class="headerlink" title="4.1.3 Serial Collector"></a>4.1.3 Serial Collector</h3><p>单线程的收集器，是JVM在client模式下运行的默认收集器。</p>
 <p>Serial收集器新生代垃圾收集器，<strong>采用复制算法</strong>。</p>
 <p><img src="http://otlnkjq1m.bkt.clouddn.com/GC-06.png" alt=""></p>
@@ -764,7 +764,7 @@
 <li><p>Sun JDK HotSpot虚拟机GC组合方式：<br><img src="http://otlnkjq1m.bkt.clouddn.com/GC-13.png" alt=""></p>
 </li>
 </ul>
-<h1 id="6-GC性能指标"><a href="#6-GC性能指标" class="headerlink" title="6 GC性能指标"></a>6 GC性能指标</h1><p><a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf" target="_blank" rel="external">Memory Management in the Java HotSpot™ Virtual Machine</a></p>
+<h1 id="6-GC性能指标"><a href="#6-GC性能指标" class="headerlink" title="6 GC性能指标"></a>6 GC性能指标</h1><p><a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf" target="_blank" rel="noopener">Memory Management in the Java HotSpot™ Virtual Machine</a></p>
 <h2 id="6-1-Throughput-吞吐量"><a href="#6-1-Throughput-吞吐量" class="headerlink" title="6.1 Throughput 吞吐量"></a>6.1 Throughput 吞吐量</h2><blockquote>
 <p>the percentage of total time not spent in garbage collection, considered over long periods of time</p>
 </blockquote>
@@ -788,16 +788,16 @@
 </blockquote>
 <p>（从对象变为垃圾到内存变为可用的时间可用。）</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf" target="_blank" rel="external">Memory Management in the Java HotSpot™ Virtual Machine</a></li>
-<li><a href="http://blog.csdn.net/u011080472/article/details/51324422" target="_blank" rel="external">【深入理解JVM】：HotSpot垃圾收集器 - CSDN博客</a></li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf" target="_blank" rel="noopener">Memory Management in the Java HotSpot™ Virtual Machine</a></li>
+<li><a href="http://blog.csdn.net/u011080472/article/details/51324422" target="_blank" rel="noopener">【深入理解JVM】：HotSpot垃圾收集器 - CSDN博客</a></li>
 <li>周志明. 深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）</li>
-<li><a href="http://xiao-feng.blogspot.com/2008/01/gc-safe-point-and-safe-region.html" target="_blank" rel="external">GC safe-point (or safepoint) and safe-region | Xiao-Feng Li</a></li>
-<li><a href="https://www.zhihu.com/question/53613423/answer/135743258" target="_blank" rel="external">java的gc为什么要分代？ - 知乎</a></li>
-<li><a href="https://www.zhihu.com/question/29268019/answer/43762165" target="_blank" rel="external">现代JVM中的Safe Region和Safe Point到底是如何定义和划分的?</a></li>
-<li><a href="http://hllvm.group.iteye.com/group/topic/38223#post-248757" target="_blank" rel="external">并发垃圾收集器（CMS）为什么没有采用标记-整理算法来实现？ - 讨论 - 高级语言虚拟机 - ITeye群组</a></li>
-<li><a href="https://www.zhihu.com/question/33210180/answer/56348818" target="_blank" rel="external">JVM GC遍历一次新生代所有对象是否可达需要多久？ - 知乎</a></li>
-<li><a href="https://blog.codecentric.de/en/2013/01/useful-jvm-flags-part-6-throughput-collector/" target="_blank" rel="external">Useful JVM Flags - Part 6 (Throughput Collector) - codecentric AG Blog</a></li>
-<li><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/vm/gc-ergonomics.html" target="_blank" rel="external">Garbage Collection Ergonomics</a></li>
+<li><a href="http://xiao-feng.blogspot.com/2008/01/gc-safe-point-and-safe-region.html" target="_blank" rel="noopener">GC safe-point (or safepoint) and safe-region | Xiao-Feng Li</a></li>
+<li><a href="https://www.zhihu.com/question/53613423/answer/135743258" target="_blank" rel="noopener">java的gc为什么要分代？ - 知乎</a></li>
+<li><a href="https://www.zhihu.com/question/29268019/answer/43762165" target="_blank" rel="noopener">现代JVM中的Safe Region和Safe Point到底是如何定义和划分的?</a></li>
+<li><a href="http://hllvm.group.iteye.com/group/topic/38223#post-248757" target="_blank" rel="noopener">并发垃圾收集器（CMS）为什么没有采用标记-整理算法来实现？ - 讨论 - 高级语言虚拟机 - ITeye群组</a></li>
+<li><a href="https://www.zhihu.com/question/33210180/answer/56348818" target="_blank" rel="noopener">JVM GC遍历一次新生代所有对象是否可达需要多久？ - 知乎</a></li>
+<li><a href="https://blog.codecentric.de/en/2013/01/useful-jvm-flags-part-6-throughput-collector/" target="_blank" rel="noopener">Useful JVM Flags - Part 6 (Throughput Collector) - codecentric AG Blog</a></li>
+<li><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/vm/gc-ergonomics.html" target="_blank" rel="noopener">Garbage Collection Ergonomics</a></li>
 </ul>
 
       
