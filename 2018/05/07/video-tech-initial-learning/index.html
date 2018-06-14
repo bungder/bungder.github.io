@@ -102,7 +102,7 @@
 <meta property="og:description" content="本文就视频技术做一个初步的扫盲（主要是针对我本人，不是针对在座的各位），基本就是资料的搜集和摘要，目的是知道一些常见的概念大概是怎么一回事，包括PPI、分辨率、比特率和视频音频压缩的一些常见术语。（本来题目叫做《视频技术概念扫盲》的，但是一轮下来，发现水深得很，还是加上『初步』比较好，毕竟还有很多盲点没扫到。）">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/WechatIMG1503.jpeg">
-<meta property="og:updated_time" content="2018-05-26T06:22:31.107Z">
+<meta property="og:updated_time" content="2018-06-14T15:44:55.849Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="视频技术概念扫盲初步">
 <meta name="twitter:description" content="本文就视频技术做一个初步的扫盲（主要是针对我本人，不是针对在座的各位），基本就是资料的搜集和摘要，目的是知道一些常见的概念大概是怎么一回事，包括PPI、分辨率、比特率和视频音频压缩的一些常见术语。（本来题目叫做《视频技术概念扫盲》的，但是一轮下来，发现水深得很，还是加上『初步』比较好，毕竟还有很多盲点没扫到。）">
@@ -618,7 +618,8 @@
 <p>通常，以上因素的选择的目的是在比特率的最小化和播放介质时最优化之间达到理想的平衡。</p>
 </blockquote>
 <p><a href="http://community.ooyala.com/t5/Developers-Knowledge-Base/Understanding-Bitrate-Resolution-and-Quality/ta-p/1740" target="_blank" rel="noopener">Understanding Bitrate, Resolution and Quality - Ooyala Community</a> 解释了比特率与视频质量之间的关系：</p>
-<p>每秒像素数 = 宽 x 高 x 每秒帧数<br>每像素比特数（bpp） = 视频比特率 / 每秒像素数</p>
+<p>每秒像素数 = 宽 x 高 x 每秒帧数</p>
+<p>每像素比特数（bpp） = 视频比特率 / 每秒像素数</p>
 <ul>
 <li>bpp在0.1左右的质量就很高了，再高的bpp不会产生可见的显著提升</li>
 <li>bpp在0.03左右的质量算很低，低比特率的通常都没法看</li>
@@ -629,7 +630,7 @@
 <p>$$<br>PiexlsPerSecond=Width \times Height \times FramesPerSecond=1280 \times 720 \times 25=23040000 pps<br>$$</p>
 <p>$$<br>BitsPerPixel=\frac{BitRate}{PiexlsPerSecond}=\frac{1290007 bps}{23040000 pps}=0.05599 bpp<br>$$</p>
 <p>可以看到，落在了$[0.03, 0.1]$区间内，根据我本人的肉眼感受，这视频的质量也可以，也就是平时常见的720p的感觉。</p>
-<p>如果要实时在线播放这个视频，除去控制需要的其他额外信息，每秒需要传输12900007 bits，也就是12597kb，也就是1.2Mb，因为运营商提供的宽带套餐只有1Mbps、2Mbps和更高的，所以下行带宽至少需要2M。</p>
+<p>如果要实时在线播放这个视频，除去控制需要的其他额外信息，每秒需要传输1290007 bits，也就是1259kb，也就是1.2Mb，因为运营商提供的宽带套餐只有1Mbps、2Mbps和更高的，所以下行带宽至少需要2M。</p>
 <h2 id="1-4-容器格式-视频文件格式"><a href="#1-4-容器格式-视频文件格式" class="headerlink" title="1.4 容器格式/视频文件格式"></a>1.4 容器格式/视频文件格式</h2><p><a href="https://zh.wikipedia.org/wiki/%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F#%E5%AE%B9%E5%99%A8%E6%A0%BC%E5%BC%8F" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F#%E5%AE%B9%E5%99%A8%E6%A0%BC%E5%BC%8F</a></p>
 <blockquote>
 <p>视频是现在电脑中多媒体系统中的重要一环。为了适应储存视频的需要，人们设定了不同的视频文件格式来把视频和音频放在一个文件中，以方便同时回放。</p>
