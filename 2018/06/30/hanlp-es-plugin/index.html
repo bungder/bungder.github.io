@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,HanLP,ElasticSearch," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Gordon" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="本文对HanLP的es插件踩坑过程做个简单的记录。">
+<meta name="keywords" content="NLP,HanLP,ElasticSearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HanLP ES插件折腾小记">
+<meta property="og:url" content="http://bungder.github.io/2018/06/30/hanlp-es-plugin/index.html">
+<meta property="og:site_name" content="Gordon">
+<meta property="og:description" content="本文对HanLP的es插件踩坑过程做个简单的记录。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-30T15:07:40.373Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HanLP ES插件折腾小记">
+<meta name="twitter:description" content="本文对HanLP的es插件踩坑过程做个简单的记录。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bungder.github.io/2018/06/30/hanlp-es-plugin/"/>
+
+
+
+
+
+  <title>HanLP ES插件折腾小记 | Gordon</title>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=63160470";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gordon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bungder.github.io/2018/06/30/hanlp-es-plugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gordon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gordon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HanLP ES插件折腾小记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-30T22:14:27+08:00">
+                2018-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> PV
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文对HanLP的es插件踩坑过程做个简单的记录。</p>
+<a id="more"></a>
+<h1 id="HanLP的ES插件"><a href="#HanLP的ES插件" class="headerlink" title="HanLP的ES插件"></a>HanLP的ES插件</h1><p>HanLP的ES插件基本都收录在HanLP的这个wiki页面里了：</p>
+<p><a href="https://github.com/hankcs/HanLP/wiki/%E8%A1%8D%E7%94%9F%E9%A1%B9%E7%9B%AE" target="_blank" rel="noopener">https://github.com/hankcs/HanLP/wiki/%E8%A1%8D%E7%94%9F%E9%A1%B9%E7%9B%AE</a></p>
+<p>这次踩坑选的是 <a href="https://github.com/shikeio/elasticsearch-analysis-hanlp" target="_blank" rel="noopener">https://github.com/shikeio/elasticsearch-analysis-hanlp</a></p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><ul>
+<li>elastic search 6.2.4</li>
+<li>kibana 6.2.4</li>
+<li>插件的预编译release <a href="https://github.com/shikeio/elasticsearch-analysis-hanlp/files/2118634/analysis-hanlp-6.2.4.zip" target="_blank" rel="noopener">analysis-hanlp-6.2.4.zip</a><ul>
+<li>其实也可以自己下载源码编译（也就是其github主页里说的<code>gradle mvn</code>），但是源码编译的时候，引用到的elasticsearch-gradle要求用jdk 10进行编译</li>
+<li>下载的预编译版本是用jdk 9编译的，因此其class 文件的版本号是53，导致后面运行elasticsearch的时候也必须用java 9去运行</li>
+</ul>
+</li>
+<li>HanLP data <a href="http://hanlp.linrunsoft.com/release/data-for-1.6.4.zip" target="_blank" rel="noopener">data-for-1.6.4.zip</a></li>
+</ul>
+<p>假设es解压后的目录为<code>{es_home}</code>，然后有另一个不相关的任意的目录<code>{hanlp_home}</code>，将data-for-1.6.4.zip解压到此目录下，得到如下目录结构：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── <span class="selector-tag">data</span></span><br><span class="line">│   ├── <span class="selector-tag">README</span><span class="selector-class">.url</span></span><br><span class="line">│   ├── <span class="selector-tag">dictionary</span></span><br><span class="line">│   └── <span class="selector-tag">model</span></span><br><span class="line">└── <span class="selector-tag">data-for-1</span><span class="selector-class">.6</span><span class="selector-class">.4</span><span class="selector-class">.zip</span></span><br></pre></td></tr></table></figure>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="初始启动"><a href="#初始启动" class="headerlink" title="初始启动"></a>初始启动</h2><ol>
+<li>启动es</li>
+<li>启动kibana</li>
+<li>浏览器访问<a href="http://127.0.0.1:5601/" target="_blank" rel="noopener">http://127.0.0.1:5601/</a></li>
+<li>进入DevTools</li>
+<li>在Console文本框里输入下面的内容，点发送</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET _search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"query"</span>: &#123;</span><br><span class="line">    <span class="attr">"match_all"</span>: &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果以上步骤都没有报错，说明初始状态的所有东西都是正常的。如果不正常，请自行解决。</p>
+<h2 id="部署插件"><a href="#部署插件" class="headerlink" title="部署插件"></a>部署插件</h2><p>将<code>analysis-hanlp-6.2.4.zip</code>解压得到<code>elasticsearch</code>目录，将其重命名为<code>analysis-hanlp</code>，移动到<code>{es_home}/plugins</code>目录下，然后按照插件的文档去修改<code>hanlp.properties</code>和<code>{es_home}/config/jvm.options</code>文件，然后重启es（不用重启kibana）。</p>
+<p>如无意外，你将会得到如下错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Jun 30, 2018 10:38:11 PM com.hankcs.hanlp.HanLP<span class="variable">$Config</span> &lt;clinit&gt;SEVERE: 没有找到hanlp.properties，可能会导致找不到data========Tips========请将hanlp.properties放在下列目录：Web项目则请放到下列目录：Webapp/WEB-INF/libWebapp/WEB-INF/classesAppserver/libJRE/lib并且编辑root=PARENT/path/to/your/data现在HanLP将尝试从/home/gordon/Dev/es/6.2.4/elasticsearch-6.2.4读取data……</span><br><span class="line">[2018-06-30T22:38:11,995][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [aggs-matrix-stats][2018-06-30T22:38:11,995][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [analysis-common][2018-06-30T22:38:11,996][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [ingest-common][2018-06-30T22:38:11,996][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [lang-expression][2018-06-30T22:38:11,996][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [lang-mustache][2018-06-30T22:38:11,996][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [lang-painless][2018-06-30T22:38:11,996][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [mapper-extras][2018-06-30T22:38:11,996][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [parent-join][2018-06-30T22:38:11,997][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [percolator][2018-06-30T22:38:11,997][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [rank-eval][2018-06-30T22:38:11,997][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [reindex][2018-06-30T22:38:11,997][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [repository-url][2018-06-30T22:38:11,997][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [transport-netty4][2018-06-30T22:38:11,997][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded module [tribe][2018-06-30T22:38:11,998][INFO ][o.e.p.PluginsService     ] [3dzf4Ix] loaded plugin [analysis-hanlp][2018-06-30T22:38:14,236][INFO ][o.e.d.DiscoveryModule    ] [3dzf4Ix] using discovery <span class="built_in">type</span> [zen][2018-06-30T22:38:14,920][INFO ][o.e.n.Node               ] initialized[2018-06-30T22:38:14,921][INFO ][o.e.n.Node               ] [3dzf4Ix] starting ...[2018-06-30T22:38:15,093][INFO ][o.e.t.TransportService   ] [3dzf4Ix] publish_address &#123;127.0.0.1:9300&#125;, bound_addresses &#123;[::1]:9300&#125;, &#123;127.0.0.1:9300&#125;[2018-06-30T22:38:18,153][INFO ][o.e.c.s.MasterService    ] [3dzf4Ix] zen-disco-elected-as-master ([0] nodes joined), reason: new_master &#123;3dzf4Ix&#125;&#123;3dzf4Ix_RgWyUEeodaAkDA&#125;&#123;oT5oXRhcTNuDvM8NbIAqNg&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125;</span><br></pre></td></tr></table></figure>
+<p>看上去好像找不到配置文件之后缺省配置生效了，并且也没出错，但是当你请求一下用hanlp，es就会挂了：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">2018-06-30T22:38:18,158</span>][<span class="symbol">INFO </span>][<span class="string">o.e.c.s.ClusterApplierService</span>] [3dzf4Ix] new<span class="emphasis">_master &#123;3dzf4Ix&#125;&#123;3dzf4Ix_</span>RgWyUEeodaAkDA&#125;&#123;oT5oXRhcTNuDvM8NbIAqNg&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125;, reason: apply cluster state (from master [master &#123;3dzf4Ix&#125;&#123;3dzf4Ix_RgWyUEeodaAkDA&#125;&#123;oT5oXRhcTNuDvM8NbIAqNg&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125; committed version [1] source [zen-disco-elected-as-master ([0] nodes joined)]])[<span class="string">2018-06-30T22:38:18,183</span>][<span class="symbol">INFO </span>][<span class="string">o.e.h.n.Netty4HttpServerTransport</span>] [3dzf4Ix] publish<span class="emphasis">_address &#123;127.0.0.1:9200&#125;, bound_</span>addresses &#123;[::1]:9200&#125;, &#123;127.0.0.1:9200&#125;[<span class="string">2018-06-30T22:38:18,183</span>][<span class="symbol">INFO </span>][<span class="string">o.e.n.Node               </span>] [3dzf4Ix] started[<span class="string">2018-06-30T22:38:18,197</span>][<span class="symbol">INFO </span>][<span class="string">o.e.g.GatewayService     </span>] [3dzf4Ix] recovered [0] indices into cluster_state[<span class="string">2018-06-30T22:43:31,191</span>][<span class="symbol">ERROR</span>][<span class="string">o.e.b.ElasticsearchUncaughtExceptionHandler</span>] [<span class="string"></span>] fatal error in thread [<span class="string">elasticsearch[3dzf4Ix</span>][<span class="symbol">index</span>][<span class="string">T#1</span>]], exitingjava.lang.ExceptionInInitializerError: null<span class="code">        at com.hankcs.hanlp.seg.common.Vertex.newB(Vertex.java:462) ~[?:?]</span><span class="code">        at com.hankcs.hanlp.seg.common.WordNet.&lt;init&gt;(WordNet.java:73) ~[?:?]</span><span class="code">        at com.hankcs.hanlp.seg.Viterbi.ViterbiSegment.segSentence(ViterbiSegment.java:40) ~[?:?]</span><span class="code">        at com.hankcs.hanlp.seg.Segment.seg(Segment.java:557) ~[?:?]</span><span class="code">        at com.hankcs.lucene.SegmentWrapper.next(SegmentWrapper.java:98) ~[?:?]</span><span class="code">        at com.hankcs.lucene.HanLPTokenizer.incrementToken(HanLPTokenizer.java:67) ~[?:?]</span><span class="code">        at org.elasticsearch.action.admin.indices.analyze.TransportAnalyzeAction.simpleAnalyze(TransportAnalyzeAction.java:266) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.action.admin.indices.analyze.TransportAnalyzeAction.analyze(TransportAnalyzeAction.java:243) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.action.admin.indices.analyze.TransportAnalyzeAction.shardOperation(TransportAnalyzeAction.java:164) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.action.admin.indices.analyze.TransportAnalyzeAction.shardOperation(TransportAnalyzeAction.java:80) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.action.support.single.shard.TransportSingleShardAction$ShardTransportHandler.messageReceived(TransportSingleShardAction.java:293) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.action.support.single.shard.TransportSingleShardAction$ShardTransportHandler.messageReceived(TransportSingleShardAction.java:286) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:30) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:66) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.transport.TransportService$7.doRun(TransportService.java:656) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.common.util.concurrent.ThreadContext$ContextPreservingAbstractRunnable.doRun(ThreadContext.java:672) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37) ~[elasticsearch-6.2.4.jar:6.2.4]</span><span class="code">        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1135) ~[?:?]</span><span class="code">        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]</span><span class="code">        at java.lang.Thread.run(Thread.java:844) [?:?]</span>Caused by: java.lang.IllegalArgumentException: 核心词典data/dictionary/CoreNatureDictionary.txt加载失败<span class="code">        at com.hankcs.hanlp.dictionary.CoreDictionary.&lt;clinit&gt;(CoreDictionary.java:44) ~[?:?]</span><span class="code">        ... 20 more</span>➜  bin</span><br></pre></td></tr></table></figure>
+<p>那么问题来了，为什么会找不到<code>hanlp.properties</code>呢？</p>
+<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>在经过多次google之后也不知道为什么，文档也没有说，只有找源码。提示是在<code>com.hankcs.hanlp.HanLP</code>这个类里出现的，所以去找HanLP的源码：<a href="https://github.com/hankcs/HanLP" target="_blank" rel="noopener">https://github.com/hankcs/HanLP</a></p>
+<p>将它下下来之后全文搜索『没有找到hanlp.properties』，只有一个地方，就是<code>src/main/java/com/hanks/hanlp/HanLP.java</code>，关键的地方是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p.load(<span class="keyword">new</span> InputStreamReader(Predefine.HANLP_PROPERTIES_PATH == <span class="keyword">null</span> ?</span><br><span class="line">                             loader.getResourceAsStream(<span class="string">"hanlp.properties"</span>) :</span><br><span class="line">                             <span class="keyword">new</span> FileInputStream(Predefine.HANLP_PROPERTIES_PATH)</span><br><span class="line">, <span class="string">"UTF-8"</span>));</span><br></pre></td></tr></table></figure>
+<p>在源码里，<code>Predefine.HANLP_PROPERTIES_PATH</code>只有声明，并没赋值，因此当时以为这里造成问题的是<code>loader.getResourceAsStream</code>，所以尝试将<code>hanlp.properties</code>放到各种地方，然而都无效。后来想着尝试在加载失败之后执行多一个加载逻辑，于是改写了源码，重新打包替代插件里的hanlp-1.6.4.jar，结果发现其实在插件运行的时候，<code>Predefine.HANLP_PROPERTIES_PATH</code>其实是有值的，值为<code>analysis-hanlp/hanlp.properties</code>，因为我修改的逻辑是没有吃掉异常的，所以在初始化FileInputStream的时候，找不到文件时打印异常会将文件的绝对路径打印出来，才发现这个问题。看看HanLP.java的源码，也是挺无语的。。。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">Properties p = <span class="keyword">new</span> Properties();</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">    ClassLoader loader = Thread.currentThread().getContextClassLoader();</span><br><span class="line">    <span class="keyword">if</span> (loader == <span class="keyword">null</span>)</span><br><span class="line">    &#123;  <span class="comment">// IKVM (v.0.44.0.5) doesn't set context classloader</span></span><br><span class="line">        loader = HanLP.Config.class.getClassLoader();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        logger.info(<span class="string">"System.getProperties().get(\"java.class.path\"): &#123;&#125;"</span>, System.getProperties().get(<span class="string">"java.class.path"</span>));</span><br><span class="line"></span><br><span class="line">        p.load(<span class="keyword">new</span> InputStreamReader(Predefine.HANLP_PROPERTIES_PATH == <span class="keyword">null</span> ?</span><br><span class="line">                                         loader.getResourceAsStream(<span class="string">"hanlp.properties"</span>) :</span><br><span class="line">                                         <span class="keyword">new</span> FileInputStream(Predefine.HANLP_PROPERTIES_PATH)</span><br><span class="line">            , <span class="string">"UTF-8"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception e)</span><br><span class="line">    &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        String HANLP_ROOT = System.getenv(<span class="string">"HANLP_ROOT"</span>);</span><br><span class="line">        <span class="keyword">if</span> (HANLP_ROOT != <span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            HANLP_ROOT = HANLP_ROOT.trim();</span><br><span class="line">            p = <span class="keyword">new</span> Properties();</span><br><span class="line">            p.setProperty(<span class="string">"root"</span>, HANLP_ROOT);</span><br><span class="line">            logger.info(<span class="string">"使用环境变量 HANLP_ROOT="</span> + HANLP_ROOT);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">    String root = p.getProperty(<span class="string">"root"</span>, <span class="string">""</span>).replaceAll(<span class="string">"\\\\"</span>, <span class="string">"/"</span>);</span><br><span class="line">    <span class="keyword">if</span> (root.length() &gt; <span class="number">0</span> &amp;&amp; !root.endsWith(<span class="string">"/"</span>)) root += <span class="string">"/"</span>;</span><br><span class="line">    CoreDictionaryPath = root + p.getProperty(<span class="string">"CoreDictionaryPath"</span>, CoreDictionaryPath);</span><br><span class="line">    <span class="comment">// balabala</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (Exception e)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">new</span> File(<span class="string">"data/dictionary/CoreNatureDictionary.tr.txt"</span>).isFile())</span><br><span class="line">    &#123;</span><br><span class="line">        logger.info(<span class="string">"使用当前目录下的data"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        StringBuilder sbInfo = <span class="keyword">new</span> StringBuilder(<span class="string">"========Tips========\n请将hanlp.properties放在下列目录：\n"</span>); <span class="comment">// 打印一些友好的tips</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">new</span> File(<span class="string">"src/main/java"</span>).isDirectory())</span><br><span class="line">        &#123;</span><br><span class="line">            sbInfo.append(<span class="string">"src/main/resources"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            String classPath = (String) System.getProperties().get(<span class="string">"java.class.path"</span>);</span><br><span class="line">            <span class="keyword">if</span> (classPath != <span class="keyword">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (String path : classPath.split(File.pathSeparator))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="keyword">new</span> File(path).isDirectory())</span><br><span class="line">                    &#123;</span><br><span class="line">                        sbInfo.append(path).append(<span class="string">'\n'</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            sbInfo.append(<span class="string">"Web项目则请放到下列目录：\n"</span> +</span><br><span class="line">                              <span class="string">"Webapp/WEB-INF/lib\n"</span> +</span><br><span class="line">                              <span class="string">"Webapp/WEB-INF/classes\n"</span> +</span><br><span class="line">                              <span class="string">"Appserver/lib\n"</span> +</span><br><span class="line">                              <span class="string">"JRE/lib\n"</span>);</span><br><span class="line">            sbInfo.append(<span class="string">"并且编辑root=PARENT/path/to/your/data\n"</span>);</span><br><span class="line">            sbInfo.append(<span class="string">"现在HanLP将尝试从"</span>).append(System.getProperties().get(<span class="string">"user.dir"</span>)).append(<span class="string">"读取data……"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        logger.error(<span class="string">"没有找到hanlp.properties，可能会导致找不到data\n"</span> + sbInfo);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>吃掉异常，然后提示的信息又没什么用。。。。而且报异常的时候不打印，反而去判断另一个文件是否存在，根据另一个文件是否存在，反推<code>hanlp.properties</code>文件是否存在……简单点，说话的方式简单点……</p>
+<p>所以，令配置文件的路径为<code>{es_home}/config/analysis-hanlp/hanlp.properties</code>即可，你可以通过链接来实现，也可以将文件拷贝过去，随你。</p>
+<p>然后重启es，再在kibana里发送：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /_analyze?pretty=true</span><br><span class="line">&#123;</span><br><span class="line"><span class="attr">"analyzer"</span>: <span class="string">"hanlp-index"</span>,</span><br><span class="line"><span class="attr">"text"</span>: <span class="string">"张柏芝士蛋糕店"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（插件的github README里那段是不行的）</p>
+<p>正常的话会得到：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"tokens"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"token"</span>: <span class="string">"张柏"</span>,</span><br><span class="line">      <span class="attr">"start_offset"</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">"end_offset"</span>: <span class="number">2</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"nr"</span>,</span><br><span class="line">      <span class="attr">"position"</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"token"</span>: <span class="string">"芝士蛋糕"</span>,</span><br><span class="line">      <span class="attr">"start_offset"</span>: <span class="number">2</span>,</span><br><span class="line">      <span class="attr">"end_offset"</span>: <span class="number">6</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"nf"</span>,</span><br><span class="line">      <span class="attr">"position"</span>: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"token"</span>: <span class="string">"芝士"</span>,</span><br><span class="line">      <span class="attr">"start_offset"</span>: <span class="number">2</span>,</span><br><span class="line">      <span class="attr">"end_offset"</span>: <span class="number">4</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"nf"</span>,</span><br><span class="line">      <span class="attr">"position"</span>: <span class="number">2</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"token"</span>: <span class="string">"蛋糕"</span>,</span><br><span class="line">      <span class="attr">"start_offset"</span>: <span class="number">4</span>,</span><br><span class="line">      <span class="attr">"end_offset"</span>: <span class="number">6</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"nf"</span>,</span><br><span class="line">      <span class="attr">"position"</span>: <span class="number">3</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"token"</span>: <span class="string">"店"</span>,</span><br><span class="line">      <span class="attr">"start_offset"</span>: <span class="number">6</span>,</span><br><span class="line">      <span class="attr">"end_offset"</span>: <span class="number">7</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"n"</span>,</span><br><span class="line">      <span class="attr">"position"</span>: <span class="number">4</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此完毕。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Gordon
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://bungder.github.io/2018/06/30/hanlp-es-plugin/" title="HanLP ES插件折腾小记">http://bungder.github.io/2018/06/30/hanlp-es-plugin/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+    <li class="post-copyright-date">
+        2018-6-30 22:06
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+            <a href="/tags/HanLP/" rel="tag"># HanLP</a>
+          
+            <a href="/tags/ElasticSearch/" rel="tag"># ElasticSearch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/27/qa-os/" rel="next" title="自动问答系统开源轮子简介">
+                <i class="fa fa-chevron-left"></i> 自动问答系统开源轮子简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg"
+               alt="Gordon" />
+          <p class="site-author-name" itemprop="name">Gordon</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HanLP的ES插件"><span class="nav-text">HanLP的ES插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备"><span class="nav-text">准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始启动"><span class="nav-text">初始启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署插件"><span class="nav-text">部署插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-text">debug</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gordon</span>
+</div>
+
+<center>
+    <a href="mailto:bungderblog@163.com?subject=From GithubPages">联系我</a>
+</center>
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> UV
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> PV
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
