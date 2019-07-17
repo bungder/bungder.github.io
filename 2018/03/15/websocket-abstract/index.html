@@ -101,16 +101,16 @@
 <meta property="og:site_name" content="Gordon">
 <meta property="og:description" content="1 概念1.1 comet天不生WS，万古如长夜。 在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为comet。 但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/osi.png">
-<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/websocket-frame.png">
-<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/websocket-prototype.png">
-<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/server-client-sample.png">
-<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/not-suing-jsr356.png">
-<meta property="og:updated_time" content="2018-03-15T15:12:51.228Z">
+<meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/osi.png">
+<meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/websocket-frame.png">
+<meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/websocket-prototype.jpg">
+<meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/server-client-sample.jpg">
+<meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/not-suing-jsr356.jpg">
+<meta property="og:updated_time" content="2019-07-17T16:38:20.992Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebSocket简介">
 <meta name="twitter:description" content="1 概念1.1 comet天不生WS，万古如长夜。 在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为comet。 但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方">
-<meta name="twitter:image" content="http://otlnkjq1m.bkt.clouddn.com/osi.png">
+<meta name="twitter:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/osi.png">
 
 
 
@@ -321,7 +321,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Gordon">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
+      <meta itemprop="image" content="/3251115.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -397,7 +397,7 @@
 <p>With long-polling we set the bar to cross-browser push. With XHR streaming and ActiveXObject(’htmlfile’) we raised it to cross-browser streaming. With SSE we’ve been trying to raise the bar to native, cross-browser streaming</p>
 </blockquote>
 <h3 id="1-1-1-实现"><a href="#1-1-1-实现" class="headerlink" title="1.1.1 实现"></a>1.1.1 实现</h3><h4 id="1-1-1-1-Streaming"><a href="#1-1-1-1-Streaming" class="headerlink" title="1.1.1.1 Streaming"></a>1.1.1.1 Streaming</h4><h5 id="1-1-1-1-1-Hidden-iframe"><a href="#1-1-1-1-1-Hidden-iframe" class="headerlink" title="1.1.1.1.1 Hidden iframe"></a>1.1.1.1.1 Hidden iframe</h5><h5 id="1-1-1-1-2-XMLHttpRequest"><a href="#1-1-1-1-2-XMLHttpRequest" class="headerlink" title="1.1.1.1.2 XMLHttpRequest"></a>1.1.1.1.2 XMLHttpRequest</h5><h4 id="1-1-1-2-Ajax-Long-pulling"><a href="#1-1-1-2-Ajax-Long-pulling" class="headerlink" title="1.1.1.2 Ajax Long-pulling"></a>1.1.1.2 Ajax Long-pulling</h4><h5 id="1-1-1-2-1-XMLHttpRequest-long-polling"><a href="#1-1-1-2-1-XMLHttpRequest-long-polling" class="headerlink" title="1.1.1.2.1 XMLHttpRequest long polling"></a>1.1.1.2.1 XMLHttpRequest long polling</h5><h5 id="1-1-1-2-2-Script-tag-long-polling"><a href="#1-1-1-2-2-Script-tag-long-polling" class="headerlink" title="1.1.1.2.2 Script tag long polling"></a>1.1.1.2.2 Script tag long polling</h5><h2 id="1-2-WebSocket协议"><a href="#1-2-WebSocket协议" class="headerlink" title="1.2 WebSocket协议"></a>1.2 WebSocket协议</h2><p>WebSocket是一种在单个TCP连接上进行全双工通讯的协议。是有别于HTTP的另一个TCP协议，它们都属于OSI模型中的第七层:</p>
-<p><img src="http://otlnkjq1m.bkt.clouddn.com/osi.png" alt=""></p>
+<p><img src="osi.png" alt=""></p>
 <p><a href="https://tools.ietf.org/html/rfc6455" target="_blank" rel="noopener"><strong>RFC 6455</strong></a> states that WebSocket “is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries” thus making it <strong>compatible with the HTTP</strong> protocol.</p>
 <p>原文为：</p>
 <blockquote>
@@ -441,7 +441,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="http://otlnkjq1m.bkt.clouddn.com/websocket-frame.png" alt=""></p>
+<p><img src="websocket-frame.png" alt=""></p>
 <h3 id="1-2-3-心跳"><a href="#1-2-3-心跳" class="headerlink" title="1.2.3 心跳"></a>1.2.3 心跳</h3><p>一端发送<code>Ping</code>帧，另一端发送<code>Pong</code>帧作为响应</p>
 <ul>
 <li>The <code>Ping</code> frame contains an opcode of <code>0x9</code>.</li>
@@ -459,7 +459,7 @@
 </blockquote>
 <h1 id="2-API"><a href="#2-API" class="headerlink" title="2 API"></a>2 API</h1><h2 id="2-1-JavaScript-API"><a href="#2-1-JavaScript-API" class="headerlink" title="2.1 JavaScript API"></a>2.1 JavaScript API</h2><p><a href="https://www.w3.org/TR/websockets/" target="_blank" rel="noopener">The WebSocket API</a>:</p>
 <p>The WebSocket Interface<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">interface WebSocket : EventTarget &#123;</span><br><span class="line">  readonly attribute DOMString url;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ready state</span></span><br><span class="line">  <span class="keyword">const</span> unsigned short CONNECTING = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">const</span> unsigned short OPEN = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">const</span> unsigned short CLOSING = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">const</span> unsigned short CLOSED = <span class="number">3</span>;</span><br><span class="line">  readonly attribute unsigned short readyState;</span><br><span class="line">  readonly attribute unsigned long bufferedAmount;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// networking</span></span><br><span class="line">           attribute EventHandler onopen;</span><br><span class="line">           attribute EventHandler onerror;</span><br><span class="line">           attribute EventHandler onclose;</span><br><span class="line">  readonly attribute DOMString extensions;</span><br><span class="line">  readonly attribute DOMString protocol;</span><br><span class="line">  <span class="keyword">void</span> close([Clamp] optional unsigned short code, optional DOMString reason);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// messaging</span></span><br><span class="line">           attribute EventHandler onmessage;</span><br><span class="line">           attribute DOMString binaryType;</span><br><span class="line">  <span class="keyword">void</span> send(DOMString data);</span><br><span class="line">  <span class="keyword">void</span> send(Blob data);</span><br><span class="line">  <span class="keyword">void</span> send(<span class="built_in">ArrayBuffer</span> data);</span><br><span class="line">  <span class="keyword">void</span> send(ArrayBufferView data);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://otlnkjq1m.bkt.clouddn.com/websocket-prototype.png" alt=""></p>
+<p><img src="websocket-prototype.jpg" alt=""></p>
 <h2 id="2-2-Java-API"><a href="#2-2-Java-API" class="headerlink" title="2.2 Java API"></a>2.2 Java API</h2><h3 id="2-2-1-Java-EE"><a href="#2-2-1-Java-EE" class="headerlink" title="2.2.1 Java EE"></a>2.2.1 Java EE</h3><p><a href="http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html" target="_blank" rel="noopener">JSR 356, Java API for WebSocket</a></p>
 <p>JSR 356是Java EE 7标准的一部分。</p>
 <p>开源实现有：</p>
@@ -467,7 +467,7 @@
 <li>GlassFish</li>
 <li>Jetty 9.1.+</li>
 </ul>
-<p>以下是一个典型的例子：<br><img src="http://otlnkjq1m.bkt.clouddn.com/server-client-sample.png" alt=""></p>
+<p>以下是一个典型的例子：<br><img src="server-client-sample.jpg" alt=""></p>
 <p>服务端由Java实现，用JSR 356的一个实现来处理WebSocket协议的细节。<br>客户端中，JavaFX客户端可以依赖任何符合JSR 356的客户端来处理WebSocket协议，而其他客户端则可以使用符合RFC 6455的实现来与服务器通信。</p>
 <p>兼容JSR 356的好处：</p>
 <ul>
@@ -476,7 +476,7 @@
 <p>JSR 356的缺点：</p>
 <p><a href="https://books.google.com/books?id=EkBPDwAAQBAJ&amp;pg=PA282&amp;lpg=PA282&amp;dq=netty+jsr+356&amp;source=bl&amp;ots=9nbhtR3VEn&amp;sig=wVmL3ImgmRmE_69OCpHLHjrYv2c&amp;hl=zh-CN&amp;sa=X&amp;ved=0ahUKEwiYnY7rse3ZAhUMzGMKHX_kDBg4ChDoAQgvMAE#v=onepage&amp;q=netty%20jsr%20356&amp;f=false" target="_blank" rel="noopener">Learning Spring Boot 2.0: Simplify the development of lightning fast … - Greg L. Turnquist - Google 图书</a></p>
 <ul>
-<li>基于Servlet 3.1<br>  目前兼容Servlet 3.1的有tomcat，但是如果在使用Netty，则不兼容了<br>  <img src="http://otlnkjq1m.bkt.clouddn.com/not-suing-jsr356.png" alt=""></li>
+<li>基于Servlet 3.1<br>  目前兼容Servlet 3.1的有tomcat，但是如果在使用Netty，则不兼容了<br>  <img src="not-suing-jsr356.jpg" alt=""></li>
 <li>J2EE标准前景不太好<br>  J2EE标准发布比较慢，RFC6455在2011年12月就正式发布了，而相应的JSR 356却在2013年5月才发布，相应地，Jetty在2013年11月才发布对JSR 356支持的稳定版本，从RFC标准发布到JSR标准实现之间相距了2年。</li>
 <li>考虑到在一般的场景下，WebSocket客户端都不是Java客户端，所以花费精力去适配JSR 356没必要，别的语言才不管J2EE的标准。</li>
 </ul>
@@ -809,7 +809,7 @@
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg"
+               src="/3251115.jpg"
                alt="Gordon" />
           <p class="site-author-name" itemprop="name">Gordon</p>
            
@@ -899,7 +899,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

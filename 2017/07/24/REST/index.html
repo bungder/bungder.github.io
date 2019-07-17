@@ -101,12 +101,12 @@
 <meta property="og:site_name" content="Gordon">
 <meta property="og:description" content="1 概述1.1 撰写目的本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派（死板），在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远，而在书本以及网上大部分介绍RESTful的资料里，却都是这样的方案（URL命名风格、请求与响应的设计）。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/REST_resources.jpg">
-<meta property="og:updated_time" content="2017-08-20T14:08:32.000Z">
+<meta property="og:image" content="http://bungder.github.io/2017/07/24/REST/REST_resources.jpg">
+<meta property="og:updated_time" content="2019-07-17T16:25:42.729Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一种RESTful接口的约定">
 <meta name="twitter:description" content="1 概述1.1 撰写目的本文用于定义一种统一的RESTful接口设计方案，希望具有参考价值。本文所描述的方案比较学院派（死板），在上一家公司提出没有被采纳，在所了解到的有限的若干家声称采用了RESTful风格的公司里，发现他们也偏离甚远，而在书本以及网上大部分介绍RESTful的资料里，却都是这样的方案（URL命名风格、请求与响应的设计）。当然，他们这么做是有理由的，我也理解，这只是取舍问题。这篇">
-<meta name="twitter:image" content="http://otlnkjq1m.bkt.clouddn.com/REST_resources.jpg">
+<meta name="twitter:image" content="http://bungder.github.io/2017/07/24/REST/REST_resources.jpg">
 
 
 
@@ -317,7 +317,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Gordon">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
+      <meta itemprop="image" content="/3251115.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -420,7 +420,8 @@
 <p>另外应设置一个version，指明所使用的接口版本。这不属于HTTP协议中的一部分，是自定义的，出于版本控制的考量，具体见第七章。</p>
 <h2 id="5-3-body"><a href="#5-3-body" class="headerlink" title="5.3    body"></a>5.3    body</h2><p>采用JSON字符串，具体的结构有待商定，这不属于HTTP协议的一部分，是自定义的。</p>
 <p>这里主要放置业务相关的数据。</p>
-<p>借用<a href="http://www.infoq.com/cn/articles/rest-introduction" target="_blank" rel="noopener">一篇10年前的文章</a>的一张图：<br><img src="http://otlnkjq1m.bkt.clouddn.com/REST_resources.jpg" alt=""></p>
+<p>借用<a href="http://www.infoq.com/cn/articles/rest-introduction" target="_blank" rel="noopener">一篇10年前的文章</a>的一张图：</p>
+<p><img src="REST_resources.jpg" alt="rest"></p>
 <h1 id="6-响应"><a href="#6-响应" class="headerlink" title="6    响应"></a>6    响应</h1><h2 id="6-1-Header"><a href="#6-1-Header" class="headerlink" title="6.1    Header"></a>6.1    Header</h2><p>根据响应的状态码不同，相应地设置头部，具体见下一节。</p>
 <p>但是在我所了解的公司里，做法都是统一返回200，然后在返回的JSON字符串里设置消息码。我是不能理解的。据一位前端同学说，前端代码接收到了请求以后，不方便获取Http状态码。其实我也写过前端，不深入，但是一些基本的知识还是有的，我觉得这并不难做到，估计是他的代码封装的时候没有考虑到这一点，现在要改比较麻烦，所以不想大动干戈、伤筋动骨。</p>
 <h2 id="6-2-状态码"><a href="#6-2-状态码" class="headerlink" title="6.2    状态码"></a>6.2    状态码</h2><table>
@@ -633,7 +634,7 @@
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg"
+               src="/3251115.jpg"
                alt="Gordon" />
           <p class="site-author-name" itemprop="name">Gordon</p>
            
@@ -723,7 +724,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -75,7 +75,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JVM,Java," />
+  <meta name="keywords" content="Java,JVM," />
 
 
 
@@ -94,20 +94,20 @@
 
 
 <meta name="description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我">
-<meta name="keywords" content="JVM,Java">
+<meta name="keywords" content="Java,JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java class文件格式">
 <meta property="og:url" content="http://bungder.github.io/2018/03/10/java-class-file-format/index.html">
 <meta property="og:site_name" content="Gordon">
 <meta property="og:description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/FieldDescriptors.jpeg">
-<meta property="og:image" content="http://otlnkjq1m.bkt.clouddn.com/MethodDescriptors.jpeg">
-<meta property="og:updated_time" content="2018-03-13T00:52:21.090Z">
+<meta property="og:image" content="http://bungder.github.io/2018/03/10/java-class-file-format/FieldDescriptors.jpg">
+<meta property="og:image" content="http://bungder.github.io/2018/03/10/java-class-file-format/MethodDescriptors.jpg">
+<meta property="og:updated_time" content="2019-07-17T16:34:51.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java class文件格式">
 <meta name="twitter:description" content="0 概述这实际上是《The Java&amp;reg; Virtual Machine Specification - Java SE 8 Edition》中第四章内容（The class File Format）的部分翻译。主要目的是整理阅读笔记，让我自己看得明白，在这个前提下，尽量让别人看得明白，如果读者觉得我写得很混乱，还请自行阅读原文，不便之处敬请见谅。如有错误，还请指正（拉到页面底部点击『联系我">
-<meta name="twitter:image" content="http://otlnkjq1m.bkt.clouddn.com/FieldDescriptors.jpeg">
+<meta name="twitter:image" content="http://bungder.github.io/2018/03/10/java-class-file-format/FieldDescriptors.jpg">
 
 
 
@@ -318,7 +318,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Gordon">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg">
+      <meta itemprop="image" content="/3251115.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -527,7 +527,7 @@
 <li>生产右侧的语法 {x} 表示 x 的零个或多个匹配项。</li>
 <li>生产右侧的短语 (one of) 表示以下行或行上的每个终端符号都是可选的定义。</li>
 </ul>
-<h2 id="3-2-Field-Descriptors"><a href="#3-2-Field-Descriptors" class="headerlink" title="3.2 Field Descriptors"></a>3.2 Field Descriptors</h2><p><img src="http://otlnkjq1m.bkt.clouddn.com/FieldDescriptors.jpeg" alt=""></p>
+<h2 id="3-2-Field-Descriptors"><a href="#3-2-Field-Descriptors" class="headerlink" title="3.2 Field Descriptors"></a>3.2 Field Descriptors</h2><p><img src="FieldDescriptors.jpg" alt=""></p>
 <p>field descriptors的说明：</p>
 <table>
 <thead>
@@ -595,7 +595,7 @@
 <li>一个Object实例表示为：<code>Ljava/lang/Object;</code></li>
 <li>一个多维数组<code>double[][][]</code>表示为<code>[[[D</code></li>
 </ul>
-<h2 id="3-3-Method-Descriptors-方法描述符"><a href="#3-3-Method-Descriptors-方法描述符" class="headerlink" title="3.3 Method Descriptors 方法描述符"></a>3.3 Method Descriptors 方法描述符</h2><p><img src="http://otlnkjq1m.bkt.clouddn.com/MethodDescriptors.jpeg" alt=""></p>
+<h2 id="3-3-Method-Descriptors-方法描述符"><a href="#3-3-Method-Descriptors-方法描述符" class="headerlink" title="3.3 Method Descriptors 方法描述符"></a>3.3 Method Descriptors 方法描述符</h2><p><img src="MethodDescriptors.jpg" alt=""></p>
 <p>例子：</p>
 <ul>
 <li><p>1</p>
@@ -815,9 +815,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
-          
             <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
           
         </div>
       
@@ -903,7 +903,7 @@
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://otlnkjq1m.bkt.clouddn.com/3251115.jpg"
+               src="/3251115.jpg"
                alt="Gordon" />
           <p class="site-author-name" itemprop="name">Gordon</p>
            
@@ -993,7 +993,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
