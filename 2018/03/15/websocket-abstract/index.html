@@ -101,16 +101,16 @@
 <meta property="og:site_name" content="Gordon">
 <meta property="og:description" content="1 概念1.1 comet天不生WS，万古如长夜。 在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为comet。 但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/osi.png">
+<meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/osi.jpg">
 <meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/websocket-frame.png">
 <meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/websocket-prototype.jpg">
 <meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/server-client-sample.jpg">
 <meta property="og:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/not-suing-jsr356.jpg">
-<meta property="og:updated_time" content="2019-07-17T16:38:20.992Z">
+<meta property="og:updated_time" content="2019-07-17T17:01:03.349Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebSocket简介">
 <meta name="twitter:description" content="1 概念1.1 comet天不生WS，万古如长夜。 在WebSocket出现之前，服务端主动推送消息给浏览器的需求就已经存在了，但是HTTP这个协议本来就不是设计用来进行双向通信的，所以机智的工程师们采取了各种hack的方式来实现这种功能，这些实现方式都统称为comet。 但是无可避免地，这些技术都存在缺陷，既然WebSocket都出现了，那么这些技术大概也能进博物馆了，除了实现Fallback方">
-<meta name="twitter:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/osi.png">
+<meta name="twitter:image" content="http://bungder.github.io/2018/03/15/websocket-abstract/osi.jpg">
 
 
 
@@ -397,7 +397,7 @@
 <p>With long-polling we set the bar to cross-browser push. With XHR streaming and ActiveXObject(’htmlfile’) we raised it to cross-browser streaming. With SSE we’ve been trying to raise the bar to native, cross-browser streaming</p>
 </blockquote>
 <h3 id="1-1-1-实现"><a href="#1-1-1-实现" class="headerlink" title="1.1.1 实现"></a>1.1.1 实现</h3><h4 id="1-1-1-1-Streaming"><a href="#1-1-1-1-Streaming" class="headerlink" title="1.1.1.1 Streaming"></a>1.1.1.1 Streaming</h4><h5 id="1-1-1-1-1-Hidden-iframe"><a href="#1-1-1-1-1-Hidden-iframe" class="headerlink" title="1.1.1.1.1 Hidden iframe"></a>1.1.1.1.1 Hidden iframe</h5><h5 id="1-1-1-1-2-XMLHttpRequest"><a href="#1-1-1-1-2-XMLHttpRequest" class="headerlink" title="1.1.1.1.2 XMLHttpRequest"></a>1.1.1.1.2 XMLHttpRequest</h5><h4 id="1-1-1-2-Ajax-Long-pulling"><a href="#1-1-1-2-Ajax-Long-pulling" class="headerlink" title="1.1.1.2 Ajax Long-pulling"></a>1.1.1.2 Ajax Long-pulling</h4><h5 id="1-1-1-2-1-XMLHttpRequest-long-polling"><a href="#1-1-1-2-1-XMLHttpRequest-long-polling" class="headerlink" title="1.1.1.2.1 XMLHttpRequest long polling"></a>1.1.1.2.1 XMLHttpRequest long polling</h5><h5 id="1-1-1-2-2-Script-tag-long-polling"><a href="#1-1-1-2-2-Script-tag-long-polling" class="headerlink" title="1.1.1.2.2 Script tag long polling"></a>1.1.1.2.2 Script tag long polling</h5><h2 id="1-2-WebSocket协议"><a href="#1-2-WebSocket协议" class="headerlink" title="1.2 WebSocket协议"></a>1.2 WebSocket协议</h2><p>WebSocket是一种在单个TCP连接上进行全双工通讯的协议。是有别于HTTP的另一个TCP协议，它们都属于OSI模型中的第七层:</p>
-<p><img src="osi.png" alt=""></p>
+<p><img src="osi.jpg" alt=""></p>
 <p><a href="https://tools.ietf.org/html/rfc6455" target="_blank" rel="noopener"><strong>RFC 6455</strong></a> states that WebSocket “is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries” thus making it <strong>compatible with the HTTP</strong> protocol.</p>
 <p>原文为：</p>
 <blockquote>
